@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <style>
+        /* Cropper Custom Style */
+        .cropper-container { margin-top: 20px; max-height: 400px; background: #000; border-radius: 12px; overflow: hidden; }
+        #crop-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 200000; justify-content: center; align-items: center; padding: 20px; }
+        .crop-card { background: var(--card); width: 100%; max-width: 800px; padding: 25px; border-radius: 20px; border: 1px solid var(--primary); }
+
+        /* WhatsApp Button Premium Style */
+        .btn-wa-kirim {
+            background: #25d366 !important;
+            color: #fff !important;
+            padding: 10px 20px !important;
+            border-radius: 50px !important;
+            text-decoration: none !important;
+            font-weight: bold !important;
+            display: inline-flex !important;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem !important;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            border: none !important;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-wa-kirim:hover {
+            background: #1eb954 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        }
+        .btn-wa-kirim i { font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <div id="notification-container"></div>
+
+    <div class="dashboard-wrapper" id="editor-main-container" style="display: none;">
+        <!-- DESKTOP SIDEBAR -->
+        <div class="sidebar" id="sidebar">
+            <div class="brand">
+                <a href="#" class="brand-info brand-logo-link" style="text-decoration: none;">
+                    <i class="fas fa-crown"></i>
+                    <span></span>
+                </a>
+                <i class="fas fa-bars" id="sidebar-toggle"></i>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-link active desktop-nav" data-tab="edit"><i class="fas fa-magic"></i> <span>Edit Undangan</span></a>
+                <a href="#" class="nav-link desktop-nav" data-tab="wishes"><i class="fas fa-comments"></i> <span>Daftar Ucapan</span></a>
+                <a href="#" class="nav-link desktop-nav" data-tab="whatsapp"><i class="fas fa-paper-plane"></i> <span>Kirim WA</span></a>
+                <a href="/" target="_blank" class="nav-link" id="btn-preview-desktop"><i class="fas fa-external-link-alt"></i> <span>Lihat Hasil</span></a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div id="sidebar-expiry" style="display: none;">
+                    <div class="expiry-widget" id="expiry-card">
+                        <div class="expiry-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="expiry-info">
+                            <div class="expiry-label">Masa Aktif</div>
+                            <div class="expiry-days" id="expiry-text">-- Hari Lagi</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btn-logout-desktop">
+                    <i class="fas fa-sign-out-alt"></i> <span>Keluar Panel</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-header">
+            <div class="brand">
+                <a href="#" class="brand-info brand-logo-link" style="text-decoration: none; display: flex; align-items: center;">
+                    <i class="fas fa-crown" style="color: var(--primary); font-size: 1.4rem;"></i>
+                    <span style="font-family: 'Cinzel Decorative', cursive; color: #fff; font-size: 1.2rem; margin-left: 10px;"></span>
+                </a>
+            </div>
+            <button id="btn-logout-mobile">
+                <i class="fas fa-power-off"></i>
+            </button>
+        </div>
+
+        <!-- BOTTOM NAV (Mobile Only) -->
+        <nav class="bottom-nav">
+            <a href="#" class="nav-link active mobile-nav" data-tab="edit"><i class="fas fa-magic"></i> <span>Edit</span></a>
+            <a href="#" class="nav-link mobile-nav" data-tab="wishes"><i class="fas fa-comments"></i> <span>Wishes</span></a>
+            <a href="#" class="nav-link mobile-nav" data-tab="whatsapp"><i class="fas fa-paper-plane"></i> <span>WA</span></a>
+            <a href="/" target="_blank" class="nav-link" id="btn-preview-mobile"><i class="fas fa-eye"></i> <span>Preview</span></a>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="header" style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 15px;">
+                <div>
+                    <h1 id="page-title" style="margin: 0; font-family: 'Cinzel Decorative', cursive; color: var(--primary-color);">Edit Undangan</h1>
+                    <p id="page-subtitle" style="color: #aaa; margin: 5px 0 0;">Kelola data dan tampilan undangan Anda</p>
+                </div>
+                <div id="header-expiry-container" style="display: none;">
+                    <div class="header-expiry" id="header-expiry-pill">
+                        <i class="fas fa-history"></i> Masa Aktif: <b id="header-expiry-text">-- Hari</b>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1: EDIT FORM -->
+            <div id="section-edit">
+                <form id="editor-form">
+                    <div class="section-card" id="admin-only-theme" style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 12px; margin-bottom: 30px; border: 1px solid rgba(184, 134, 11, 0.2);">
+                        <h3><i class="fas fa-palette"></i> Pilih Desain Undangan (Admin Only)</h3>
+                        <div class="input-group">
+                            <label>Pilih Tema</label>
+                            <div id="theme-select-wrapper-editor">
+                                <!-- Rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="editor-content-wrapper">
+            <!-- Section Mempelai -->
+            <div class="form-section">
+                <h2><i class="fas fa-heart"></i> Data Mempelai</h2>
+                
+                <h3><i class="fas fa-mars"></i> Mempelai Pria</h3>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Nama Lengkap <span class="required">*</span></label>
+                            <input type="text" id="groom-fullname" placeholder="Contoh: Ozil Syahputra, S.Kom" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Nama Panggilan <span class="required">*</span></label>
+                            <input type="text" id="groom-name" placeholder="Contoh: Ozil" required>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Nama Ayah <span class="required">*</span></label>
+                            <input type="text" id="groom-father" placeholder="Nama Ayah Kandung" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Nama Ibu <span class="required">*</span></label>
+                            <input type="text" id="groom-mother" placeholder="Nama Ibu Kandung" required>
+                        </div>
+                    </div>
+                <div class="input-group">
+                    <label class="no-star">Media Sosial (Opsional)</label>
+                    <div class="social-input-group">
+                        <div class="custom-select-wrapper" id="groom-social-select-wrapper">
+                            <!-- Custom Select via JS -->
+                        </div>
+                        <input type="text" id="groom-social" placeholder="Username (misal: ozilsyh)">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Foto Profil Pria <span class="required">*</span></label>
+                    <input type="file" id="groom-photo-file" accept="image/*">
+                    <input type="hidden" id="groom-photo-url">
+                    <div id="groom-photo-preview" class="image-preview-box"></div>
+                </div>
+
+                <hr style="border: 0; border-top: 1px solid rgba(184, 134, 11, 0.2); margin: 30px 0;">
+
+                <h3><i class="fas fa-venus"></i> Mempelai Wanita</h3>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Nama Lengkap <span class="required">*</span></label>
+                            <input type="text" id="bride-fullname" placeholder="Contoh: Zelda Amalia, S.E" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Nama Panggilan <span class="required">*</span></label>
+                            <input type="text" id="bride-name" placeholder="Contoh: Zelda" required>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Nama Ayah <span class="required">*</span></label>
+                            <input type="text" id="bride-father" placeholder="Nama Ayah Kandung" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Nama Ibu <span class="required">*</span></label>
+                            <input type="text" id="bride-mother" placeholder="Nama Ibu Kandung" required>
+                        </div>
+                    </div>
+                <div class="input-group">
+                    <label class="no-star">Media Sosial (Opsional)</label>
+                    <div class="social-input-group">
+                        <div class="custom-select-wrapper" id="bride-social-select-wrapper">
+                            <!-- Custom Select via JS -->
+                        </div>
+                        <input type="text" id="bride-social" placeholder="Username (misal: zelda_aml)">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Foto Profil Wanita <span class="required">*</span></label>
+                    <input type="file" id="bride-photo-file" accept="image/*">
+                    <input type="hidden" id="bride-photo-url">
+                    <div id="bride-photo-preview" class="image-preview-box"></div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-photo-video"></i> Media & Konten</h2>
+                <div class="input-group">
+                    <label class="no-star">Kutipan / Quotes (Ayat)</label>
+                    <textarea id="wedding-quotes" rows="3" placeholder="Tuliskan kutipan atau ayat favorit Anda..."></textarea>
+                </div>
+                    <div class="input-group">
+                        <label class="no-star">Link Video YouTube</label>
+                        <input type="url" id="youtube-url" placeholder="Contoh: https://www.youtube.com/watch?v=XXXXX">
+                    </div>
+                    <div class="grid-2">
+                        <div class="input-group">
+                            <label>Foto Cover Depan <span class="required">*</span></label>
+                            <input type="file" id="cover-photo-file" accept="image/*">
+                            <input type="hidden" id="cover-photo-url">
+                            <div id="cover-photo-preview" class="image-preview-box wide"></div>
+                        </div>
+                        <div class="input-group">
+                            <label>Thumbnail Sosmed (Landscape) <span class="required">*</span></label>
+                            <input type="file" id="thumb-photo-file" accept="image/*">
+                            <input type="hidden" id="thumb-photo-url">
+                            <div id="thumb-photo-preview" class="image-preview-box wide"></div>
+                            <small style="color: #888; display: block; margin-top: 5px;">Rasio 1.91:1 (Landscape) untuk pratinjau WA/FB.</small>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label class="no-star">Musik Latar (Opsional)</label>
+                        <input type="file" id="music-file" accept="audio/mpeg">
+                        <input type="hidden" id="music-url">
+                    </div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-calendar-alt"></i> Detail Acara</h2>
+                <div id="events-container"></div>
+                <button type="button" id="add-event" class="btn-secondary"><i class="fas fa-plus"></i> Tambah Acara</button>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-images"></i> Galeri Foto (Maks 8)</h2>
+                <div class="input-group">
+                    <label class="no-star">Tambah Foto</label>
+                    <input type="file" id="gallery-files" accept="image/*" multiple>
+                </div>
+                <div id="gallery-preview" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; margin-top: 15px;"></div>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-book-open"></i> Cerita Cinta (Maks 6)</h2>
+                <div id="stories-container"></div>
+                <button type="button" id="add-story" class="btn-secondary"><i class="fas fa-plus"></i> Tambah Cerita</button>
+            </div>
+
+            <div class="form-section">
+                <h2><i class="fas fa-gift"></i> Rekening Kado Digital</h2>
+                <div id="gifts-container"></div>
+                <button type="button" id="add-gift" class="btn-secondary"><i class="fas fa-plus"></i> Tambah Rekening</button>
+            </div>
+
+            </div> <!-- End editor-content-wrapper -->
+
+            <div style="display: flex; gap: 15px; margin-top: 35px;">
+                <button type="submit" id="save-btn" class="btn-save" style="flex: 2; margin-top: 0; font-size: 1.1rem; padding: 15px;">
+                    <i class="fas fa-save"></i> SIMPAN & UPDATE UNDANGAN
+                </button>
+            </div>
+                </form>
+            </div>
+
+            <!-- SECTION 2: WISHES MANAGEMENT -->
+            <div id="section-wishes" style="display: none;">
+                <div class="user-stats">
+                    <div class="stat-box">
+                        <h4>Total Ucapan</h4>
+                        <div class="value" id="stat-total-wishes">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Hadir</h4>
+                        <div class="value" id="stat-hadir" style="color: #2ecc71;">0</div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table id="wishes-table">
+                        <thead>
+                            <tr>
+                                <th>NAMA TAMU</th>
+                                <th>KEHADIRAN</th>
+                                <th>PESAN / DOA</th>
+                                <th style="text-align: right;">AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wishes-table-body">
+                            <!-- Data Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 3: WHATSAPP SENDER -->
+            <div id="section-whatsapp" style="display: none;">
+                <div class="form-section">
+                    <h2><i class="fab fa-whatsapp"></i> WhatsApp Blast</h2>
+                    <p class="wa-desc" style="color: #888; margin-bottom: 25px;">
+                        Kirim undangan ke banyak nomor sekaligus dengan link khusus tamu.<br><br>
+                        <strong style="color: var(--primary);">Penting Sebelum Mengirim:</strong><br>
+                        • <b>Jika di Laptop/PC</b>: Anda wajib membuka <a href="https://web.whatsapp.com/" target="_blank" style="color: #2ecc71;">WhatsApp Web</a> atau Aplikasi WhatsApp Desktop yang sudah login dengan nomor pengirim.<br>
+                        • <b>Jika di HP/Ponsel</b>: Pastikan Anda memiliki aplikasi WhatsApp resmi dan sudah login menggunakan nomor pengirim.
+                    </p>
+
+                    <div class="input-group">
+                        <label>Link Undangan Dasar (Otomatis)</label>
+                        <input type="url" id="wa-base-url" placeholder="https://domain.com/slug" style="background: rgba(255,255,255,0.05); color: var(--primary); font-weight: bold;" readonly>
+                        <p id="url-mode-info" style="color: #888; font-size: 0.75rem; margin-top: 5px; font-style: italic;">Menggunakan format yang disetujui Admin.</p>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Daftar Tamu & Nomor HP <span class="required">*</span></label>
+                        <textarea id="wa-guest-list" rows="6" placeholder="Format: Nama Tamu, NomorHP&#10;Contoh:&#10;Budi Santoso, 08123456789&#10;Siti Aminah, 62899887766"></textarea>
+                        <small style="color: #888;">Gunakan koma (,) sebagai pemisah. Satu baris satu tamu.</small>
+                    </div>
+
+                    <div class="wa-alert-box" style="background: rgba(184, 134, 11, 0.05); border: 1px dashed var(--primary); margin-bottom: 20px;">
+                        <p class="wa-alert-text" style="margin: 0; color: var(--primary);">
+                            <i class="fas fa-magic"></i> <b>Sistem Anti-Spam Aktif:</b> 10 variasi pesan undangan telah disiapkan secara otomatis untuk meminimalisir risiko blokir WhatsApp.
+                        </p>
+                    </div>
+
+                    <button type="button" id="btn-generate-wa" class="btn-save" style="margin-top: 10px;">
+                        <i class="fas fa-sync"></i> GENERATE DAFTAR KIRIM
+                    </button>
+                </div>
+
+                <div id="wa-result-container" style="display: none; margin-top: 30px;">
+                    <h3 style="font-family: 'Cinzel', serif; color: var(--primary); margin-bottom: 20px;">Daftar Siap Kirim</h3>
+                    <div class="table-container">
+                        <table id="wa-table">
+                            <thead>
+                                <tr>
+                                    <th>NAMA TAMU</th>
+                                    <th>NOMOR WA</th>
+                                    <th style="text-align: right;">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody id="wa-table-body">
+                                <!-- Generated via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CROP MODAL -->
+    <div id="crop-modal">
+        <div class="crop-card">
+            <h2 id="crop-modal-title" style="font-family: 'Cinzel Decorative', cursive; color: var(--primary); margin-bottom: 20px;">Potong Foto</h2>
+            <div style="max-height: 400px; overflow: hidden;">
+                <img id="crop-image-element" style="max-width: 100%;">
+            </div>
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button type="button" id="btn-cancel-crop" class="btn-secondary" style="flex: 1; border-style: solid; border-color: #555; color: #aaa;">BATAL</button>
+                <button type="button" id="btn-apply-crop" class="btn-save" style="flex: 2; margin-top: 0;">POTONG & GUNAKAN</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Konfirmasi Premium (Hapus/Logout) -->
+    <div id="modal-confirm" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000000;">
+        <div class="modal-content confirm-card" style="text-align: center; max-width: 400px; padding: 40px; border: 1px solid var(--primary); background: #1a120b; border-radius: 20px;">
+            <div id="confirm-icon-wrapper" style="font-size: 3.5rem; color: #e74c3c; margin-bottom: 20px;">
+                <i id="confirm-icon-i" class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 id="confirm-title" style="color: var(--primary); margin: 0 0 10px; font-family: 'Cinzel Decorative', cursive;">Konfirmasi</h2>
+            <p id="confirm-message" style="color: #aaa; margin-bottom: 30px;">Apakah Anda yakin?</p>
+            
+            <div style="display: flex; gap: 15px;">
+                <button id="btn-confirm-action" class="btn-primary" style="flex: 1; justify-content: center; background: #e74c3c; border-color: #e74c3c;">YA, KELUAR</button>
+                <button class="btn-primary" style="flex: 1; justify-content: center; background: #444; border-color: #555;" onclick="document.getElementById('modal-confirm').style.display='none'">
+                    BATAL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="/supabase-config.js"></script>
+    <script type="module" src="editor.js"></script>
+</body>
+</html>

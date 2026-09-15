@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/dashboard.css">
+    <style>
+        /* Shared styles moved to dashboard.css */
+        /* Shared styles moved to dashboard.css */
+    </style>
+</head>
+<body>
+
+    <div id="notification-container"></div>
+    
+    <!-- LOGIN OVERLAY (DEPRECATED - HANDLED BY LOGIN.HTML) -->
+    <div id="admin-login" style="display: none;"></div>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <div id="dashboard-wrapper" style="display: none;">
+        <!-- MOBILE HEADER -->
+        <div class="mobile-header">
+            <a href="#" class="brand-info brand-logo-link" style="text-decoration: none;">
+                <i class="fas fa-crown"></i>
+                <span style="font-family: 'Cinzel Decorative', cursive; color: var(--primary); font-weight: bold; white-space: nowrap;"></span>
+            </a>
+            <button id="btn-logout-mobile">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+
+        <div class="sidebar" id="sidebar">
+            <div class="brand">
+                <a href="#" class="brand-info brand-logo-link" style="text-decoration: none;">
+                    <i class="fas fa-crown"></i>
+                    <span style="white-space: nowrap;"></span>
+                </a>
+                <i class="fas fa-bars" id="sidebar-toggle"></i>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-link active" id="nav-dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-link" id="nav-clients">
+                    <i class="fas fa-users"></i>
+                    <span>Daftar Klien</span>
+                </a>
+                <a href="#" class="nav-link" id="nav-pricing">
+                    <i class="fas fa-tags"></i>
+                    <span>Harga Tema</span>
+                </a>
+                <a href="#" class="nav-link" id="nav-settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Pengaturan</span>
+                </a>
+            </div>
+            
+            <div style="margin-top: auto; padding-bottom: 20px;">
+                <button class="btn-logout" id="btn-logout-sidebar" style="width: 100%; justify-content: center;">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>KELUAR</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <div>
+                    <h1 id="page-title" style="margin: 0; font-family: 'Cinzel Decorative', cursive; color: var(--primary);">Master Dashboard</h1>
+                    <p id="page-subtitle" style="color: #aaa; margin: 5px 0 0;">Ringkasan Statistik Bisnis Anda</p>
+                </div>
+            </div>
+
+            <!-- TAB 1: DASHBOARD STATS -->
+            <div id="section-dashboard">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h4>Total Undangan</h4>
+                        <div class="value" id="stat-total">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-crown"></i>
+                        <h4>Tema Royal Gold</h4>
+                        <div class="value" id="stat-royal">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-leaf"></i>
+                        <h4>Tema Floral Light</h4>
+                        <div class="value" id="stat-floral">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-moon"></i>
+                        <h4>Tema Midnight</h4>
+                        <div class="value" id="stat-midnight">0</div>
+                    </div>
+                </div>
+
+                <div class="grid-2" style="display: grid; grid-template-columns: 2fr 1fr; gap: 25px;">
+                    <div class="form-section" style="margin-bottom: 0; padding: 25px;">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 20px;"><i class="fas fa-history" style="color: var(--primary);"></i> Undangan Terbaru</h3>
+                        <div class="table-container" style="background: transparent; border: none; overflow: hidden;">
+                            <table style="min-width: 100%;">
+                                <thead>
+                                    <tr style="background: transparent;">
+                                        <th style="padding: 10px; font-size: 0.7rem;">SLUG</th>
+                                        <th style="padding: 10px; font-size: 0.7rem;">TEMA</th>
+                                        <th style="padding: 10px; font-size: 0.7rem;">TANGGAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-clients-body">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <button class="btn-secondary" onclick="switchTab('clients')" style="margin-top: 20px; font-size: 0.8rem; padding: 8px;">LIHAT SEMUA KLIEN</button>
+                    </div>
+
+                    <div class="form-section" style="margin-bottom: 0; padding: 25px;">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 20px;"><i class="fas fa-bolt" style="color: var(--primary);"></i> Aksi Cepat</h3>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="btn-primary" onclick="document.getElementById('modal').style.display='flex'" style="margin-top: 0; width: 100%; height: 50px; font-size: 0.9rem;">
+                                <i class="fas fa-plus-circle"></i> Buat Undangan Baru
+                            </button>
+                            <button class="btn-secondary" onclick="switchTab('settings')" style="width: 100%; height: 50px; font-size: 0.9rem;">
+                                <i class="fas fa-cog"></i> Pengaturan Brand
+                            </button>
+                            <div style="margin-top: 15px; padding: 15px; background: rgba(184, 134, 11, 0.05); border-radius: 12px; border: 1px dashed rgba(184, 134, 11, 0.2);">
+                                <p style="margin: 0; font-size: 0.75rem; color: #aaa; line-height: 1.5;">Gunakan panel ini untuk manajemen cepat undangan klien Anda.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: CLIENT LIST -->
+            <div id="section-clients" style="display: none;">
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                    <button class="btn-primary" id="btn-add-client" style="margin-top: 0;">
+                        <i class="fas fa-plus"></i> BUAT UNDANGAN BARU
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table id="client-table">
+                        <thead>
+                            <tr>
+                                <th>SLUG (USERNAME)</th>
+                                <th>PASSWORD</th>
+                                <th>TEMA</th>
+                                <th>TGL DIBUAT</th>
+                                <th>TGL KEDALUWARSA</th>
+                                <th>STATUS</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data via JS -->
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+            <!-- TAB 3: THEME PRICING (NEW) -->
+            <div id="section-pricing" style="display: none;">
+                <div class="form-section">
+                    <h3 style="margin-top:0;"><i class="fas fa-tags" style="color:var(--primary);"></i> Manajemen Harga Tema</h3>
+                    <p style="color:#aaa; font-size:0.85rem; margin-bottom:25px;">Atur harga berbeda untuk setiap tema dan durasi aktif.</p>
+                    
+                    <div class="table-container" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(184,134,11,0.2);">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="text-align: left; background: rgba(184,134,11,0.1);">
+                                    <th style="padding: 15px; font-size:0.8rem;">NAMA TEMA</th>
+                                    <th style="padding: 15px; font-size:0.8rem;">1 BLN (Rp)</th>
+                                    <th style="padding: 15px; font-size:0.8rem;">2 BLN (Rp)</th>
+                                    <th style="padding: 15px; font-size:0.8rem;">3 BLN (Rp)</th>
+                                    <th style="padding: 15px; font-size:0.8rem;">CORET (Rp)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pricing-table-body">
+                                <!-- Generated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <button class="btn-primary" id="btn-save-pricing" style="margin-top: 25px;">
+                        <i class="fas fa-save"></i> SIMPAN SEMUA HARGA TEMA
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 4: SETTINGS -->
+            <div id="section-settings" style="display: none;">
+            <div class="form-section" style="max-width: 600px;">
+                <h3><i class="fas fa-id-card"></i> Branding Usaha</h3>
+                <div class="input-group">
+                    <label>Nama Usaha / Brand</label>
+                    <input type="text" id="input-brand-name" placeholder="Contoh: ETERNAL MOMENTS">
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Nomor WhatsApp Owner (Tanpa +)</label>
+                    <input type="text" id="input-owner-wa" placeholder="Contoh: 628123456789">
+                </div>
+                <button class="btn-primary" id="btn-save-settings" style="margin-top: 30px;">
+                    <i class="fas fa-save"></i> SIMPAN PERUBAHAN
+                </button>
+            </div>
+        </div>
+
+        <!-- BOTTOM NAV FOR MOBILE -->
+        <div class="bottom-nav">
+            <a href="#" class="nav-link active" id="nav-dashboard-mobile">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#" class="nav-link" id="nav-clients-mobile">
+                <i class="fas fa-users"></i>
+                <span>Klien</span>
+            </a>
+            <a href="#" class="nav-link" id="nav-pricing-mobile">
+                <i class="fas fa-tags"></i>
+                <span>Harga</span>
+            </a>
+            <a href="#" class="nav-link" id="nav-settings-mobile">
+                <i class="fas fa-cog"></i>
+                <span>Setting</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal Buat Undangan -->
+    <div id="modal">
+        <div class="modal-content">
+            <h2 style="margin-top: 0; color: var(--primary);">Buat Undangan Baru</h2>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px;">Slug / Username</label>
+                <input type="text" id="new-slug" placeholder="contoh: budi-wati">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px;">Password User</label>
+                <input type="text" id="new-pass" placeholder="Password untuk user">
+            </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px;">Masa Aktif Undangan</label>
+                <div class="custom-select" id="new-expiry-wrapper">
+                    <div class="select-trigger" data-value="90">
+                        <span>3 Bulan (Standar)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="select-options">
+                        <div class="option" data-value="1">1 Hari (Testing)</div>
+                        <div class="option" data-value="7">7 Hari (Trial)</div>
+                        <div class="option" data-value="30">1 Bulan</div>
+                        <div class="option" data-value="60">2 Bulan</div>
+                        <div class="option active" data-value="90">3 Bulan (Standar)</div>
+                    </div>
+                </div>
+                <p style="margin: 5px 0 0; font-size: 0.7rem; color: #888;">Data akan dihapus otomatis setelah masa aktif habis.</p>
+            </div>
+            <div style="margin-bottom: 30px;">
+                <label style="display: block; margin-bottom: 8px;">Pilih Desain Tema</label>
+                <div class="custom-select" id="new-theme-wrapper">
+                    <div class="select-trigger" data-value="royal-gold">
+                        <span>Royal Gold (Mewah & Gelap)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="select-options">
+                        <div class="option active" data-value="royal-gold">Royal Gold (Mewah & Gelap)</div>
+                        <div class="option" data-value="floral-light">Floral Light (Romantis & Terang)</div>
+                        <div class="option" data-value="midnight-dark">Midnight Dark (Modern & Futuristik)</div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1; justify-content: center;" id="btn-save-new">SIMPAN & AKTIFKAN</button>
+                <button class="btn-primary" style="flex: 1; justify-content: center; background: #444;" onclick="document.getElementById('modal').style.display='none'">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal Sukses Pembuatan -->
+    <div id="modal-success" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 100000;">
+        <div class="modal-content" style="text-align: center;">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2 style="color: #2ecc71; margin-bottom: 10px;">Undangan Berhasil Dibuat!</h2>
+            <p style="color: #aaa;">Silakan salin informasi akun di bawah ini untuk diberikan kepada klien:</p>
+            
+            <div class="copy-box">
+                <p>URL Login: <b id="success-login-url">-</b></p>
+                <p>Username/Slug: <b id="success-slug">-</b></p>
+                <p>Password: <b id="success-pass">-</b></p>
+                <hr style="border: 1px solid rgba(184, 134, 11, 0.2); margin: 10px 0;">
+                <p>URL Undangan: <b id="success-url">-</b></p>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-primary" style="flex: 1; justify-content: center;" id="btn-copy-info">
+                    <i class="fas fa-copy"></i> SALIN INFO
+                </button>
+                <button class="btn-primary" style="flex: 1; justify-content: center; background: #444;" onclick="document.getElementById('modal-success').style.display='none'">
+                    TUTUP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Edit Klien -->
+    <div id="modal-theme" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); justify-content: center; align-items: center; z-index: 1000000;">
+        <div class="modal-content" style="max-width: 420px; padding: 35px; border: 1px solid var(--primary); background: #1a120b; border-radius: 20px;">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <div style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <h2 style="font-family: 'Cinzel Decorative', cursive; color: var(--primary); margin: 0 0 5px;">Edit Akun Klien</h2>
+                <p style="color: #aaa; font-size: 0.85rem; margin: 0;">Ubah pengaturan untuk klien: <b id="edit-client-slug" style="color: var(--primary); font-family: monospace;">-</b></p>
+            </div>
+            
+            <div class="input-group" style="text-align: left; margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 8px;">Password Baru</label>
+                <input type="text" id="edit-client-pass" placeholder="Password Klien" style="margin-bottom: 0;">
+            </div>
+
+            <div class="input-group" style="text-align: left; margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 8px;">Pilih Desain Tema</label>
+                <div id="theme-select-wrapper-admin"></div>
+            </div>
+
+            <div class="input-group" style="text-align: left; margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 8px;">Perpanjang Masa Aktif</label>
+                <div class="custom-select" id="edit-expiry-wrapper">
+                    <div class="select-trigger" data-value="keep">
+                        <span>Jangan Ubah (Tetap)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="select-options" style="max-height: 200px; overflow-y: auto;">
+                        <div class="option active" data-value="keep">Jangan Ubah (Tetap)</div>
+                        <div class="option" data-value="1">Mulai Ulang: 1 Hari (Testing)</div>
+                        <div class="option" data-value="7">Mulai Ulang: 7 Hari (Trial)</div>
+                        <div class="option" data-value="30">Mulai Ulang: 30 Hari (1 Bulan)</div>
+                        <div class="option" data-value="60">Mulai Ulang: 60 Hari (2 Bulan)</div>
+                        <div class="option" data-value="90">Mulai Ulang: 90 Hari (3 Bulan)</div>
+                        <div class="option" data-value="180">Mulai Ulang: 180 Hari (6 Bulan)</div>
+                        <div class="option" data-value="365">Mulai Ulang: 365 Hari (1 Tahun)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 15px; margin-top: 25px;">
+                <button id="btn-save-theme" class="btn-primary" style="flex: 2; justify-content: center;">SIMPAN PERUBAHAN</button>
+                <button class="btn-primary" style="flex: 1; justify-content: center; background: #444; border-color: #555;" onclick="document.getElementById('modal-theme').style.display='none'">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Konfirmasi Premium -->
+    <div id="modal-confirm" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; z-index: 1000000;">
+        <div class="modal-content confirm-card" style="text-align: center; max-width: 400px; padding: 40px; border: 1px solid var(--primary); background: #1a120b; border-radius: 20px;">
+            <div id="confirm-icon-wrapper" style="font-size: 3.5rem; color: #e74c3c; margin-bottom: 20px;">
+                <i id="confirm-icon-i" class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 id="confirm-title" style="color: var(--primary); margin: 0 0 10px; font-family: 'Cinzel Decorative', cursive;">Konfirmasi</h2>
+            <p id="confirm-message" style="color: #aaa; margin-bottom: 30px;">Apakah Anda yakin?</p>
+            
+            <div style="display: flex; gap: 15px;">
+                <button id="btn-confirm-action" class="btn-primary" style="flex: 1; justify-content: center; background: #e74c3c; border-color: #e74c3c;">YA, LANJUTKAN</button>
+                <button class="btn-primary" style="flex: 1; justify-content: center; background: #444; border-color: #555;" onclick="document.getElementById('modal-confirm').style.display='none'">
+                    BATAL
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Verifikasi Password (Custom Prompt Premium) -->
+    <div id="modal-auth" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 100000;">
+        <div class="modal-content" style="text-align: center; max-width: 400px; padding: 40px; border: 1px solid var(--primary);">
+            <div style="font-size: 3.5rem; color: var(--primary); margin-bottom: 20px;">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <h2 style="color: var(--primary); margin: 0 0 10px; font-family: 'Cinzel Decorative', cursive;">Verifikasi Admin</h2>
+            <p style="color: #aaa; margin-bottom: 30px;">Masukkan Master Password untuk menyimpan perubahan brand.</p>
+            
+            <div style="margin-bottom: 30px;">
+                <input type="password" id="auth-pass" placeholder="••••••••" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(184, 134, 11, 0.3); background: rgba(255,255,255,0.05); color: #fff; text-align: center; font-size: 1.5rem; letter-spacing: 5px;">
+            </div>
+
+            <div style="display: flex; gap: 15px;">
+                <button id="btn-auth-cancel" class="btn-primary" style="flex: 1; background: #444; justify-content: center;">BATAL</button>
+                <button id="btn-auth-confirm" class="btn-primary" style="flex: 1; justify-content: center;">VERIFIKASI</button>
+            </div>
+        </div>
+    </div>
+    <!-- SUPABASE & SCRIPTS (PRO MODULES) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="/supabase-config.js"></script>
+    <script type="module" src="/config.js"></script>
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

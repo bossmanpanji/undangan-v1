@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+
+    <!-- Meta Tags for Social Media (Open Graph & Twitter) -->
+    <meta name="description" content="Tanpa mengurangi rasa hormat, kami bermaksud mengundang Bapak/Ibu/Saudara/i untuk hadir dan memberikan doa restu pada acara pernikahan kami.">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Undangan Pernikahan Digital">
+    <meta property="og:description" content="Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di hari bahagia kami.">
+    <meta property="og:image" content="https://i.ibb.co.com/gZpZ6Q7/default-thumbnail.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Undangan Pernikahan Digital">
+    <meta property="twitter:description" content="Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di hari bahagia kami.">
+    <meta property="twitter:image" content="https://i.ibb.co.com/gZpZ6Q7/default-thumbnail.jpg">
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Premium Error Overlay Styles */
+        #error-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1a120b; z-index: 100000; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 30px; color: #fff;
+            background-image: linear-gradient(rgba(26, 18, 11, 0.95), rgba(26, 18, 11, 0.95)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%23b8860b' fill-opacity='0.05'/%3E%3C/svg%3E");
+        }
+        .error-card {
+            max-width: 500px; padding: 50px; border-radius: 25px;
+            border: 2px solid #b8860b; background: rgba(45, 30, 18, 0.5);
+            backdrop-filter: blur(15px); box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            animation: fadeIn 0.8s ease-out;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .error-card i { font-size: 4rem; color: #b8860b; margin-bottom: 30px; }
+        .error-card h1 { font-family: 'Cinzel Decorative', cursive; color: #b8860b; font-size: 1.8rem; margin: 0 0 15px; }
+        .error-card p { color: #aaa; font-size: 1rem; line-height: 1.6; margin-bottom: 30px; }
+        .btn-home {
+            display: inline-block; padding: 15px 35px; background: #b8860b;
+            color: #1a120b; text-decoration: none; border-radius: 50px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-home:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(184, 134, 11, 0.4); }
+
+    </style>
+</head>
+
+<body>
+    <!-- Premium Error Overlay -->
+    <div id="error-overlay">
+        <div class="error-card">
+            <i class="fas fa-crown"></i>
+            <h1 id="error-title">Oops! Maaf</h1>
+            <p id="error-desc">Halaman undangan tidak ditemukan atau link yang Anda gunakan sudah tidak berlaku. Silakan periksa kembali URL Anda.</p>
+            <a href="/" class="btn-home">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="background-music" loop>
+        <source src="" id="music-source" type="audio/mpeg">
+    </audio>
+
+    <!-- Overlay / Cover -->
+    <div id="overlay">
+        <div class="overlay-content" data-aos="fade-up">
+            <div class="frame-container">
+                <div class="main-frame">
+                    <img id="overlay-couple-image" src="" alt="Couple" class="overlay-img">
+                </div>
+                <div class="couple-names-mini">
+                    <span id="groom-name-mini">Groom</span> & <span id="bride-name-mini">Bride</span>
+                </div>
+            </div>
+            <p class="invite-text">Kepada YTH,</p>
+            <h2 id="guest-name">Nama Tamu</h2>
+            <p>Kami mengundang Anda ke acara pernikahan kami.</p>
+            <button id="btn-open-invitation" class="btn-premium">
+                <i class="fas fa-envelope-open"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden Initially) -->
+    <main id="main-content" style="display: none;">
+        <div id="particles-js"></div>
+
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="corner-ornament top-left"></div>
+            <div class="corner-ornament top-right"></div>
+            <div class="corner-ornament bottom-left"></div>
+            <div class="corner-ornament bottom-right"></div>
+            <div class="container hero-container" data-aos="zoom-in">
+                <p class="subtitle">The Wedding of</p>
+                <h1 class="couple-names"><span id="groom-name">John</span> & <span id="bride-name">Jane</span></h1>
+                <p id="wedding-date-hero">Sabtu, 20 Mei 2026</p>
+            </div>
+        </section>
+
+        <!-- Quote Section -->
+        <section id="quote" class="section-padding">
+            <div class="container" data-aos="fade-up">
+                <i class="fas fa-quote-left quote-icon"></i>
+                <p id="quote-text" class="quote-text"></p>
+                <i class="fas fa-quote-right quote-icon"></i>
+            </div>
+            <div class="javanese-divider"></div>
+        </section>
+
+        <!-- Couple Section -->
+        <section id="couple" class="section-padding">
+            <div class="container">
+                <div class="couple-card" data-aos="fade-right" data-aos-duration="1200">
+                    <div class="couple-img-container">
+                        <img id="groom-image" src="" alt="Groom">
+                    </div>
+                    <h3 id="groom-fullname"></h3>
+                    <p id="groom-parents"></p>
+                    <a id="groom-ig" href="#" class="ig-link"><i class="fab fa-instagram"></i> <span></span></a>
+                </div>
+
+                <div class="ampersand" data-aos="zoom-in" data-aos-delay="500" data-aos-duration="1000">&</div>
+
+                <div class="couple-card" data-aos="fade-left" data-aos-duration="1200">
+                    <div class="couple-img-container">
+                        <img id="bride-image" src="" alt="Bride">
+                    </div>
+                    <h3 id="bride-fullname"></h3>
+                    <p id="bride-parents"></p>
+                    <a id="bride-ig" href="#" class="ig-link"><i class="fab fa-instagram"></i> <span></span></a>
+                </div>
+            </div>
+            <div class="javanese-divider"></div>
+        </section>
+
+        <!-- Love Story Section -->
+        <section id="story" class="section-padding bg-light" style="display: none;">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Cerita Cinta Kami</h2>
+                <div class="timeline" id="story-timeline">
+                    <!-- Stories will be injected here -->
+                </div>
+            </div>
+            <div class="javanese-divider"></div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section id="countdown-section" class="section-padding bg-light">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Menuju Hari Bahagia</h2>
+                <div id="countdown" class="countdown-wrapper">
+                    <div class="countdown-item">
+                        <span id="days" class="number">00</span>
+                        <span class="label">Hari</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="hours" class="number">00</span>
+                        <span class="label">Jam</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="minutes" class="number">00</span>
+                        <span class="label">Menit</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="seconds" class="number">00</span>
+                        <span class="label">Detik</span>
+                    </div>
+                </div>
+                <div id="calendar-btn-container" style="display: none; margin-top: 30px;">
+                    <a id="google-calendar-link" href="#" target="_blank" class="btn-premium btn-small">
+                        <i class="far fa-calendar-plus"></i> Simpan di Kalender
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section-padding bg-light">
+            <div class="container" id="events-container">
+                <!-- Event cards will be injected here -->
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="section-padding" style="display: none;">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Galeri Kenangan</h2>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Gallery items will be injected here -->
+                </div>
+            </div>
+        </section>
+        <!-- Video Section -->
+        <section id="video" class="section-padding bg-light" style="display: none;">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Video Kebahagiaan</h2>
+                <div class="video-container"
+                    style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 800px; margin: 0 auto; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                    <iframe id="youtube-video" src=""
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gifts Section -->
+        <section id="gifts" class="section-padding" style="display: none;">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Kado Digital</h2>
+                <p class="section-desc">Doa restu Anda merupakan karunia terindah bagi kami. Namun jika ingin memberikan
+                    tanda kasih, Anda dapat melalui:</p>
+                <div class="gifts-grid" id="gifts-grid">
+                    <!-- Gift cards will be injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP / Digital Guestbook Section -->
+        <section id="rsvp" class="section-padding bg-light" style="display: none;">
+            <div class="container" data-aos="fade-up">
+                <h2 class="section-title">Buku Tamu Digital</h2>
+                <p>Kirimkan doa restu dan ucapan selamat Anda untuk kedua mempelai.</p>
+                
+                <div class="rsvp-container">
+                    <!-- Form Input -->
+                    <div class="rsvp-form-card">
+                        <div class="form-group">
+                            <label>Nama Anda</label>
+                            <input type="text" id="wish-name" placeholder="Masukkan nama lengkap Anda">
+                        </div>
+                        <div class="form-group">
+                            <label>Konfirmasi Kehadiran</label>
+                            <select id="wish-attendance">
+                                <option value="Hadir">Hadir</option>
+                                <option value="Tidak Hadir">Tidak Hadir</option>
+                                <option value="Masih Ragu">Masih Ragu</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ucapan & Doa</label>
+                            <textarea id="wish-message" rows="4" placeholder="Tulis doa atau ucapan Anda..."></textarea>
+                        </div>
+                        <button id="btn-send-wish" class="btn-premium">
+                            <i class="fas fa-paper-plane"></i> Kirim Ucapan & RSVP
+                        </button>
+                    </div>
+
+                    <!-- Wishes Display Wall -->
+                    <div class="wishes-wall" id="wishes-wall">
+                        <!-- Wishes will be loaded here -->
+                        <div class="loading-wishes">Memuat ucapan...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="section-padding">
+            <div class="container" data-aos="fade-up">
+                <p>Terima Kasih Atas Doa Restu Anda</p>
+                <h2 class="couple-names-footer"><span id="groom-name-footer">John</span> & <span
+                        id="bride-name-footer">Jane</span></h2>
+                <!-- Footer branding removed -->
+            </div>
+        </footer>
+
+    </main>
+
+    <!-- Floating Music Control -->
+    <div id="music-control" style="display: none;">
+        <button id="btn-music" class="music-btn pulse">
+            <i class="fas fa-pause"></i>
+        </button>
+    </div>
+
+    <!-- Floating Navbar (Toolbar) -->
+    <nav class="bottom-nav" id="bottom-nav" style="display: none;">
+        <a href="#hero" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </a>
+        <a href="#couple" class="nav-item">
+            <i class="fas fa-heart"></i>
+            <span>Mempelai</span>
+        </a>
+        <a href="#events" class="nav-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Acara</span>
+        </a>
+        <a href="#gallery" class="nav-item">
+            <i class="fas fa-images"></i>
+            <span>Galeri</span>
+        </a>
+        <a href="#gifts" class="nav-item">
+            <i class="fas fa-gift"></i>
+            <span>Kado</span>
+        </a>
+    </nav>
+
+    <!-- Background Music -->
+    <audio id="background-music" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Particles.js (Optional, but adds premium feel) -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="/supabase-config.js"></script>
+    <script type="module" src="/config.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

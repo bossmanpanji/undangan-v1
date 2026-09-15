@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Panel</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b8860b;
+            --bg: #1a120b;
+            --card: rgba(45, 30, 18, 0.6);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: white;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-image: radial-gradient(circle at center, #2d1e12 0%, #1a120b 100%);
+        }
+        .login-card {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background: var(--card);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            text-align: center;
+            animation: slideUp 0.8s ease-out;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .logo { font-family: 'Cinzel Decorative', cursive; color: var(--primary); font-size: 1.5rem; margin-bottom: 10px; }
+        h1 { font-size: 1.2rem; font-weight: 300; color: #ccc; margin-bottom: 30px; letter-spacing: 2px; }
+
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group label { display: block; font-size: 0.8rem; color: var(--primary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #666; }
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            transition: 0.3s;
+        }
+        .input-wrapper input:focus { border-color: var(--primary); background: rgba(255,255,255,0.1); }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: #1a120b;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-login:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(184, 134, 11, 0.3); }
+        .btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .back-link { display: inline-block; margin-top: 25px; color: #666; text-decoration: none; font-size: 0.85rem; transition: 0.3s; }
+        .back-link:hover { color: var(--primary); }
+
+        #notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 380px;
+            width: calc(100% - 40px);
+        }
+        .toast-notification {
+            background: rgba(28, 20, 14, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(184, 134, 11, 0.25);
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transform: translateX(120%);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .toast-notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        .toast-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .toast-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            text-align: left;
+        }
+        .toast-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #ffffff;
+            letter-spacing: 0.3px;
+        }
+        .toast-message {
+            font-size: 0.85rem;
+            color: #d1c7bd;
+            line-height: 1.4;
+        }
+        .toast-notification.success {
+            border-left: 4px solid #2ecc71;
+            border-color: rgba(46, 204, 113, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(46, 204, 113, 0.1);
+        }
+        .toast-notification.success .toast-icon {
+            color: #2ecc71;
+            background: rgba(46, 204, 113, 0.15);
+        }
+        .toast-notification.error {
+            border-left: 4px solid #e74c3c;
+            border-color: rgba(231, 76, 60, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(231, 76, 60, 0.15);
+        }
+        .toast-notification.error .toast-icon {
+            color: #e74c3c;
+            background: rgba(231, 76, 60, 0.15);
+        }
+        .toast-notification.info {
+            border-left: 4px solid #3498db;
+            border-color: rgba(52, 152, 219, 0.25);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(52, 152, 219, 0.1);
+        }
+        .toast-notification.info .toast-icon {
+            color: #3498db;
+            background: rgba(52, 152, 219, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <div class="logo"></div>
+        <h1>ACCESS PANEL</h1>
+
+        <form id="login-form">
+            <div class="input-group">
+                <label>Email atau Username</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" placeholder="Masukkan Email atau Slug" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Masukkan Password" required>
+                </div>
+            </div>
+            <button type="submit" class="btn-login" id="btn-submit">MASUK SEKARANG</button>
+        </form>
+
+        <a href="#" id="btn-back-home" class="back-link"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+    </div>
+
+    <div id="notification-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script type="module" src="/supabase-config.js"></script>
+    <script type="module" src="login.js"></script>
+</body>
+</html>

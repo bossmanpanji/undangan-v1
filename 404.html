@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Tidak Ditemukan</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #b8860b;
+            --bg: #1a120b;
+            --card: rgba(45, 30, 18, 0.6);
+        }
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg);
+            background-image: linear-gradient(rgba(26, 18, 11, 0.95), rgba(26, 18, 11, 0.95)), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 30-30 30L0 30z' fill='%23b8860b' fill-opacity='0.05'/%3E%3C/svg%3E");
+            color: #fff;
+            font-family: 'Crimson Text', serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0; /* Sembunyikan awal agar tidak berkedip */
+            transition: opacity 0.3s;
+        }
+        body.ready { opacity: 1; }
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            z-index: 100;
+        }
+        .error-card {
+            max-width: 500px;
+            width: 90%;
+            padding: 60px 40px;
+            background: var(--card);
+            border-radius: 30px;
+            border: 2px solid var(--primary);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.8);
+            animation: slideUp 0.8s ease-out;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .icon-box {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 15px rgba(184, 134, 11, 0.3));
+        }
+        h1 {
+            font-family: 'Cinzel Decorative', cursive;
+            color: var(--primary);
+            font-size: 2rem;
+            margin: 0 0 20px;
+            letter-spacing: 2px;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        .btn-home {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--primary);
+            color: var(--bg);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(184, 134, 11, 0.3);
+        }
+        .btn-home:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(184, 134, 11, 0.5);
+            background: #d4af37;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loader">
+        <i class="fas fa-crown fa-spin" style="font-size: 3rem; color: var(--primary); margin-bottom: 20px;"></i>
+        <h2 style="font-family: 'Cinzel Decorative', cursive; color: var(--primary);">Memuat Undangan...</h2>
+    </div>
+    <div class="error-card">
+        <div class="icon-box">
+            <i class="fas fa-crown"></i>
+        </div>
+        <h1>Undangan Tidak Ditemukan</h1>
+        <p>Mohon maaf, sepertinya link yang Anda tuju tidak terdaftar atau telah kedaluwarsa. Silakan periksa kembali alamat URL Anda.</p>
+        <a href="/" class="btn-home">Kembali ke Beranda</a>
+    </div>
+    <script>
+        // Redirect semua 404 ke Halaman Utama (Katalog)
+        window.location.href = "/";
+    </script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <script>
+        if (window.location.hostname.startsWith('app.')) {
+            document.documentElement.style.display = 'none';
+        }
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <meta name="description"
+        content="Buat undangan pernikahan digital premium dengan desain elegan, RSVP otomatis, galeri foto, dan musik latar. Mulai dari Rp99.000.">
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23b8860b' d='M512 128l-81 126L311 96l-55 80-55-80L80 254l-80-126v256h512V128z'/%3E%3C/svg%3E">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="/landing/landing.css">
+</head>
+
+<body>
+
+    <!-- Particles -->
+    <div id="particles-js" style="position:fixed;width:100%;height:100%;top:0;left:0;z-index:0;pointer-events:none;">
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="lp-navbar" id="lp-navbar">
+        <a href="/" class="brand" id="navbar-brand"></a>
+        <div class="nav-actions">
+            <a href="#katalog" class="btn-nav btn-nav-outline" style="display:none;" id="nav-katalog-btn">Katalog</a>
+            <a href="/login/" class="btn-nav btn-nav-outline"><i class="fas fa-sign-in-alt"></i> Masuk</a>
+        </div>
+    </nav>
+
+    <!-- ====== HERO ====== -->
+    <section class="lp-hero" id="hero">
+        <div data-aos="fade-up" data-aos-duration="1200" style="position:relative;z-index:2;">
+            <div class="hero-badge">
+                <i class="fas fa-crown"></i> Premium Wedding Service
+            </div>
+            <h1 class="hero-title" id="landing-brand-title"></h1>
+            <p class="hero-subtitle">
+                Wujudkan undangan pernikahan digital yang elegan, modern, dan berkesan — dalam hitungan menit.
+            </p>
+            <div class="hero-cta-group">
+                <a href="#katalog" class="btn-cta btn-cta-primary">
+                    <i class="fas fa-palette"></i> Lihat Koleksi Tema
+                </a>
+                <a href="#cara-kerja" class="btn-cta btn-cta-ghost">
+                    <i class="fas fa-play-circle"></i> Cara Kerjanya
+                </a>
+            </div>
+            <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                <div class="hero-stat">
+                    <span class="number" id="stat-clients">500+</span>
+                    <span class="label">Undangan Dibuat</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="number">3</span>
+                    <span class="label">Pilihan Tema</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="number">24jam</span>
+                    <span class="label">Proses Cepat</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- ====== FEATURES ====== -->
+    <section class="lp-section" id="fitur">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-label">Fitur Unggulan</p>
+            <h2 class="section-title">Semua yang Anda Butuhkan</h2>
+            <p class="section-desc">Setiap undangan dilengkapi fitur lengkap untuk pengalaman tamu yang tak terlupakan.
+            </p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                <h3>RSVP Digital</h3>
+                <p>Konfirmasi kehadiran tamu secara otomatis tanpa ribet.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-music"></i></div>
+                <h3>Musik Latar</h3>
+                <p>Tambahkan lagu romantis favorit sebagai pengiring undangan.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-images"></i></div>
+                <h3>Galeri Foto</h3>
+                <p>Tampilkan momen terbaik dalam galeri foto yang elegan.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fas fa-heart"></i></div>
+                <h3>Love Story</h3>
+                <p>Ceritakan perjalanan cinta Anda dengan timeline interaktif.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon"><i class="fas fa-gift"></i></div>
+                <h3>Amplop Digital</h3>
+                <p>Terima hadiah & transfer langsung dari tamu undangan.</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                <div class="feature-icon"><i class="fas fa-globe"></i></div>
+                <h3>Custom Domain</h3>
+                <p>URL undangan eksklusif dengan nama mempelai sendiri.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== KATALOG TEMA ====== -->
+    <section class="lp-section" id="katalog">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-label">Koleksi Tema</p>
+            <h2 class="section-title">Pilih Desain Impian Anda</h2>
+            <p class="section-desc">Setiap tema dirancang dengan detail tinggi untuk mencerminkan keindahan hari bahagia
+                Anda.</p>
+        </div>
+        <div class="themes-grid" id="theme-grid-container">
+
+            <!-- Royal Gold -->
+            <div class="theme-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="theme-preview theme-preview-royal">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <img src="/assets/images/preview-royal-gold.png" alt="Royal Gold Preview">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h3 class="theme-name" style="color:#b8860b;">Royal Gold</h3>
+                    <div class="theme-price-wrapper" data-theme-id="royal-gold" style="display:none;"></div>
+                    <p class="theme-desc">Desain mewah dengan nuansa emas klasik yang memancarkan kesan elegan dan
+                        timeless.</p>
+                    <div class="theme-actions">
+                        <a href="/themes/v1/index.html?u=demo" class="btn-theme btn-theme-demo"><i
+                                 class="fas fa-eye"></i> Demo</a>
+                        <button class="btn-theme btn-theme-order btn-open-order" data-theme-name="Royal Gold"><i
+                                 class="fab fa-whatsapp"></i> Pesan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floral Light -->
+            <div class="theme-card" data-aos="fade-up" data-aos-delay="150">
+                <div class="theme-preview theme-preview-floral">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <img src="/assets/images/preview-floral-light.png" alt="Floral Light Preview">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h3 class="theme-name" style="color:#d4a373;">Floral Light</h3>
+                    <div class="theme-price-wrapper" data-theme-id="floral-light" style="display:none;"></div>
+                    <p class="theme-desc">Nuansa hangat dengan sentuhan floral dan palet warna lembut yang romantis.</p>
+                    <div class="theme-actions">
+                        <a href="/themes/v1/index.html?u=demo2" class="btn-theme btn-theme-demo"><i
+                                 class="fas fa-eye"></i> Demo</a>
+                        <button class="btn-theme btn-theme-order btn-open-order" data-theme-name="Floral Light"><i
+                                 class="fab fa-whatsapp"></i> Pesan</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Midnight Dark -->
+            <div class="theme-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="theme-preview theme-preview-midnight">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <img src="/assets/images/preview-midnight-dark.png" alt="Midnight Dark Preview">
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h3 class="theme-name" style="color:#3a8fb7;">Midnight Dark</h3>
+                    <div class="theme-price-wrapper" data-theme-id="midnight-dark" style="display:none;"></div>
+                    <p class="theme-desc">Tampilan modern dan sleek dengan nuansa gelap biru yang sophisticated.</p>
+                    <div class="theme-actions">
+                        <a href="/themes/v1/index.html?u=demo3" class="btn-theme btn-theme-demo"><i
+                                 class="fas fa-eye"></i> Demo</a>
+                        <button class="btn-theme btn-theme-order btn-open-order" data-theme-name="Midnight Dark"><i
+                                 class="fab fa-whatsapp"></i> Pesan</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ====== CARA KERJA ====== -->
+    <section class="lp-section" id="cara-kerja">
+        <div class="section-header" data-aos="fade-up">
+            <p class="section-label">Cara Kerja</p>
+            <h2 class="section-title">3 Langkah Mudah</h2>
+            <p class="section-desc">Undangan digital Anda siap dalam waktu singkat tanpa proses yang rumit.</p>
+        </div>
+        <div class="steps-container">
+            <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+                <div class="step-number">01</div>
+                <h3>Pilih Tema</h3>
+                <p>Pilih desain undangan yang paling mencerminkan gaya Anda dari koleksi kami.</p>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="step-number">02</div>
+                <h3>Isi Data</h3>
+                <p>Masukkan informasi mempelai, acara, galeri foto, dan detail lainnya melalui panel editor.</p>
+            </div>
+            <div class="step-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="step-number">03</div>
+                <h3>Bagikan</h3>
+                <p>Undangan Anda siap! Bagikan link eksklusif ke seluruh tamu via WhatsApp.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== CTA FINAL ====== -->
+    <section class="lp-cta-section" id="cta-final">
+        <div data-aos="fade-up">
+            <h2 class="cta-title">Siap Membuat Undangan Impian?</h2>
+            <p class="cta-desc">Hubungi kami sekarang dan wujudkan undangan pernikahan digital yang tak terlupakan.</p>
+            <button class="btn-cta btn-cta-primary btn-open-order" data-theme-name="">
+                <i class="fab fa-whatsapp"></i> Pesan Sekarang
+            </button>
+        </div>
+    </section>
+
+    <!-- ORDER MODAL -->
+    <div class="order-modal-overlay" id="order-modal" style="display:none;">
+        <div class="order-modal">
+            <button class="order-modal-close" id="order-modal-close">&times;</button>
+            <div class="order-modal-header">
+                <h2>Form Pemesanan</h2>
+                <p>Lengkapi data di bawah untuk memesan tema ini.</p>
+            </div>
+            <form id="order-form">
+                <div class="order-field">
+                    <label>Nama Anda (Pria-Wanita) <span style="color:#e74c3c;">*</span></label>
+                    <input type="text" id="order-name" placeholder="Contoh: ozy-zelda" required pattern="^[a-zA-Z]+-[a-zA-Z]+$">
+                </div>
+                <div class="order-field">
+                    <label>Tema Undangan</label>
+                    <select id="order-theme-select" style="display: none;">
+                        <option value="royal-gold">Royal Gold</option>
+                        <option value="floral-light">Floral Light</option>
+                        <option value="midnight-dark">Midnight Dark</option>
+                    </select>
+                    <div class="custom-select" id="order-theme-custom-select">
+                        <div class="custom-select-trigger" data-value="royal-gold">
+                            <span>Royal Gold</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="custom-options">
+                            <div class="custom-option active" data-value="royal-gold">Royal Gold</div>
+                            <div class="custom-option" data-value="floral-light">Floral Light</div>
+                            <div class="custom-option" data-value="midnight-dark">Midnight Dark</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="order-theme-id">
+                </div>
+                <div class="order-field">
+                    <label>Durasi Aktif <span style="color:#e74c3c;">*</span></label>
+                    <div class="durations-grid">
+                        <label class="dur-label">
+                            <input type="radio" name="order-dur" value="1"> 1 Bln
+                        </label>
+                        <label class="dur-label">
+                            <input type="radio" name="order-dur" value="2"> 2 Bln
+                        </label>
+                        <label class="dur-label">
+                            <input type="radio" name="order-dur" value="3" checked> 3 Bln
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" id="btn-order-submit">
+                    PESAN SEKARANG <i class="fab fa-whatsapp"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .order-modal { 
+            background: #1a120b; 
+            border: 1px solid rgba(184, 134, 11, 0.3); 
+            border-radius: 24px; 
+            padding: 35px; 
+            width: 100%;
+            max-width: 450px; 
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+        .order-modal-header h2 { 
+            font-family: 'Cinzel Decorative', cursive; 
+            color: #b8860b; 
+            font-size: 1.4rem; 
+            margin: 0 0 10px 0; 
+            letter-spacing: 2px; 
+        }
+        .order-modal-header p { 
+            color: #aaa; 
+            font-size: 0.9rem; 
+            margin-bottom: 25px; 
+        }
+        
+        .order-field {
+            margin-bottom: 20px;
+        }
+        .order-field label { 
+            display: block; 
+            color: #fff; 
+            font-size: 0.85rem; 
+            margin-bottom: 8px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        
+        #order-name { 
+            width: 100%; 
+            padding: 14px; 
+            background: rgba(255, 255, 255, 0.05); 
+            border: 1px solid rgba(184, 134, 11, 0.2); 
+            border-radius: 12px; 
+            color: #fff; 
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+        #order-name:focus {
+            outline: none;
+            border-color: #b8860b;
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Custom Select Styling */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            user-select: none;
+        }
+        .custom-select-trigger {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            padding: 14px 20px;
+            border-radius: 12px;
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+        .custom-select-trigger:hover {
+            border-color: #b8860b;
+            background: rgba(184, 134, 11, 0.08);
+        }
+        .custom-select.open .custom-select-trigger {
+            border-color: #b8860b;
+            box-shadow: 0 0 15px rgba(184, 134, 11, 0.2);
+        }
+        .custom-select-trigger i {
+            transition: transform 0.3s ease;
+            color: #b8860b;
+        }
+        .custom-select.open .custom-select-trigger i {
+            transform: rotate(180deg);
+        }
+        .custom-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            background: #1a120b;
+            border: 1px solid rgba(184, 134, 11, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+        }
+        .custom-select.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        .custom-option {
+            padding: 14px 20px;
+            color: #ccc;
+            cursor: pointer;
+            transition: 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+        .custom-option:hover {
+            background: rgba(184, 134, 11, 0.1);
+            color: #b8860b;
+            padding-left: 25px;
+        }
+        .custom-option.active {
+            background: rgba(184, 134, 11, 0.2);
+            color: #b8860b;
+            font-weight: 700;
+        }
+        .custom-option.active::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            font-size: 0.8rem;
+        }
+        
+        .durations-grid {
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 10px;
+        }
+        .dur-label {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(184, 134, 11, 0.2);
+            padding: 12px 10px;
+            border-radius: 10px;
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: bold;
+            transition: 0.3s;
+            display: block;
+        }
+        .dur-label input[type="radio"] {
+            display: none;
+        }
+        .dur-label:has(input:checked) {
+            background: rgba(184, 134, 11, 0.2) !important;
+            border: 1px solid #b8860b !important;
+            color: #b8860b !important;
+        }
+        .dur-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        #btn-order-submit { 
+            width: 100%; 
+            padding: 16px; 
+            background: #b8860b !important; 
+            color: #1a120b !important; 
+            border: none !important; 
+            border-radius: 14px !important; 
+            font-weight: bold !important; 
+            cursor: pointer; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+            transition: 0.3s; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            margin-top: 25px;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        #btn-order-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(184, 134, 11, 0.4);
+        }
+        .order-modal-close { 
+            position: absolute; 
+            top: 20px; 
+            right: 20px; 
+            background: none; 
+            border: none; 
+            color: #fff; 
+            font-size: 24px; 
+            cursor: pointer; 
+            opacity: 0.6; 
+            transition: 0.3s;
+        }
+        .order-modal-close:hover {
+            opacity: 1;
+        }
+    </style>
+
+    <!-- FOOTER -->
+    <footer class="lp-footer">
+        <p>&copy; <span id="current-year">2026</span> <span id="brand-footer"></span> &bull; PREMIUM
+            SERVICE</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script type="module" src="/supabase-config.js"></script>
+    <script type="module" src="/landing/landing.js"></script>
+</body>
+
+</html>
