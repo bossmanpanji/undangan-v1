@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Jika belum ada slug (bukan via worker/query), deteksi dari subdomain atau path
     if (!slug) {
         const parts = hostname.split('.');
-        const isHostingPlatform = hostname.includes('vercel.app') || hostname.includes('pages.dev') || hostname.includes('netlify.app');
+        const isHostingPlatform = hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('run.app') || hostname.includes('webcontainer') || hostname.includes('aistudio') || hostname.includes('google') || hostname.includes('vercel.app') || hostname.includes('pages.dev') || hostname.includes('netlify.app');
         
         // Cek jika ini subdomain kustom (misal: budi.domain.com), BUKAN link bawaan Vercel/Pages
         if (parts.length > 2 && !isAppSubdomain && !isWwwSubdomain && !isHostingPlatform) {

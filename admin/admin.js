@@ -18,13 +18,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let hostname = window.location.hostname;
     if (hostname.startsWith('www.')) hostname = hostname.replace('www.', '');
     
-    if (!hostname.startsWith('app.') && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const isHostingPlatform = hostname === 'localhost' || 
+                              hostname === '127.0.0.1' || 
+                              hostname.includes('run.app') || 
+                              hostname.includes('webcontainer') || 
+                              hostname.includes('aistudio') || 
+                              hostname.includes('google') || 
+                              hostname.includes('vercel.app') || 
+                              hostname.includes('pages.dev') || 
+                              hostname.includes('netlify.app');
+
+    if (!isHostingPlatform && !hostname.startsWith('app.')) {
         window.location.href = `https://app.${hostname}${window.location.pathname}${window.location.search}`;
         return;
     }
 
     const rootDomain = hostname.replace('app.', '');
-    const homeUrl = (rootDomain === 'localhost' || rootDomain === '127.0.0.1') ? '/' : `https://${rootDomain}`;
+    const homeUrl = (isHostingPlatform || rootDomain === 'localhost' || rootDomain === '127.0.0.1') ? '/' : `https://${rootDomain}`;
     document.querySelectorAll('.brand-logo-link').forEach(link => link.href = homeUrl);
 
     const btnSaveSettings = document.getElementById('btn-save-settings');
@@ -263,8 +273,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const status = diffDays > expiryDays ? '<span class="badge" style="background:#ff4d4d">Expired</span>' : '<span class="badge" style="background:#2ecc71">Aktif</span>';
 
             let baseDomain = window.BASE_DOMAIN || hostname.replace('app.', '').replace('www.', '');
-            let previewUrl = `${window.location.protocol}//${item.slug}.${baseDomain}`;
-            if (hostname === 'localhost' || hostname === '127.0.0.1') previewUrl = `/${item.slug}`;
+            let previewUrl = (isHostingPlatform) ? `/themes/v1/index.html?u=${item.slug}` : `${window.location.protocol}//${item.slug}.${baseDomain}`;
+            if (hostname === 'localhost' || hostname === '127.0.0.1') previewUrl = `/themes/v1/index.html?u=${item.slug}`;
 
             const tr = document.createElement('tr');
             tr.innerHTML = `

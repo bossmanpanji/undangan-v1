@@ -3,14 +3,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     let hostname = window.location.hostname;
     if (hostname.startsWith('www.')) hostname = hostname.replace('www.', '');
     
-    if (!hostname.startsWith('app.') && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const isHostingPlatform = hostname === 'localhost' || 
+                              hostname === '127.0.0.1' || 
+                              hostname.includes('run.app') || 
+                              hostname.includes('webcontainer') || 
+                              hostname.includes('aistudio') || 
+                              hostname.includes('google') || 
+                              hostname.includes('vercel.app') || 
+                              hostname.includes('pages.dev') || 
+                              hostname.includes('netlify.app');
+
+    if (!isHostingPlatform && !hostname.startsWith('app.')) {
         window.location.href = `https://app.${hostname}${window.location.pathname}${window.location.search}`;
         return;
     }
 
     // Set logo links to root domain
     const rootDomain = hostname.replace('app.', '');
-    const homeUrl = (rootDomain === 'localhost' || rootDomain === '127.0.0.1') ? '/' : `https://${rootDomain}`;
+    const homeUrl = (isHostingPlatform || rootDomain === 'localhost' || rootDomain === '127.0.0.1') ? '/' : `https://${rootDomain}`;
     document.querySelectorAll('.brand-logo-link').forEach(link => link.href = homeUrl);
 
     // 0. INITIALIZATION
@@ -246,7 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // UPDATE PREVIEW LINKS WITH SUBDOMAIN (HYBRID ARCHITECTURE)
                     let baseDomainUrl = window.location.hostname.replace('app.', '');
-                    const previewUrl = `https://${currentSlug}.${baseDomainUrl}`;
+                    const previewUrl = (isHostingPlatform) ? `/themes/v1/index.html?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
                     const btnPreviewDesktop = document.getElementById('btn-preview-desktop');
                     const btnPreviewMobile = document.getElementById('btn-preview-mobile');
                     if (btnPreviewDesktop) btnPreviewDesktop.href = previewUrl;

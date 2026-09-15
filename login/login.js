@@ -8,7 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let hostname = window.location.hostname;
     if (hostname.startsWith('www.')) hostname = hostname.replace('www.', '');
     
-    if (!hostname.startsWith('app.') && hostname !== 'localhost' && hostname !== '127.0.0.1') {
+    const isHostingPlatform = hostname === 'localhost' || 
+                              hostname === '127.0.0.1' || 
+                              hostname.includes('run.app') || 
+                              hostname.includes('webcontainer') || 
+                              hostname.includes('aistudio') || 
+                              hostname.includes('google') || 
+                              hostname.includes('vercel.app') || 
+                              hostname.includes('pages.dev') || 
+                              hostname.includes('netlify.app');
+
+    if (!isHostingPlatform && !hostname.startsWith('app.')) {
         window.location.href = `https://app.${hostname}${window.location.pathname}${window.location.search}`;
         return;
     }
@@ -17,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBackHome = document.getElementById('btn-back-home');
     if (btnBackHome) {
         let root = hostname.replace('app.', '');
-        btnBackHome.href = (root === 'localhost' || root === '127.0.0.1') ? '/' : `https://${root}`;
+        btnBackHome.href = (isHostingPlatform || root === 'localhost' || root === '127.0.0.1') ? '/' : `https://${root}`;
     }
 
     const safeRedirect = (path) => {

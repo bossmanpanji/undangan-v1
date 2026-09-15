@@ -31,9 +31,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Global state
-let ownerWA = '';
-let themePricing = {};
-let bizName = '';
+let ownerWA = '6285716467666';
+let themePricing = {
+    'global': { '1': '99000', '2': '149000', '3': '199000', 'orig': '250000' },
+    'royal-gold': { '1': '99000', '2': '149000', '3': '199000', 'orig': '250000' },
+    'floral-light': { '1': '99000', '2': '149000', '3': '199000', 'orig': '250000' },
+    'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', 'orig': '250000' }
+};
+let bizName = 'SEJOLI';
 
 async function fetchBrandAndSettings() {
     try {
@@ -43,25 +48,25 @@ async function fetchBrandAndSettings() {
                 .select('key, value')
                 .in('key', ['business_name', 'owner_whatsapp', 'theme_pricing_json']);
 
-            if (data) {
+            if (data && data.length > 0) {
                 const s = {};
                 data.forEach(item => s[item.key] = item.value);
-                bizName = s.business_name || '';
-                ownerWA = s.owner_whatsapp || '';
+                if (s.business_name) bizName = s.business_name;
+                if (s.owner_whatsapp) ownerWA = s.owner_whatsapp;
 
                 if (s.theme_pricing_json) {
                     try {
                         themePricing = JSON.parse(s.theme_pricing_json);
                     } catch(e) {}
                 }
-                displayPricing();
-                // Pastikan harga di tombol modal ikut ter-update jika modal sedang terbuka
-                if (window.updateOrderPrice) window.updateOrderPrice();
             }
         }
     } catch (err) {
         console.error('Error fetching settings:', err);
     }
+
+    displayPricing();
+    if (window.updateOrderPrice) window.updateOrderPrice();
 
     const elements = {
         title: document.getElementById('landing-brand-title'),
@@ -71,7 +76,7 @@ async function fetchBrandAndSettings() {
     if (elements.title) elements.title.innerText = bizName;
     if (elements.navbar) elements.navbar.innerText = bizName;
     if (elements.footer) elements.footer.innerText = bizName.toUpperCase();
-    document.title = bizName;
+    document.title = `${bizName} - Undangan Digital`;
 }
 
 function displayPricing() {

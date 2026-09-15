@@ -1,0 +1,6 @@
+{
+  "name": "Undangan Digital",
+  "description": "Platform pembuatan dan penyedia undangan pernikahan digital elegan dengan pilihan tema, musik, RSVP, dan panel admin.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
