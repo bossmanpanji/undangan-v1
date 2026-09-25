@@ -273,8 +273,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const status = diffDays > expiryDays ? '<span class="badge" style="background:#ff4d4d">Expired</span>' : '<span class="badge" style="background:#2ecc71">Aktif</span>';
 
             let baseDomain = window.BASE_DOMAIN || hostname.replace('app.', '').replace('www.', '');
-            let previewUrl = (isHostingPlatform) ? `/themes/v1/index.html?u=${item.slug}` : `${window.location.protocol}//${item.slug}.${baseDomain}`;
-            if (hostname === 'localhost' || hostname === '127.0.0.1') previewUrl = `/themes/v1/index.html?u=${item.slug}`;
+            function getThemeUrl(t, s) {
+                if (t === 'heritage-series') return `/themes/heritage/index.html?u=${s}`;
+                if (t === 'modern-botanical') return `/themes/botanical/index.html?u=${s}`;
+                return `/themes/v1/index.html?u=${s}`;
+            }
+            let previewUrl = (isHostingPlatform) ? getThemeUrl(theme, item.slug) : `${window.location.protocol}//${item.slug}.${baseDomain}`;
+            if (hostname === 'localhost' || hostname === '127.0.0.1') previewUrl = getThemeUrl(theme, item.slug);
 
             const tr = document.createElement('tr');
             tr.innerHTML = `
@@ -300,6 +305,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('stat-royal').innerText = data.filter(i => (i.config.theme || 'royal-gold') === 'royal-gold').length;
         document.getElementById('stat-floral').innerText = data.filter(i => i.config.theme === 'floral-light').length;
         document.getElementById('stat-midnight').innerText = data.filter(i => i.config.theme === 'midnight-dark').length;
+        const statHeritage = document.getElementById('stat-heritage');
+        if (statHeritage) statHeritage.innerText = data.filter(i => i.config.theme === 'heritage-series').length;
+        const statBotanical = document.getElementById('stat-botanical');
+        if (statBotanical) statBotanical.innerText = data.filter(i => i.config.theme === 'modern-botanical').length;
 
         const recentBody = document.getElementById('recent-clients-body');
         if (recentBody) {
@@ -443,7 +452,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const themes = [
             { name: 'Royal Gold (Mewah & Gelap)', val: 'royal-gold', icon: 'fas fa-crown' },
             { name: 'Floral Light (Romantis & Terang)', val: 'floral-light', icon: 'fas fa-leaf' },
-            { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' }
+            { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' },
+            { name: 'Heritage Series (Batik & Elegan)', val: 'heritage-series', icon: 'fas fa-landmark' },
+            { name: 'Modern Botanical (Sage Green & Alami)', val: 'modern-botanical', icon: 'fas fa-seedling' }
         ];
 
         wrapper.innerHTML = `
@@ -553,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const { data } = await window.supabaseClient.from('admin_settings').select('value').eq('key', 'theme_pricing_json').maybeSingle();
             if (data && data.value) themePricingData = JSON.parse(data.value);
-            const themes = [{ id: 'global', name: 'GLOBAL' }, { id: 'royal-gold', name: 'Royal Gold' }, { id: 'floral-light', name: 'Floral Light' }, { id: 'midnight-dark', name: 'Midnight Dark' }];
+            const themes = [{ id: 'global', name: 'GLOBAL' }, { id: 'royal-gold', name: 'Royal Gold' }, { id: 'floral-light', name: 'Floral Light' }, { id: 'midnight-dark', name: 'Midnight Dark' }, { id: 'heritage-series', name: 'Heritage Series' }, { id: 'modern-botanical', name: 'Modern Botanical' }];
             tbody.innerHTML = '';
             themes.forEach(t => {
                 const p = themePricingData[t.id] || {};

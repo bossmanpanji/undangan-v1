@@ -285,6 +285,12 @@ body {
 .theme-preview-midnight {
     background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0a1628 100%);
 }
+.theme-preview-heritage {
+    background: linear-gradient(135deg, #2C2A29 0%, #5C4A3D 50%, #2C2A29 100%);
+}
+.theme-preview-botanical {
+    background: linear-gradient(135deg, #E2E8E4 0%, #B8C7BE 50%, #8FA295 100%);
+}
 /* --- Phone Mockup Wrapper --- */
 .phone-mockup {
     width: 110px;
@@ -313,6 +319,14 @@ body {
 .theme-preview-midnight .phone-mockup {
     border-color: #122136;
     box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 10px rgba(58, 143, 183, 0.2);
+}
+.theme-preview-heritage .phone-mockup {
+    border-color: #B38B4D;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 10px rgba(179, 139, 77, 0.3);
+}
+.theme-preview-botanical .phone-mockup {
+    border-color: #9EACA2;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 10px rgba(158, 172, 162, 0.3);
 }
 
 /* Glass shine overlay */
@@ -359,6 +373,12 @@ body {
 .theme-card:hover .theme-preview-midnight .phone-mockup {
     box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(58, 143, 183, 0.5);
     border-color: #3a8fb7;
+}
+
+.theme-card:hover .theme-preview-botanical .phone-mockup {
+    box-shadow: 0 20px 40px rgba(47, 60, 51, 0.4), 0 0 20px rgba(158, 172, 162, 0.5);
+    border-color: #9EACA2;
+    transform: translateY(-6px) scale(1.05) rotate(-1deg);
 }
 
 /* Slight image zoom/pan effect on card hover */

@@ -1,8 +1,8 @@
 // Auto-generated Supabase Configuration & Fallback Mock Client
 console.log('🚀 ENV Configuration loading...');
-var SUPABASE_URL = "";
-var SUPABASE_ANON_KEY = "";
-var EDITOR_PASSWORD = "";
+var SUPABASE_URL = "https://vdlrpkjzeopxfdyluers.supabase.co";
+var SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkbHJwa2p6ZW9weGZkeWx1ZXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNDY3NjgsImV4cCI6MjEwNDkyMjc2OH0.qvZ4sCCHxVD9SGROz3VDnf8VZn5UFyw7gF8caH0WeOA";
+var EDITOR_PASSWORD = "*NjiYui2021*";
 
 function createMockSupabaseClient() {
     console.info('ℹ️ Using in-memory / localStorage Supabase Client for local preview.');
@@ -140,7 +140,8 @@ function createMockSupabaseClient() {
                 global: { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'royal-gold': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'floral-light': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
-                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
+                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
+                'heritage-series': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
             })}
         ]);
 
@@ -176,6 +177,14 @@ function createMockSupabaseClient() {
                 expiry_days: 365,
                 created_at: new Date().toISOString(),
                 config: { ...defaultWeddingConfig, theme: 'midnight-dark' }
+            },
+            {
+                id: 'inv-client-demo4',
+                slug: 'demo4',
+                password: 'demo',
+                expiry_days: 365,
+                created_at: new Date().toISOString(),
+                config: { ...defaultWeddingConfig, theme: 'heritage-series' }
             }
         ]);
 

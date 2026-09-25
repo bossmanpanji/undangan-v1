@@ -62,7 +62,12 @@ export default {
         const invitation = data && data.length > 0 ? data[0] : null;
 
         if (invitation) {
-          const vercelRes = await fetch(`https://${env.BASE_DOMAIN}/themes/v1/index.html`);
+          const clientTheme = invitation.config?.theme || 'royal-gold';
+          let themeFile = '/themes/v1/index.html';
+          if (clientTheme === 'heritage-series') themeFile = '/themes/heritage/index.html';
+          else if (clientTheme === 'modern-botanical') themeFile = '/themes/botanical/index.html';
+
+          const vercelRes = await fetch(`https://${env.BASE_DOMAIN}${themeFile}`);
           let html = await vercelRes.text();
 
           const config = invitation.config;

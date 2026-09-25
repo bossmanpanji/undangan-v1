@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 610" width="360" height="610">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2C2A29"/>
+      <stop offset="50%" stop-color="#3D352E"/>
+      <stop offset="100%" stop-color="#1A1817"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4AF37"/>
+      <stop offset="50%" stop-color="#B38B4D"/>
+      <stop offset="100%" stop-color="#8C6828"/>
+    </linearGradient>
+    <pattern id="batikDots" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="8" cy="8" r="1.2" fill="#B38B4D" opacity="0.25"/>
+      <circle cx="0" cy="0" r="0.8" fill="#B38B4D" opacity="0.15"/>
+      <circle cx="16" cy="16" r="0.8" fill="#B38B4D" opacity="0.15"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="360" height="610" fill="url(#bgGrad)"/>
+  <rect width="360" height="610" fill="url(#batikDots)"/>
+
+  <!-- Ornate Frame -->
+  <rect x="18" y="18" width="324" height="574" rx="8" fill="none" stroke="#B38B4D" stroke-width="1.5" stroke-opacity="0.6"/>
+  <rect x="24" y="24" width="312" height="562" rx="4" fill="none" stroke="#B38B4D" stroke-width="0.8" stroke-dasharray="4 2" stroke-opacity="0.4"/>
+
+  <!-- Corner Ornaments -->
+  <path d="M 14 36 L 14 14 L 36 14" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <path d="M 346 36 L 346 14 L 324 14" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <path d="M 14 574 L 14 596 L 36 596" fill="none" stroke="#D4AF37" stroke-width="2"/>
+  <path d="M 346 574 L 346 596 L 324 596" fill="none" stroke="#D4AF37" stroke-width="2"/>
+
+  <!-- Header Text -->
+  <text x="180" y="75" text-anchor="middle" font-family="'Cinzel', serif, Georgia" font-size="11" fill="#B38B4D" letter-spacing="4">THE WEDDING OF</text>
+
+  <!-- Decorative Line -->
+  <line x1="120" y1="92" x2="240" y2="92" stroke="#B38B4D" stroke-width="1" stroke-opacity="0.5"/>
+  <circle cx="180" cy="92" r="3" fill="#D4AF37"/>
+
+  <!-- Couple Photo Placeholder / Arch Frame -->
+  <g transform="translate(115, 115)">
+    <rect width="130" height="170" rx="65" fill="#1F1D1C" stroke="#B38B4D" stroke-width="2"/>
+    <circle cx="65" cy="65" r="38" fill="#5C4A3D" opacity="0.5"/>
+    <path d="M 35 150 C 35 110, 95 110, 95 150 Z" fill="#5C4A3D" opacity="0.6"/>
+    <!-- Small heart -->
+    <path d="M 65 55 C 65 48, 55 48, 55 57 C 55 64, 65 72, 65 72 C 65 72, 75 64, 75 57 C 75 48, 65 48, 65 55 Z" fill="#B38B4D"/>
+  </g>
+
+  <!-- Couple Names in Calligraphy Style -->
+  <text x="180" y="335" text-anchor="middle" font-family="'Great Vibes', cursive, 'Brush Script MT', Georgia" font-size="34" fill="url(#goldGrad)" font-weight="bold">Rama &amp; Shinta</text>
+
+  <!-- Date -->
+  <text x="180" y="372" text-anchor="middle" font-family="'Cinzel', serif, Georgia" font-size="13" fill="#FDFBF7" letter-spacing="3">15 . 08 . 2027</text>
+
+  <!-- Quote Box -->
+  <rect x="45" y="395" width="270" height="50" rx="8" fill="#5C4A3D" fill-opacity="0.3" stroke="#B38B4D" stroke-width="0.8" stroke-opacity="0.4"/>
+  <text x="180" y="416" text-anchor="middle" font-family="'Lato', sans-serif, Arial" font-size="9.5" fill="#E0D7CD" font-style="italic">"Sebuah ikatan suci yang terjalin</text>
+  <text x="180" y="432" text-anchor="middle" font-family="'Lato', sans-serif, Arial" font-size="9.5" fill="#E0D7CD" font-style="italic">dalam doa dan restu."</text>
+
+  <!-- Guest Invite Card -->
+  <rect x="65" y="465" width="230" height="55" rx="10" fill="#2C2A29" stroke="#B38B4D" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="180" y="485" text-anchor="middle" font-family="'Lato', sans-serif" font-size="9" fill="#A89F91" letter-spacing="1">KEPADA YTH.</text>
+  <text x="180" y="505" text-anchor="middle" font-family="'Cinzel', serif" font-size="12" fill="#D4AF37" font-weight="bold">Tamu Undangan</text>
+
+  <!-- Open Invitation Button -->
+  <g transform="translate(85, 538)">
+    <rect width="190" height="38" rx="19" fill="url(#goldGrad)" filter="drop-shadow(0 4px 8px rgba(0,0,0,0.5))"/>
+    <text x="95" y="24" text-anchor="middle" font-family="'Cinzel', serif" font-size="11" fill="#1A1817" font-weight="bold" letter-spacing="1">BUKA UNDANGAN</text>
+  </g>
+</svg>
