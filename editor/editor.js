@@ -256,14 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // UPDATE PREVIEW LINKS WITH SUBDOMAIN (HYBRID ARCHITECTURE)
                     let baseDomainUrl = window.location.hostname.replace('app.', '');
-                    const clientTheme = data?.config?.theme || 'royal-gold';
-                    let themePath = '/themes/v1/index.html';
-                    if (clientTheme === 'heritage-series') {
-                        themePath = '/themes/heritage/index.html';
-                    } else if (clientTheme === 'modern-botanical') {
-                        themePath = '/themes/botanical/index.html';
-                    }
-                    const previewUrl = (isHostingPlatform) ? `${themePath}?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
+                    const previewUrl = (isHostingPlatform) ? `/themes/v1/index.html?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
                     const btnPreviewDesktop = document.getElementById('btn-preview-desktop');
                     const btnPreviewMobile = document.getElementById('btn-preview-mobile');
                     if (btnPreviewDesktop) btnPreviewDesktop.href = previewUrl;
@@ -581,7 +574,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         return {
             ...currentConfig,
-            theme: document.querySelector('#theme-select-editor .custom-select-trigger')?.getAttribute('data-value') || currentConfig?.theme || 'royal-gold',
+            theme: document.querySelector('#theme-select-editor .custom-select-trigger')?.getAttribute('data-value') || 'royal-gold',
             couple: {
                 groom: {
                     name: document.getElementById('groom-name').value,
@@ -603,7 +596,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             events, stories, gifts,
             gallery: galleryUrls,
             quotes: document.getElementById('wedding-quotes').value,
-            youtubeUrl: document.getElementById('youtube-url').value.trim(),
+            youtubeUrl: document.getElementById('youtube-url').value,
             coverImage: document.getElementById('cover-photo-url').value,
             ogImage: document.getElementById('thumb-photo-url').value,
             music: document.getElementById('music-url').value
@@ -621,9 +614,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const themes = [
                 { name: 'Royal Gold (Mewah & Gelap)', val: 'royal-gold', icon: 'fas fa-crown' },
                 { name: 'Floral Light (Romantis & Terang)', val: 'floral-light', icon: 'fas fa-leaf' },
-                { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' },
-                { name: 'Heritage Series (Batik & Elegan)', val: 'heritage-series', icon: 'fas fa-landmark' },
-                { name: 'Modern Botanical (Sage Green & Alami)', val: 'modern-botanical', icon: 'fas fa-seedling' }
+                { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' }
             ];
             const currentTheme = config.theme || 'royal-gold';
             const themeObj = themes.find(t => t.val === currentTheme) || themes[0];
@@ -657,17 +648,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                     options.forEach(o => o.classList.remove('active'));
                     opt.classList.add('active');
                     select.classList.remove('open');
-
-                    // Dynamically update preview links if theme changed in editor
-                    let baseDomainUrl = window.location.hostname.replace('app.', '');
-                    let tPath = '/themes/v1/index.html';
-                    if (val === 'heritage-series') tPath = '/themes/heritage/index.html';
-                    else if (val === 'modern-botanical') tPath = '/themes/botanical/index.html';
-                    const newPreview = (isHostingPlatform) ? `${tPath}?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
-                    const bDesktop = document.getElementById('btn-preview-desktop');
-                    const bMobile = document.getElementById('btn-preview-mobile');
-                    if (bDesktop) bDesktop.href = newPreview;
-                    if (bMobile) bMobile.href = newPreview;
                 };
             });
 
@@ -703,7 +683,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('wedding-quotes').value = config.quotes || '';
         document.getElementById('youtube-url').value = config.youtubeUrl || '';
-        updateYoutubePreview();
         
         if (config.couple?.groom?.image) setPreview('groom-photo-preview', config.couple.groom.image);
         if (config.couple?.bride?.image) setPreview('bride-photo-preview', config.couple.bride.image);
@@ -729,58 +708,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         
         box.innerHTML = `<img src="${url}"><button type="button" class="remove-preview-btn" onclick="this.parentElement.style.display='none'; document.getElementById('${urlInputId}').value=''">×</button>`;
         box.style.display = 'block';
-    }
-
-    function updateYoutubePreview() {
-        const input = document.getElementById('youtube-url');
-        const wrapper = document.getElementById('youtube-preview-wrapper');
-        const iframe = document.getElementById('editor-youtube-iframe');
-        const clearBtn = document.getElementById('btn-clear-youtube');
-        if (!input) return;
-
-        const val = input.value.trim();
-        if (clearBtn) clearBtn.style.display = val ? 'block' : 'none';
-
-        if (!wrapper || !iframe) return;
-
-        let videoId = '';
-        if (val.includes('youtube.com/embed/')) {
-            videoId = val.split('youtube.com/embed/')[1].split(/[?&#]/)[0];
-        } else if (val.includes('youtube.com/shorts/')) {
-            videoId = val.split('youtube.com/shorts/')[1].split(/[?&#]/)[0];
-        } else if (val.includes('youtube.com/live/')) {
-            videoId = val.split('youtube.com/live/')[1].split(/[?&#]/)[0];
-        } else if (val.includes('v=')) {
-            videoId = val.split('v=')[1].split('&')[0];
-        } else if (val.includes('youtu.be/')) {
-            videoId = val.split('youtu.be/')[1].split(/[?&#]/)[0];
-        } else if (val.length === 11 && !val.includes('/') && !val.includes('.')) {
-            videoId = val;
-        }
-
-        if (videoId && videoId !== 'Contoh') {
-            iframe.src = `https://www.youtube.com/embed/${videoId}`;
-            wrapper.style.display = 'block';
-        } else {
-            iframe.src = '';
-            wrapper.style.display = 'none';
-        }
-    }
-
-    // Attach listeners for YouTube live preview in customer editor dashboard
-    const youtubeInput = document.getElementById('youtube-url');
-    const youtubeClearBtn = document.getElementById('btn-clear-youtube');
-    if (youtubeInput) {
-        youtubeInput.addEventListener('input', updateYoutubePreview);
-        youtubeInput.addEventListener('change', updateYoutubePreview);
-    }
-    if (youtubeClearBtn) {
-        youtubeClearBtn.onclick = () => {
-            if (youtubeInput) {
-                youtubeInput.value = '';
-                updateYoutubePreview();
-            }
-        };
     }
 
     editorForm.onsubmit = async (e) => {
@@ -980,7 +907,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const updatedConfig = {
                 ...currentConfig,
-                theme: document.querySelector('#theme-select-editor .custom-select-trigger')?.getAttribute('data-value') || currentConfig?.theme || 'royal-gold',
+                theme: document.querySelector('#theme-select-editor .custom-select-trigger')?.getAttribute('data-value') || 'royal-gold',
                 couple: {
                     groom: {
                         name: document.getElementById('groom-name').value,
@@ -1004,7 +931,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 gifts: gifts,
                 gallery: galleryUrls.slice(0, 20),
                 quotes: document.getElementById('wedding-quotes').value,
-                youtubeUrl: document.getElementById('youtube-url').value.trim(),
+                youtubeUrl: document.getElementById('youtube-url').value,
                 coverImage: coverUrl,
                 ogImage: thumbUrl,
                 music: musicUrl

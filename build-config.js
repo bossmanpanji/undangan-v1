@@ -158,8 +158,7 @@ function createMockSupabaseClient() {
                 global: { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'royal-gold': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'floral-light': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
-                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
-                'heritage-series': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
+                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
             })}
         ]);
 
@@ -195,14 +194,6 @@ function createMockSupabaseClient() {
                 expiry_days: 365,
                 created_at: new Date().toISOString(),
                 config: { ...defaultWeddingConfig, theme: 'midnight-dark' }
-            },
-            {
-                id: 'inv-client-demo4',
-                slug: 'demo4',
-                password: 'demo',
-                expiry_days: 365,
-                created_at: new Date().toISOString(),
-                config: { ...defaultWeddingConfig, theme: 'heritage-series' }
             }
         ]);
 

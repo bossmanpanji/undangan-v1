@@ -5,7 +5,6 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 3000,
-    allowedHosts: 'all',
   },
   preview: {
     host: '0.0.0.0',
@@ -19,8 +18,6 @@ export default defineConfig({
         editor: resolve(__dirname, 'editor/index.html'),
         login: resolve(__dirname, 'login/index.html'),
         theme_v1: resolve(__dirname, 'themes/v1/index.html'),
-        theme_heritage: resolve(__dirname, 'themes/heritage/index.html'),
-        theme_botanical: resolve(__dirname, 'themes/botanical/index.html'),
         notfound: resolve(__dirname, '404.html'),
       },
     },

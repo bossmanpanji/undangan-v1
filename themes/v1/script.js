@@ -93,16 +93,6 @@ async function initApp(slug) {
         let createdAt;
         let expiryLimit = 90;
 
-        if (slug === 'demo4' || slug === 'demo-heritage') {
-            window.location.href = `/themes/heritage/index.html${window.location.search}`;
-            return;
-        }
-
-        if (slug === 'demo5' || slug === 'demo-botanical') {
-            window.location.href = `/themes/botanical/index.html${window.location.search}`;
-            return;
-        }
-
         if (slug === 'demo' || slug === 'demo2' || slug === 'demo3') {
             if (!window.config) throw new Error("Data demo tidak tersedia");
             const c = window.config;
@@ -181,15 +171,6 @@ async function initApp(slug) {
 
         const config = configData;
         
-        if (config.theme === 'heritage-series') {
-            window.location.href = `/themes/heritage/index.html${window.location.search}`;
-            return;
-        }
-        if (config.theme === 'modern-botanical') {
-            window.location.href = `/themes/botanical/index.html${window.location.search}`;
-            return;
-        }
-
         // --- APPLY THEME ---
         document.body.className = config.theme || 'royal-gold';
         
