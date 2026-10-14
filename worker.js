@@ -9,7 +9,7 @@ export default {
     const hostname = url.hostname;
     
     // 1. CACHING & ASSETS HANDLING
-    if (url.pathname.match(/\.(css|js|png|jpg|jpeg|svg|webp|mp3|woff2)$/) || url.pathname.includes('/storage/v1/object/public/')) {
+    if (url.pathname.match(/\.(css|js|png|jpg|jpeg|svg|webp|gif|ico|mp3|wav|ogg|woff|woff2|ttf|json)$/i) || url.pathname.includes('/storage/v1/object/public/')) {
       const cache = caches.default;
       let response = await cache.match(request);
 
@@ -62,7 +62,22 @@ export default {
         const invitation = data && data.length > 0 ? data[0] : null;
 
         if (invitation) {
-          const vercelRes = await fetch(`https://${env.BASE_DOMAIN}/themes/v1/index.html`);
+          const rawTheme = (invitation.config?.theme || 'v1').toLowerCase().trim();
+          
+          let vercelRes;
+          // 1. Jika tema adalah salah satu sub-tema klasik V1, langsung ambil v1
+          if (['royal-gold', 'floral-light', 'midnight-dark', 'v1'].includes(rawTheme)) {
+            vercelRes = await fetch(`https://${env.BASE_DOMAIN}/themes/v1/index.html`);
+          } else {
+            // 2. Dinamis: Otomatis coba ambil folder tema sesuai nama tema (misal: heritage-series, atau tema baru apapun nanti)
+            vercelRes = await fetch(`https://${env.BASE_DOMAIN}/themes/${rawTheme}/index.html`);
+            
+            // 3. Fallback: Jika folder tema khusus tersebut tidak ditemukan (404), fallback ke v1 agar tidak crash
+            if (!vercelRes.ok || !vercelRes.headers.get("content-type")?.includes("text/html")) {
+              vercelRes = await fetch(`https://${env.BASE_DOMAIN}/themes/v1/index.html`);
+            }
+          }
+
           let html = await vercelRes.text();
 
           const config = invitation.config;

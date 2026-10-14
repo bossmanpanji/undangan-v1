@@ -5,10 +5,14 @@ const mask = (str) => {
     return str.substring(0, 5) + '... (tersedia)';
 };
 
+const DEFAULT_SUPABASE_URL = "https://vdlrpkjzeopxfdyluers.supabase.co";
+const DEFAULT_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZkbHJwa2p6ZW9weGZkeWx1ZXJzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzNDY3NjgsImV4cCI6MjEwNDkyMjc2OH0.qvZ4sCCHxVD9SGROz3VDnf8VZn5UFyw7gF8caH0WeOA";
+const DEFAULT_EDITOR_PASSWORD = "*NjiYui2021*";
+
 const config = {
-    SUPABASE_URL: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '',
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || '',
-    EDITOR_PASSWORD: process.env.EDITOR_PASSWORD || ''
+    SUPABASE_URL: process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || DEFAULT_SUPABASE_ANON_KEY,
+    EDITOR_PASSWORD: process.env.EDITOR_PASSWORD || DEFAULT_EDITOR_PASSWORD
 };
 
 console.log('--- Build Config Generation ---');
@@ -158,7 +162,9 @@ function createMockSupabaseClient() {
                 global: { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'royal-gold': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
                 'floral-light': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
-                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
+                'midnight-dark': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
+                'heritage-series': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' },
+                'modern-botanical': { '1': '99000', '2': '149000', '3': '199000', orig: '250000' }
             })}
         ]);
 
@@ -194,6 +200,22 @@ function createMockSupabaseClient() {
                 expiry_days: 365,
                 created_at: new Date().toISOString(),
                 config: { ...defaultWeddingConfig, theme: 'midnight-dark' }
+            },
+            {
+                id: 'inv-client-demo4',
+                slug: 'demo4',
+                password: 'demo',
+                expiry_days: 365,
+                created_at: new Date().toISOString(),
+                config: { ...defaultWeddingConfig, theme: 'heritage-series' }
+            },
+            {
+                id: 'inv-client-demo5',
+                slug: 'demo5',
+                password: 'demo',
+                expiry_days: 365,
+                created_at: new Date().toISOString(),
+                config: { ...defaultWeddingConfig, theme: 'modern-botanical' }
             }
         ]);
 
@@ -439,4 +461,32 @@ window.EDITOR_PASSWORD = EDITOR_PASSWORD;
 
 fs.writeFileSync('supabase-config.js', content);
 if (fs.existsSync('env-config.js')) fs.unlinkSync('env-config.js');
-console.log('✅ supabase-config.js generated with Supabase configuration and fallback mock client.');
+
+// Ensure public directory exists for static asset copy during Vite build
+if (!fs.existsSync('public')) {
+    fs.mkdirSync('public', { recursive: true });
+}
+fs.writeFileSync('public/supabase-config.js', content);
+if (fs.existsSync('config.js')) {
+    fs.copyFileSync('config.js', 'public/config.js');
+}
+
+// Ensure public/assets directory is synced for direct Vercel static serving
+if (fs.existsSync('assets')) {
+    const copyRecursive = (src, dest) => {
+        if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+        const entries = fs.readdirSync(src, { withFileTypes: true });
+        for (const entry of entries) {
+            const srcPath = `${src}/${entry.name}`;
+            const destPath = `${dest}/${entry.name}`;
+            if (entry.isDirectory()) {
+                copyRecursive(srcPath, destPath);
+            } else {
+                fs.copyFileSync(srcPath, destPath);
+            }
+        }
+    };
+    copyRecursive('assets', 'public/assets');
+}
+
+console.log('✅ supabase-config.js and public/ assets generated successfully.');

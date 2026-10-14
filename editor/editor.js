@@ -256,7 +256,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // UPDATE PREVIEW LINKS WITH SUBDOMAIN (HYBRID ARCHITECTURE)
                     let baseDomainUrl = window.location.hostname.replace('app.', '');
-                    const previewUrl = (isHostingPlatform) ? `/themes/v1/index.html?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
+                    const clientTheme = data.config?.theme || 'royal-gold';
+                    const themePath = (clientTheme === 'heritage-series' || clientTheme === 'heritage') ? '/themes/heritage-series/index.html' : '/themes/v1/index.html';
+                    const previewUrl = (isHostingPlatform) ? `${themePath}?u=${currentSlug}` : `https://${currentSlug}.${baseDomainUrl}`;
                     const btnPreviewDesktop = document.getElementById('btn-preview-desktop');
                     const btnPreviewMobile = document.getElementById('btn-preview-mobile');
                     if (btnPreviewDesktop) btnPreviewDesktop.href = previewUrl;
@@ -461,17 +463,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            // Hardcoded Anti-Spam Templates (Sopan, Ramah, Tanpa Sapaan Waktu, Berparagraf)
+            // Hardcoded Anti-Spam Templates (Sopan, Ramah, Universal, Tanpa Sapaan Waktu, Berparagraf)
             const templates = [
-                "Assalamu'alaikum Wr. Wb.\n\nTanpa mengurangi rasa hormat, perkenankan kami membagikan kabar bahagia ini kepada Bapak/Ibu/Saudara/i *[nama_tamu]*.\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir di momen spesial kami.\n\nDetail acara dan lokasi dapat dilihat melalui tautan undangan berikut:\n[link_undangan]\n\nAtas kehadiran dan doa restunya, kami mengucapkan terima kasih.\n\nHormat kami,\n*[nama_mempelai]*\n\nWassalamu'alaikum Wr. Wb.",
+                "Tanpa mengurangi rasa hormat, perkenankan kami membagikan kabar bahagia ini kepada Bapak/Ibu/Saudara/i *[nama_tamu]*.\n\nMerupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir di momen spesial kami.\n\nDetail acara dan lokasi dapat dilihat melalui tautan undangan berikut:\n[link_undangan]\n\nAtas kehadiran dan doa restunya, kami mengucapkan terima kasih.\n\nHormat kami,\n*[nama_mempelai]*",
                 
-                "Assalamu'alaikum Wr. Wb.\n\nKami memohon doa restu dari Bapak/Ibu/Saudara/i *[nama_tamu]* untuk hari pernikahan kami.\n\nAdalah suatu kehormatan besar bagi kami jika Anda berkenan meluangkan waktu untuk hadir dan memberikan doa restu secara langsung.\n\nSilakan buka tautan berikut untuk melihat informasi lengkap acara kami:\n[link_undangan]\n\nKehadiran Anda akan sangat berarti bagi kami.\n\nHormat kami,\n*[nama_mempelai]*\n\nWassalamu'alaikum Wr. Wb.",
+                "Kami memohon doa restu dari Bapak/Ibu/Saudara/i *[nama_tamu]* untuk hari pernikahan kami.\n\nAdalah suatu kehormatan besar bagi kami jika Anda berkenan meluangkan waktu untuk hadir dan memberikan doa restu secara langsung.\n\nSilakan buka tautan berikut untuk melihat informasi lengkap acara kami:\n[link_undangan]\n\nKehadiran Anda akan sangat berarti bagi kami.\n\nHormat kami,\n*[nama_mempelai]*",
                 
-                "Assalamu'alaikum Wr. Wb.\n\nKepada Yth. Bapak/Ibu/Saudara/i *[nama_tamu]*,\n\nSuatu kebahagiaan bagi kami jika Anda dapat memberikan doa restu pada hari pernikahan kami yang sebentar lagi akan tiba.\n\nMerupakan kehormatan apabila Anda dapat hadir di tengah-tengah kami.\n\nInformasi lengkap mengenai resepsi dan akad nikah dapat diakses di:\n[link_undangan]\n\nTerima kasih banyak atas doa dan dukungannya.\n\nHormat kami,\n*[nama_mempelai]*\n\nWassalamu'alaikum Wr. Wb.",
+                "Kepada Yth. Bapak/Ibu/Saudara/i *[nama_tamu]*,\n\nSuatu kebahagiaan bagi kami jika Anda dapat memberikan doa restu pada hari pernikahan kami yang sebentar lagi akan tiba.\n\nMerupakan kehormatan apabila Anda dapat hadir di tengah-tengah kami.\n\nInformasi lengkap mengenai resepsi dan akad nikah dapat diakses di:\n[link_undangan]\n\nTerima kasih banyak atas doa dan dukungannya.\n\nHormat kami,\n*[nama_mempelai]*",
                 
-                "Assalamu'alaikum Wr. Wb.\n\nHalo *[nama_tamu]*,\n\nMelalui pesan singkat ini, kami ingin berbagi kabar bahagia mengenai rencana pernikahan kami.\n\nKami akan sangat merasa terhormat apabila Anda dapat menyempatkan diri untuk hadir dan merayakan bersama kami.\n\nDetail undangan digital kami dapat Anda lihat pada tautan di bawah ini:\n[link_undangan]\n\nKami sangat menantikan kehadiran Anda.\n\nHormat kami,\n*[nama_mempelai]*\n\nWassalamu'alaikum Wr. Wb.",
+                "Halo *[nama_tamu]*,\n\nMelalui pesan singkat ini, kami ingin berbagi kabar bahagia mengenai rencana pernikahan kami.\n\nKami akan sangat merasa terhormat apabila Anda dapat menyempatkan diri untuk hadir dan merayakan bersama kami.\n\nDetail undangan digital kami dapat Anda lihat pada tautan di bawah ini:\n[link_undangan]\n\nKami sangat menantikan kehadiran Anda.\n\nHormat kami,\n*[nama_mempelai]*",
                 
-                "Assalamu'alaikum Wr. Wb.\n\nDengan segala kerendahan hati, izinkan kami mengabarkan hari bahagia kami kepada Bapak/Ibu/Saudara/i *[nama_tamu]*.\n\nSungguh suatu kehormatan bagi kami jika Anda dapat hadir untuk berbagi momen indah ini bersama kami.\n\nKunjungi tautan berikut untuk mengetahui detail acara selengkapnya:\n[link_undangan]\n\nTerima kasih atas segala perhatian dan doa restunya.\n\nHormat kami,\n*[nama_mempelai]*\n\nWassalamu'alaikum Wr. Wb."
+                "Dengan segala kerendahan hati, izinkan kami mengabarkan hari bahagia kami kepada Bapak/Ibu/Saudara/i *[nama_tamu]*.\n\nSungguh suatu kehormatan bagi kami jika Anda dapat hadir untuk berbagi momen indah ini bersama kami.\n\nKunjungi tautan berikut untuk mengetahui detail acara selengkapnya:\n[link_undangan]\n\nTerima kasih atas segala perhatian dan doa restunya.\n\nHormat kami,\n*[nama_mempelai]*"
             ];
 
             const lines = guestListText.split('\n');
@@ -614,7 +616,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const themes = [
                 { name: 'Royal Gold (Mewah & Gelap)', val: 'royal-gold', icon: 'fas fa-crown' },
                 { name: 'Floral Light (Romantis & Terang)', val: 'floral-light', icon: 'fas fa-leaf' },
-                { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' }
+                { name: 'Midnight Dark (Modern & Futuristik)', val: 'midnight-dark', icon: 'fas fa-moon' },
+                { name: 'Heritage Series (Klasik Tradisional)', val: 'heritage-series', icon: 'fas fa-landmark' },
+                { name: 'Velvet Champagne (Luxury Glamour)', val: 'velvet-champagne', icon: 'fas fa-champagne-glasses' },
+                { name: 'Nordic Minimalist (Clean & Elegant)', val: 'nordic-minimalist', icon: 'fas fa-feather-pointed' }
             ];
             const currentTheme = config.theme || 'royal-gold';
             const themeObj = themes.find(t => t.val === currentTheme) || themes[0];

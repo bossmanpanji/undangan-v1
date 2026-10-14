@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nordic Minimalist Wedding Invitation - Soren &amp; Freya</title>
+  <meta name="description" content="Undangan pernikahan digital eksklusif bertema Nordic Minimalist untuk platform SEJOLI." />
+  <meta property="og:title" content="Nordic Minimalist Wedding Invitation - Soren &amp; Freya" />
+  <meta property="og:description" content="Undangan pernikahan digital eksklusif bertema Nordic Minimalist untuk platform SEJOLI." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Fonts: Plus Jakarta Sans (Modern Geometric Sans), Inter (Clean Body), Parisienne & Cormorant Garamond (Nordic Elegance) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,600&family=Inter:wght@200;300;400;500;600&family=Parisienne&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- FontAwesome 6 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nordic: {
+              white: '#FFFFFF',
+              surface: '#FBFBFA',
+              bone: '#F4F4F2',
+              border: '#E5E5E2',
+              borderDark: '#D4D4CE',
+              muted: '#71717A',
+              charcoal: '#18181B',
+              dark: '#0F0F10',
+              accent: '#3F3F46',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Cormorant Garamond"', 'serif'],
+            script: ['Parisienne', 'cursive'],
+          },
+          letterSpacing: {
+            ultra: '0.25em',
+            mega: '0.35em',
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Supabase Client v2 & Sejoli Config -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/supabase-config.js"></script>
+  <script src="/config.js"></script>
+
+  <style>
+    /* Base typography and Nordic smooth aesthetics */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F8F8F6;
+      color: #18181B;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+
+    /* Scandinavian Frosted Glassmorphism Styles */
+    .nordic-glass {
+      background: rgba(255, 255, 255, 0.76);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 14px 35px -5px rgba(0, 0, 0, 0.04), 0 4px 10px -2px rgba(0, 0, 0, 0.02);
+    }
+
+    .nordic-glass-card {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.03), 0 4px 8px -2px rgba(0, 0, 0, 0.02);
+    }
+
+    .nordic-glass-subtle {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.02);
+    }
+
+    /* Ultra-Smooth & Slow Scandinavian Lockscreen transition */
+    #lockscreen {
+      transition: transform 1.8s cubic-bezier(0.7, 0, 0.2, 1), opacity 1.6s cubic-bezier(0.7, 0, 0.2, 1), filter 1.6s ease-out;
+      will-change: transform, opacity, filter;
+    }
+    #lockscreen.unlocked {
+      transform: translateY(-102%) scale(0.98);
+      opacity: 0;
+      filter: blur(10px);
+      pointer-events: none;
+    }
+    #lockscreen-card {
+      transition: transform 1.5s cubic-bezier(0.7, 0, 0.2, 1), opacity 1.2s cubic-bezier(0.7, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+    #lockscreen.unlocked #lockscreen-card {
+      transform: translateY(-40px) scale(0.95);
+      opacity: 0;
+    }
+    #lockscreen-bg-img {
+      transition: transform 2.2s cubic-bezier(0.7, 0, 0.2, 1), opacity 1.6s ease-out;
+      will-change: transform, opacity;
+    }
+    #lockscreen.unlocked #lockscreen-bg-img {
+      transform: scale(1.12);
+      opacity: 0;
+    }
+
+    /* Main Content Smooth Fade & Scale Entrance */
+    #main-content {
+      transition: transform 1.8s cubic-bezier(0.25, 1, 0.35, 1), opacity 1.6s ease-out;
+      will-change: transform, opacity;
+    }
+    body.is-locked #main-content {
+      opacity: 0.6;
+      transform: scale(0.98) translateY(16px);
+    }
+    body.is-unlocked #main-content {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Floating navigation & audio widget delayed gentle entrance */
+    #floating-nav, #audio-control-container {
+      transition: opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s, transform 1.2s cubic-bezier(0.25, 1, 0.5, 1) 0.6s !important;
+    }
+
+    /* Subtle Nordic grid line pattern */
+    .nordic-grid-bg {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(228, 228, 226, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(228, 228, 226, 0.4) 1px, transparent 1px);
+    }
+
+    /* Disc spin for audio controller */
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-spin-slow {
+      animation: spin-slow 8s linear infinite;
+    }
+
+    /* Minimal scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F4F4F2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4D4CE;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #71717A;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen selection:bg-zinc-200 selection:text-zinc-900 is-locked">
+
+  <!-- Ambient Scandinavian Glass Glow Blobs for Glassmorphism Depth -->
+  <div class="fixed top-16 -left-20 w-80 h-80 bg-stone-200/50 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="fixed top-1/2 -right-20 w-96 h-96 bg-zinc-200/40 rounded-full blur-3xl pointer-events-none -z-10"></div>
+  <div class="fixed bottom-24 left-1/4 w-80 h-80 bg-stone-200/35 rounded-full blur-3xl pointer-events-none -z-10"></div>
+
+  <!-- ========================================== -->
+  <!-- 1. FULLSCREEN LOCKSCREEN / COVER OVERLAY   -->
+  <!-- ========================================== -->
+  <div id="lockscreen" class="fixed inset-0 z-50 flex items-center justify-center bg-nordic-surface text-nordic-charcoal overflow-hidden px-4 py-8">
+    <!-- Atmospheric Background Image with Soft Nordic Veil -->
+    <div class="absolute inset-0 z-0">
+      <img id="lockscreen-bg-img" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80" 
+           alt="Cover Backdrop" class="w-full h-full object-cover object-center opacity-30 scale-105 transition-transform duration-1000 ease-out" />
+      <div class="absolute inset-0 bg-gradient-to-b from-white/95 via-[#FBFBFA]/90 to-white/95"></div>
+    </div>
+
+    <!-- Minimal Scandinavian Glassmorphism Frame Container -->
+    <div id="lockscreen-card" class="relative z-10 w-full max-w-lg mx-auto nordic-glass p-8 sm:p-12 text-center shadow-xl">
+      <!-- Nordic Thin Corner Markers -->
+      <div class="absolute top-2 left-2 w-3 h-3 border-t border-l border-zinc-400"></div>
+      <div class="absolute top-2 right-2 w-3 h-3 border-t border-r border-zinc-400"></div>
+      <div class="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-zinc-400"></div>
+      <div class="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-zinc-400"></div>
+
+      <!-- Kicker Header -->
+      <div class="space-y-1 mb-8">
+        <p class="text-[11px] font-display uppercase tracking-mega text-zinc-500 font-semibold">The Wedding Celebration Of</p>
+        <div class="w-8 h-[1px] bg-zinc-300 mx-auto mt-2"></div>
+      </div>
+
+      <!-- Couple Nicknames -->
+      <div class="my-6">
+        <h1 class="text-4xl sm:text-5xl font-script text-zinc-800 leading-tight">
+          <span id="lock-groom-name">Soren</span>
+          <span class="block text-2xl font-serif italic text-zinc-400 font-light my-1">&amp;</span>
+          <span id="lock-bride-name">Freya</span>
+        </h1>
+      </div>
+
+      <!-- Event Date -->
+      <p id="lock-event-date" class="text-xs uppercase tracking-ultra font-display text-zinc-500 mb-8 font-medium">
+        Sabtu, 24 Oktober 2026
+      </p>
+
+      <!-- Dynamic Guest Greeting Glass Card -->
+      <div class="nordic-glass-subtle p-4 sm:p-5 mb-8 text-center border border-white/80">
+        <p class="text-[11px] tracking-widest uppercase text-zinc-400 font-medium mb-1">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <h3 id="lock-guest-name" class="text-base sm:text-lg font-display font-semibold text-zinc-800 tracking-wide capitalize">
+          Tamu Undangan
+        </h3>
+        <p class="text-[10px] text-zinc-400 mt-1 italic font-serif">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir.</p>
+      </div>
+
+      <!-- CTA Button -->
+      <button id="btn-open-invitation" type="button" 
+              class="group relative inline-flex items-center justify-center gap-3 px-8 py-3.5 border border-zinc-900 bg-zinc-900 text-white text-xs font-display uppercase tracking-widest hover:bg-white hover:text-zinc-900 transition-all duration-300 shadow-sm active:scale-95 cursor-pointer">
+        <span>Buka Undangan</span>
+        <i class="fa-solid fa-envelope-open text-xs transition-transform duration-300 group-hover:translate-x-1"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 2. MAIN INVITATION CONTENT WRAPPER         -->
+  <!-- ========================================== -->
+  <main id="main-content" class="w-full max-w-3xl mx-auto min-h-screen bg-nordic-surface/80 backdrop-blur-sm border-x border-nordic-border/60 shadow-sm relative pb-32">
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative pt-20 pb-16 px-6 sm:px-12 text-center border-b border-nordic-border overflow-hidden">
+      <!-- Minimalist geometric background lines -->
+      <div class="absolute inset-0 nordic-grid-bg opacity-30 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-xl mx-auto">
+        <div class="inline-block border-b border-zinc-300 pb-1 mb-6">
+          <span class="text-[11px] tracking-mega uppercase font-display text-zinc-500 font-medium">Wedding Ceremony &amp; Celebration</span>
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl font-script text-zinc-900 leading-tight mb-2">
+          <span id="hero-groom-name">Soren</span>
+          <span class="font-serif italic text-3xl text-zinc-400 font-light mx-2">&amp;</span>
+          <span id="hero-bride-name">Freya</span>
+        </h1>
+
+        <p id="hero-date" class="text-xs uppercase tracking-ultra font-display text-zinc-500 mt-4 mb-8">
+          Sabtu, 24 Oktober 2026 · Bandung, Indonesia
+        </p>
+
+        <!-- Featured Portrait with Scandinavian Frosted Passepartout Frame -->
+        <div class="relative mx-auto w-full max-w-md p-3.5 nordic-glass shadow-md mb-8">
+          <div class="aspect-[4/5] w-full overflow-hidden bg-zinc-100">
+            <img id="hero-main-photo" src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80" 
+                 alt="Mempelai Soren & Freya" class="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700 ease-out" />
+          </div>
+          <div class="pt-3 pb-1 text-center">
+            <p class="text-[11px] font-serif italic text-zinc-500">"Dua jiwa menyatu dalam kesederhanaan dan ketulusan cinta."</p>
+          </div>
+        </div>
+
+        <!-- Quotes Section -->
+        <div class="max-w-md mx-auto my-8 border-y border-zinc-200/80 py-6 px-4">
+          <i class="fa-solid fa-quote-left text-zinc-300 text-xs mb-3 block"></i>
+          <p id="quote-text" class="text-sm font-serif italic text-zinc-700 leading-relaxed">
+            "Maka dipertemukanlah dua jiwa dalam ketenangan, saling melengkapi dalam kesederhanaan cinta yang tulus dan abadi."
+          </p>
+          <p id="quote-source" class="text-[11px] font-display uppercase tracking-widest text-zinc-400 mt-3">
+            — Makna Cinta &amp; Kebersamaan
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUNTDOWN TIMER SECTION -->
+    <section id="countdown-section" class="py-12 px-6 sm:px-12 bg-white/70 backdrop-blur-sm border-b border-nordic-border text-center">
+      <div class="max-w-xl mx-auto">
+        <p class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-medium mb-2">Menghitung Hari Bahagia</p>
+        <h2 class="text-2xl font-display font-light text-zinc-800 tracking-wide mb-8">Waktu Menuju Hari Istimewa</h2>
+
+        <!-- Timer Grid with Glass Cards -->
+        <div class="grid grid-cols-4 gap-3 sm:gap-4 max-w-md mx-auto">
+          <!-- Days -->
+          <div class="nordic-glass-card p-3 sm:p-4 text-center">
+            <span id="cd-days" class="block text-2xl sm:text-3xl font-display font-semibold text-zinc-900">00</span>
+            <span class="block text-[10px] uppercase tracking-widest font-display text-zinc-400 mt-1">Hari</span>
+          </div>
+          <!-- Hours -->
+          <div class="nordic-glass-card p-3 sm:p-4 text-center">
+            <span id="cd-hours" class="block text-2xl sm:text-3xl font-display font-semibold text-zinc-900">00</span>
+            <span class="block text-[10px] uppercase tracking-widest font-display text-zinc-400 mt-1">Jam</span>
+          </div>
+          <!-- Minutes -->
+          <div class="nordic-glass-card p-3 sm:p-4 text-center">
+            <span id="cd-minutes" class="block text-2xl sm:text-3xl font-display font-semibold text-zinc-900">00</span>
+            <span class="block text-[10px] uppercase tracking-widest font-display text-zinc-400 mt-1">Menit</span>
+          </div>
+          <!-- Seconds -->
+          <div class="nordic-glass-card p-3 sm:p-4 text-center">
+            <span id="cd-seconds" class="block text-2xl sm:text-3xl font-display font-semibold text-zinc-900">00</span>
+            <span class="block text-[10px] uppercase tracking-widest font-display text-zinc-400 mt-1">Detik</span>
+          </div>
+        </div>
+
+        <div class="mt-8 flex justify-center">
+          <a id="btn-save-cal-main" href="#" target="_blank" 
+             class="inline-flex items-center gap-2 border border-zinc-300 bg-white/80 backdrop-blur-sm px-5 py-2 text-xs font-display tracking-wider uppercase text-zinc-700 hover:border-zinc-900 hover:text-zinc-900 transition-colors">
+            <i class="fa-regular fa-calendar-plus text-xs"></i>
+            <span>Simpan ke Google Calendar</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COUPLE SECTION (MEMPELAI) -->
+    <section id="couple" class="py-16 px-6 sm:px-12 border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">The Couple</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Mempelai Pengantin</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10 sm:gap-8 max-w-2xl mx-auto">
+        <!-- Groom Glass Card -->
+        <div class="nordic-glass-card p-6 sm:p-8 text-center flex flex-col items-center">
+          <div class="w-40 h-48 border border-zinc-200 p-1 mb-6 bg-white/60">
+            <img id="groom-img" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" 
+                 alt="Foto Mempelai Pria" class="w-full h-full object-cover" />
+          </div>
+          <h3 id="groom-fullname" class="text-xl font-display font-semibold text-zinc-900 tracking-wide">
+            Soren Alexander, S.T.
+          </h3>
+          <p class="text-xs uppercase tracking-widest text-zinc-400 font-display mt-0.5">Mempelai Pria</p>
+          <div class="w-6 h-[1px] bg-zinc-200 my-4"></div>
+          <p id="groom-parents" class="text-xs text-zinc-600 leading-relaxed font-sans px-2">
+            Putra tercinta dari Bpk. Henrik Lund &amp; Ibu Astrid Lindgren
+          </p>
+          <div id="groom-social-container" class="mt-5 pt-3">
+            <a id="groom-instagram" href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-900 transition-colors">
+              <i id="groom-social-icon" class="fa-brands fa-instagram text-sm"></i>
+              <span id="groom-ig-handle" class="font-display">@sorenalex</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bride Glass Card -->
+        <div class="nordic-glass-card p-6 sm:p-8 text-center flex flex-col items-center">
+          <div class="w-40 h-48 border border-zinc-200 p-1 mb-6 bg-white/60">
+            <img id="bride-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                 alt="Foto Mempelai Wanita" class="w-full h-full object-cover" />
+          </div>
+          <h3 id="bride-fullname" class="text-xl font-display font-semibold text-zinc-900 tracking-wide">
+            Freya Astrid, S.Ds.
+          </h3>
+          <p class="text-xs uppercase tracking-widest text-zinc-400 font-display mt-0.5">Mempelai Wanita</p>
+          <div class="w-6 h-[1px] bg-zinc-200 my-4"></div>
+          <p id="bride-parents" class="text-xs text-zinc-600 leading-relaxed font-sans px-2">
+            Putri tercinta dari Bpk. Erik Dahl &amp; Ibu Ingrid Bergman
+          </p>
+          <div id="bride-social-container" class="mt-5 pt-3">
+            <a id="bride-instagram" href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+               class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-900 transition-colors">
+              <i id="bride-social-icon" class="fa-brands fa-instagram text-sm"></i>
+              <span id="bride-ig-handle" class="font-display">@freyadahl</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS SECTION (RANGKAIAN ACARA) -->
+    <section id="events" class="py-16 px-6 sm:px-12 bg-white/70 backdrop-blur-sm border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">Wedding Schedule</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Rangkaian Acara</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+      </div>
+
+      <!-- Events Dynamic Container -->
+      <div id="events-container" class="space-y-8 max-w-2xl mx-auto">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- LOVE STORY TIMELINE SECTION (CERITA CINTA) -->
+    <section id="stories" class="py-16 px-6 sm:px-12 border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">Our Journey</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Cerita Cinta Kami</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+      </div>
+
+      <!-- Story Timeline Container -->
+      <div id="stories-container" class="relative max-w-xl mx-auto pl-6 sm:pl-8 border-l border-zinc-200 space-y-10">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION (GALERI FOTO) -->
+    <section id="gallery" class="py-16 px-6 sm:px-12 bg-white/70 backdrop-blur-sm border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">Moments &amp; Memories</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Galeri Foto</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div id="gallery-container" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+        <!-- Rendered dynamically by JavaScript -->
+      </div>
+    </section>
+
+    <!-- ======================================== -->
+    <!-- SECTION: VIDEO KEBAHAGIAAN               -->
+    <!-- ======================================== -->
+    <section id="video-section" class="py-16 px-6 sm:px-12 bg-white/70 backdrop-blur-sm border-b border-nordic-border">
+      <div class="max-w-3xl mx-auto">
+        <!-- Header -->
+        <div class="text-center max-w-xl mx-auto mb-10">
+          <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">Moments of Joy</span>
+          <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Video Kebahagiaan</h2>
+          <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+          <p class="text-xs text-zinc-500 max-w-md mx-auto mt-4 leading-relaxed font-sans">
+            Untaian detik penuh cinta dan kebahagiaan yang terabadikan dalam rekaman visual perjalanan kami:
+          </p>
+        </div>
+
+        <!-- Video Frame -->
+        <div class="nordic-glass-card p-3 sm:p-5 shadow-sm relative max-w-2xl mx-auto">
+          <div class="relative w-full aspect-video border border-zinc-200 overflow-hidden bg-black shadow-inner">
+            <iframe id="youtube-iframe" 
+                    class="w-full h-full" 
+                    src="" 
+                    title="Video Kebahagiaan" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIGITAL ENVELOPE / WEDDING GIFTS (TANDA KASIH) -->
+    <section id="gifts" class="py-16 px-6 sm:px-12 border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-12">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">Wedding Gift</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Tanda Kasih</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+        <p class="text-xs text-zinc-500 max-w-md mx-auto mt-4 leading-relaxed font-sans">
+          Doa dan restu Anda merupakan karunia terindah bagi kami. Namun apabila Anda berkenan memberikan tanda kasih, dapat melalui nomor rekening berikut:
+        </p>
+      </div>
+
+      <div class="max-w-xl mx-auto space-y-6">
+        <!-- Bank Accounts Container -->
+        <div id="bank-accounts-container" class="space-y-4">
+          <!-- Rendered dynamically by JavaScript -->
+        </div>
+
+        <!-- Optional Physical Gift Address -->
+        <div id="gift-address-container" class="nordic-glass-card p-6 text-center hidden">
+          <i class="fa-solid fa-box-open text-zinc-400 text-lg mb-2 block"></i>
+          <p class="text-xs uppercase tracking-wider font-display text-zinc-400 font-medium">Alamat Pengiriman Kado</p>
+          <p id="gift-address-text" class="text-xs text-zinc-700 font-sans mt-2 leading-relaxed max-w-md mx-auto"></p>
+          <button type="button" onclick="window.copyTextToClipboard(document.getElementById('gift-address-text').innerText, 'Alamat pengiriman kado')"
+                  class="mt-3 inline-flex items-center gap-2 border border-zinc-300 bg-white/80 px-4 py-2 text-xs font-display uppercase tracking-wider text-zinc-700 hover:border-zinc-900 hover:text-zinc-900 transition-colors cursor-pointer">
+            <i class="fa-regular fa-clone text-xs"></i>
+            <span>Salin Alamat Lengkap</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP & WISHES SECTION (KONFIRMASI & PESAN) -->
+    <section id="rsvp" class="py-16 px-6 sm:px-12 bg-white/70 backdrop-blur-sm border-b border-nordic-border">
+      <div class="text-center max-w-xl mx-auto mb-10">
+        <span class="text-[11px] uppercase tracking-mega font-display text-zinc-500 font-semibold">RSVP &amp; Wishes</span>
+        <h2 class="text-3xl font-serif italic text-zinc-900 mt-1">Konfirmasi &amp; Ucapan</h2>
+        <div class="w-10 h-[1px] bg-zinc-300 mx-auto mt-3"></div>
+      </div>
+
+      <div class="max-w-xl mx-auto">
+        <!-- RSVP Form with Frosted Glass -->
+        <form id="rsvp-form" class="nordic-glass-card p-6 sm:p-8 mb-10 shadow-sm">
+          <div class="space-y-5">
+            <div>
+              <label for="rsvp-name" class="block text-xs uppercase tracking-wider font-display text-zinc-700 mb-1.5 font-medium">
+                Nama Lengkap
+              </label>
+              <input id="rsvp-name" type="text" required placeholder="Tulis nama lengkap Anda"
+                     class="w-full border border-zinc-300 bg-white/90 px-3.5 py-2.5 text-xs text-zinc-800 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 transition-colors" />
+            </div>
+
+            <div>
+              <label class="block text-xs uppercase tracking-wider font-display text-zinc-700 mb-1.5 font-medium">
+                Konfirmasi Kehadiran
+              </label>
+              <div class="grid grid-cols-3 gap-2">
+                <label class="cursor-pointer">
+                  <input type="radio" name="attendance" value="Hadir" class="peer sr-only" checked />
+                  <div class="border border-zinc-300 bg-white/90 py-2.5 text-center text-xs font-display text-zinc-600 peer-checked:border-zinc-900 peer-checked:bg-zinc-900 peer-checked:text-white transition-all">
+                    Hadir
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="attendance" value="Tidak Hadir" class="peer sr-only" />
+                  <div class="border border-zinc-300 bg-white/90 py-2.5 text-center text-xs font-display text-zinc-600 peer-checked:border-zinc-900 peer-checked:bg-zinc-900 peer-checked:text-white transition-all">
+                    Tidak Hadir
+                  </div>
+                </label>
+                <label class="cursor-pointer">
+                  <input type="radio" name="attendance" value="Masih Ragu" class="peer sr-only" />
+                  <div class="border border-zinc-300 bg-white/90 py-2.5 text-center text-xs font-display text-zinc-600 peer-checked:border-zinc-900 peer-checked:bg-zinc-900 peer-checked:text-white transition-all">
+                    Ragu-ragu
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="rsvp-message" class="block text-xs uppercase tracking-wider font-display text-zinc-700 mb-1.5 font-medium">
+                Pesan &amp; Ucapan Selamat
+              </label>
+              <textarea id="rsvp-message" rows="3" required placeholder="Tuliskan ucapan dan harapan hangat Anda untuk kedua mempelai..."
+                        class="w-full border border-zinc-300 bg-white/90 px-3.5 py-2.5 text-xs text-zinc-800 placeholder-zinc-400 focus:outline-none focus:border-zinc-900 transition-colors resize-none"></textarea>
+            </div>
+
+            <button id="btn-submit-rsvp" type="submit"
+                    class="w-full py-3 bg-zinc-900 text-white text-xs font-display uppercase tracking-widest hover:bg-zinc-800 transition-colors active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer">
+              <i class="fa-regular fa-paper-plane text-xs"></i>
+              <span>Kirim Konfirmasi &amp; Ucapan</span>
+            </button>
+          </div>
+        </form>
+
+        <!-- Wishes List -->
+        <div>
+          <div class="flex items-center justify-between border-b border-zinc-200 pb-2 mb-4">
+            <h3 class="text-xs uppercase tracking-wider font-display font-semibold text-zinc-700">
+              Untaian Ucapan &amp; Pesan (<span id="wishes-count">0</span>)
+            </h3>
+            <span class="text-[10px] text-zinc-400 uppercase tracking-widest">Buku Tamu</span>
+          </div>
+
+          <div id="wishes-container" class="space-y-3 max-h-96 overflow-y-auto pr-1">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER SECTION -->
+    <footer class="py-16 px-6 text-center bg-nordic-surface/90 border-t border-nordic-border">
+      <div class="max-w-md mx-auto space-y-4">
+        <p class="text-3xl font-script text-zinc-800">
+          <span id="footer-groom-name">Soren</span> &amp; <span id="footer-bride-name">Freya</span>
+        </p>
+        <p class="text-xs font-serif italic text-zinc-500">
+          Terima kasih atas perhatian, doa, dan kehadiran hangat Anda dalam mengawali perjalanan baru hidup kami.
+        </p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ========================================== -->
+  <!-- 3. FLOATING QUICK NAVIGATION BAR (GLASS)   -->
+  <!-- ========================================== -->
+  <nav id="floating-nav" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 nordic-glass px-4 py-2.5 shadow-xl transition-all duration-500 opacity-0 pointer-events-none translate-y-4 max-w-sm w-[90%] sm:w-auto">
+    <div class="flex items-center justify-around gap-4 sm:gap-6 text-zinc-500 text-xs font-display">
+      <a href="#couple" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-regular fa-heart text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Mempelai</span>
+      </a>
+      <a href="#events" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-regular fa-calendar-check text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Acara</span>
+      </a>
+      <a href="#stories" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-solid fa-timeline text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Cerita</span>
+      </a>
+      <a href="#gallery" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-regular fa-images text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Galeri</span>
+      </a>
+      <a id="nav-link-video" href="#video-section" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-solid fa-circle-play text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Video</span>
+      </a>
+      <a href="#gifts" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-solid fa-gift text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">Hadiah</span>
+      </a>
+      <a href="#rsvp" class="hover:text-zinc-900 transition-colors flex flex-col items-center gap-1">
+        <i class="fa-regular fa-envelope text-xs"></i>
+        <span class="text-[9px] uppercase tracking-wider">RSVP</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ========================================== -->
+  <!-- 4. FLOATING BACKGROUND AUDIO CONTROLLER    -->
+  <!-- ========================================== -->
+  <audio id="bgm-audio" loop preload="auto">
+    <source src="https://www.dropbox.com/scl/fi/pbtl6lwtv07kxgmdd0gnu/music.mp3?rlkey=u1xr764r3lumkbdl5ds2zt2ex&st=8f6aeui9&raw=1" type="audio/mp3" />
+  </audio>
+
+  <div id="audio-control-container" class="fixed bottom-20 right-4 z-40 transition-opacity duration-500 opacity-0 pointer-events-none">
+    <button id="btn-toggle-audio" type="button" aria-label="Toggle Audio"
+            class="w-11 h-11 nordic-glass text-zinc-800 shadow-lg flex items-center justify-center hover:bg-zinc-900 hover:text-white transition-all cursor-pointer">
+      <i id="audio-icon" class="fa-solid fa-music text-xs animate-spin-slow"></i>
+    </button>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 5. LIGHTBOX MODAL FOR GALLERY              -->
+  <!-- ========================================== -->
+  <div id="lightbox-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center hidden opacity-0 transition-opacity duration-300 p-4">
+    <!-- Close button -->
+    <button id="lightbox-close" class="absolute top-5 right-5 text-white/80 hover:text-white p-2 text-xl z-50 cursor-pointer">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <!-- Navigation buttons -->
+    <button id="lightbox-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-3 text-2xl z-50 cursor-pointer">
+      <i class="fa-solid fa-chevron-left"></i>
+    </button>
+    <button id="lightbox-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white p-3 text-2xl z-50 cursor-pointer">
+      <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+    <!-- Image wrapper -->
+    <div class="relative max-w-3xl max-h-[85vh] flex flex-col items-center">
+      <img id="lightbox-image" src="" alt="Lightbox Preview" class="max-w-full max-h-[80vh] object-contain border border-white/20 shadow-2xl" />
+      <p id="lightbox-caption" class="text-xs text-white/70 font-serif italic mt-3 tracking-wider"></p>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- 6. TOAST NOTIFICATION CONTAINER            -->
+  <!-- ========================================== -->
+  <div id="toast-container" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none w-full max-w-sm px-4"></div>
+
+  <!-- ========================================== -->
+  <!-- 7. SEJOLI LOGIC & SUPABASE DATA BINDING    -->
+  <!-- ========================================== -->
+  <script>
+    // --- 7.1 UNIVERSAL NORDIC DEMO CONFIG ---
+    const DEMO_CONFIG = {
+      coverImage: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=2000&q=80",
+      heroImage: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=80",
+      quote: {
+        translation: "Maka dipertemukanlah dua jiwa dalam ketenangan, saling melengkapi dalam kesederhanaan cinta yang tulus dan abadi.",
+        source: "Makna Cinta & Kebersamaan"
+      },
+      couple: {
+        groom: {
+          fullname: "Soren Alexander, S.T.",
+          nickname: "Soren",
+          sonOf: "Putra tercinta dari Bpk. Henrik Lund & Ibu Astrid Lindgren",
+          instagram: "sorenalex",
+          socialIcon: "fa-brands fa-instagram",
+          image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80"
+        },
+        bride: {
+          fullname: "Freya Astrid, S.Ds.",
+          nickname: "Freya",
+          daughterOf: "Putri tercinta dari Bpk. Erik Dahl & Ibu Ingrid Bergman",
+          instagram: "freyadahl",
+          socialIcon: "fa-brands fa-instagram",
+          image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80"
+        }
+      },
+      events: [
+        {
+          title: "Upacara Pernikahan",
+          date: "Sabtu, 24 Oktober 2026",
+          time: "08:00 - 10:00 WIB",
+          location: "The Glass House Sanctuary",
+          address: "Jl. Pinus Hijau No. 12, Dago Atas, Ciburial, Bandung",
+          mapUrl: "https://maps.google.com/?q=Dago+Bandung",
+          calTitle: "Upacara Pernikahan Soren & Freya",
+          calDetails: "Upacara Pernikahan Soren & Freya di The Glass House Sanctuary, Dago Atas, Bandung",
+          entertainment: ""
+        },
+        {
+          title: "Resepsi & Perayaan",
+          date: "Sabtu, 24 Oktober 2026",
+          time: "11:30 - 14:00 WIB",
+          location: "Grand Pine Pavilion",
+          address: "Jl. Pinus Hijau No. 12, Dago Atas, Ciburial, Bandung",
+          mapUrl: "https://maps.google.com/?q=Dago+Bandung",
+          calTitle: "Resepsi Pernikahan Soren & Freya",
+          calDetails: "Resepsi & Perayaan Pernikahan Soren & Freya di Grand Pine Pavilion, Bandung",
+          entertainment: "Live Acoustic Band & Nordic Strings"
+        }
+      ],
+      stories: [
+        {
+          year: "2020",
+          title: "Awal Pertemuan di Kedai Kopi",
+          description: "Di sudut kedai bernuansa kayu sederhana, dua tatapan bertemu di tengah sejuknya suasana kota. Percakapan santai tentang desain dan seni membuka jalan bagi rasa yang tumbuh perlahan namun teguh."
+        },
+        {
+          year: "2023",
+          title: "Menemukan Rumah dalam Diri Satu Sama Lain",
+          description: "Tiga tahun berjalan mengarungi beragam dinamika kehidupan. Kami belajar bahwa cinta sejati bukan tentang gemerlap kemewahan, melainkan tentang ketenangan hati dan saling memahami dalam keheningan."
+        },
+        {
+          year: "2025",
+          title: "Janji di Bawah Langit Senja",
+          description: "Di tepi danau berangin tenang, sebuah komitmen tulus diikrarkan untuk melangkah bersama mengarungi babak baru kehidupan dalam ikatan pernikahan yang penuh kebahagiaan."
+        }
+      ],
+      gallery: [
+        {
+          url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80",
+          caption: "Ketenangan di Awal Perjalanan Bersama"
+        },
+        {
+          url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1000&q=80",
+          caption: "Dekapan Hangat dalam Kesederhanaan"
+        },
+        {
+          url: "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?auto=format&fit=crop&w=1000&q=80",
+          caption: "Langkah Pasti Menuju Masa Depan"
+        },
+        {
+          url: "https://images.unsplash.com/photo-1469371670807-013ccf25f16a?auto=format&fit=crop&w=1000&q=80",
+          caption: "Binar Mata Penuh Harapan dan Doa"
+        },
+        {
+          url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1000&q=80",
+          caption: "Setiap Detik yang Disyukuri"
+        },
+        {
+          url: "https://images.unsplash.com/photo-1544077960-604201fe74bc?auto=format&fit=crop&w=1000&q=80",
+          caption: "Menatap Hari Bahagia yang Dinanti"
+        }
+      ],
+      gifts: [
+        {
+          bank: "BCA (Bank Central Asia)",
+          number: "8730192831",
+          holder: "Soren Alexander"
+        },
+        {
+          bank: "Bank Mandiri",
+          number: "1310029384756",
+          holder: "Freya Astrid"
+        }
+      ],
+      music: "https://www.dropbox.com/scl/fi/pbtl6lwtv07kxgmdd0gnu/music.mp3?rlkey=u1xr764r3lumkbdl5ds2zt2ex&st=8f6aeui9&raw=1",
+      youtubeUrl: "https://www.youtube.com/watch?v=y83x7MgzWOA"
+    };
+
+    // Initial Demo Wishes Data
+    let localWishes = [
+      {
+        name: "Lukas & Sophia",
+        attendance: "Hadir",
+        message: "Selamat menempuh hidup baru Soren & Freya! Semoga perjalanan cinta kalian senantiasa dipenuhi kehangatan, keharmonisan, dan kebahagiaan abadi.",
+        created_at: "Baru saja"
+      },
+      {
+        name: "Aris & Keluarga",
+        attendance: "Hadir",
+        message: "Turut berbahagia untuk kedua sahabat terbaik. Semoga cinta dan rasa saling melengkapi selalu mengiringi setiap langkah kalian.",
+        created_at: "2 jam lalu"
+      },
+      {
+        name: "Clara Elizabeth",
+        attendance: "Masih Ragu",
+        message: "Wishing you both a lifetime of love and joy! Doa dan harapan terbaik selalu menyertai hari bahagia kalian.",
+        created_at: "5 jam lalu"
+      }
+    ];
+
+    // --- 7.2 STATE MANAGEMENT ---
+    let currentConfig = DEMO_CONFIG;
+    let countdownTimer = null;
+    let currentGalleryPhotos = [];
+    let currentLightboxIndex = 0;
+    let isMusicPlaying = false;
+
+    // Toast helper
+    function showToast(message, icon = "fa-check") {
+      const container = document.getElementById("toast-container");
+      if (!container) return;
+      const toast = document.createElement("div");
+      toast.className = "flex items-center gap-2.5 px-4 py-2.5 bg-zinc-900 text-white text-xs font-display shadow-lg border border-zinc-700 transition-all duration-300 opacity-0 translate-y-2 pointer-events-auto";
+      toast.innerHTML = `<i class="fa-solid ${icon} text-zinc-300"></i><span>${message}</span>`;
+      container.appendChild(toast);
+      
+      requestAnimationFrame(() => {
+        toast.classList.remove("opacity-0", "translate-y-2");
+        toast.classList.add("opacity-100", "translate-y-0");
+      });
+
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "-translate-y-2");
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Copy to clipboard helper
+    window.copyTextToClipboard = async function(text, label = "Nomor rekening") {
+      if (!text) return;
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          const textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+        }
+        showToast(`${label} berhasil disalin!`);
+      } catch (err) {
+        showToast(`Gagal menyalin teks.`, "fa-triangle-exclamation");
+      }
+    };
+
+    // --- 7.3 ROBUST DATE PARSER & COUNTDOWN TIMER ---
+    function parseTargetDate(dateVal, timeVal) {
+      if (!dateVal) return null;
+      const str = String(dateVal).trim();
+
+      // Extract hours and minutes if timeVal provided
+      let hours = 8;
+      let minutes = 0;
+      if (timeVal) {
+        const timeMatch = String(timeVal).match(/(\d{1,2})[:.](\d{2})/);
+        if (timeMatch) {
+          hours = parseInt(timeMatch[1], 10);
+          minutes = parseInt(timeMatch[2], 10);
+        }
+      }
+
+      // 1. Format YYYY-MM-DD or YYYY/MM/DD
+      const ymd = str.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+      if (ymd) {
+        const y = parseInt(ymd[1], 10);
+        const m = parseInt(ymd[2], 10) - 1;
+        const d = parseInt(ymd[3], 10);
+        const timeInStr = str.match(/T?(\d{1,2}):(\d{2})/);
+        if (timeInStr && !timeVal) {
+          hours = parseInt(timeInStr[1], 10);
+          minutes = parseInt(timeInStr[2], 10);
+        }
+        return new Date(y, m, d, hours, minutes, 0).getTime();
+      }
+
+      // 2. Format Indonesian Text: "Sabtu, 24 Oktober 2026" or "24 Oktober 2026"
+      const idMonths = {
+        januari: 0, jan: 0,
+        februari: 1, feb: 1,
+        maret: 2, mar: 2,
+        april: 3, apr: 3,
+        mei: 4,
+        juni: 5, jun: 5,
+        juli: 6, jul: 6,
+        agustus: 7, agu: 7, ags: 7,
+        september: 8, sep: 8,
+        oktober: 9, okt: 9,
+        november: 10, nov: 10,
+        desember: 11, des: 11
+      };
+
+      const textMatch = str.match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+      if (textMatch) {
+        const day = parseInt(textMatch[1], 10);
+        const monthKey = textMatch[2].toLowerCase();
+        const year = parseInt(textMatch[3], 10);
+        if (idMonths.hasOwnProperty(monthKey)) {
+          return new Date(year, idMonths[monthKey], day, hours, minutes, 0).getTime();
+        }
+      }
+
+      // 3. Fallback standard Date.parse
+      const parsed = Date.parse(str.replace(' ', 'T'));
+      if (!isNaN(parsed)) {
+        return parsed;
+      }
+
+      return null;
+    }
+
+    function initCountdown(targetDateStr, timeStr) {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+
+      let targetTime = parseTargetDate(targetDateStr, timeStr);
+      const now = Date.now();
+
+      // If missing or unparseable, set fallback
+      if (!targetTime || isNaN(targetTime)) {
+        targetTime = new Date('2026-10-24T08:00:00+07:00').getTime();
+      }
+
+      // If demo mode and date is in past, push 18 days into future for live ticking
+      const urlParams = new URLSearchParams(window.location.search);
+      const isDemo = (urlParams.get('u') || window.FORCE_SLUG || 'demo') === 'demo';
+      if (targetTime <= now && isDemo) {
+        const futureDate = new Date();
+        futureDate.setDate(futureDate.getDate() + 18);
+        futureDate.setHours(8, 0, 0, 0);
+        targetTime = futureDate.getTime();
+      }
+
+      const daysEl = document.getElementById('cd-days');
+      const hoursEl = document.getElementById('cd-hours');
+      const minutesEl = document.getElementById('cd-minutes');
+      const secondsEl = document.getElementById('cd-seconds');
+
+      if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+      function updateTimer() {
+        const current = Date.now();
+        const difference = targetTime - current;
+
+        if (difference <= 0) {
+          daysEl.textContent = '00';
+          hoursEl.textContent = '00';
+          minutesEl.textContent = '00';
+          secondsEl.textContent = '00';
+          if (countdownTimer) {
+            clearInterval(countdownTimer);
+            countdownTimer = null;
+          }
+          return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        daysEl.textContent = String(days).padStart(2, '0');
+        hoursEl.textContent = String(hours).padStart(2, '0');
+        minutesEl.textContent = String(minutes).padStart(2, '0');
+        secondsEl.textContent = String(seconds).padStart(2, '0');
+      }
+
+      updateTimer();
+      countdownTimer = setInterval(updateTimer, 1000);
+    }
+
+    // --- 7.4 LIGHTBOX MODAL ---
+    function openLightbox(index) {
+      if (!currentGalleryPhotos || currentGalleryPhotos.length === 0) return;
+      currentLightboxIndex = (index + currentGalleryPhotos.length) % currentGalleryPhotos.length;
+      const photo = currentGalleryPhotos[currentLightboxIndex];
+      const modal = document.getElementById("lightbox-modal");
+      const img = document.getElementById("lightbox-image");
+      const caption = document.getElementById("lightbox-caption");
+
+      img.src = typeof photo === 'string' ? photo : (photo.url || photo.image);
+      caption.textContent = typeof photo === 'object' && photo.caption ? photo.caption : `Foto ${currentLightboxIndex + 1} dari ${currentGalleryPhotos.length}`;
+
+      modal.classList.remove("hidden");
+      requestAnimationFrame(() => modal.classList.remove("opacity-0"));
+    }
+
+    function closeLightbox() {
+      const modal = document.getElementById("lightbox-modal");
+      modal.classList.add("opacity-0");
+      setTimeout(() => modal.classList.add("hidden"), 300);
+    }
+
+    // --- 7.5 DATA BINDING ENGINE ---
+    function applyConfig(cfg) {
+      currentConfig = cfg || DEMO_CONFIG;
+
+      // Extract couple info with safe fallbacks
+      const groom = cfg.couple?.groom || cfg.couples?.groom;
+      const bride = cfg.couple?.bride || cfg.couples?.bride;
+
+      // Helper URL and handle formatters for social media
+      function formatSocialUrl(handle, iconClass) {
+        if (!handle) return '#';
+        const clean = handle.trim();
+        if (clean.startsWith('http://') || clean.startsWith('https://')) return clean;
+        const noAt = clean.replace(/^@+/, '');
+        const icon = (iconClass || '').toLowerCase();
+        if (icon.includes('whatsapp') || icon.includes('wa')) {
+          let phone = noAt.replace(/[^0-9]/g, '');
+          if (phone.startsWith('0')) phone = '62' + phone.substring(1);
+          return `https://wa.me/${phone}`;
+        }
+        if (icon.includes('tiktok')) {
+          return `https://www.tiktok.com/@${noAt}`;
+        }
+        return `https://instagram.com/${noAt}`;
+      }
+
+      function formatSocialHandle(handle) {
+        if (!handle) return '';
+        const clean = handle.trim();
+        if (clean.startsWith('http://') || clean.startsWith('https://')) {
+          try {
+            const url = new URL(clean);
+            const pathname = url.pathname.replace(/^\/|\/$/g, '');
+            return pathname ? (pathname.startsWith('@') ? pathname : `@${pathname}`) : clean;
+          } catch (e) {
+            return clean;
+          }
+        }
+        return clean.startsWith('@') ? clean : `@${clean}`;
+      }
+
+      const groomFull = groom?.fullname || groom?.fullName || groom?.name || "Soren Alexander, S.T.";
+      const groomNick = groom?.name || groom?.nickname || "Soren";
+      const groomParents = groom?.sonOf || groom?.parents || "Putra tercinta dari Bpk. Henrik Lund & Ibu Astrid Lindgren";
+      const rawGroomIg = groom && ('instagram' in groom) ? groom.instagram : (cfg === DEMO_CONFIG ? 'sorenalex' : '');
+      const groomIg = (rawGroomIg !== null && rawGroomIg !== undefined) ? String(rawGroomIg).trim() : '';
+      const groomHasSocial = groomIg !== '' && groomIg !== '@';
+      const groomPhoto = groom?.image || groom?.photo || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80";
+
+      const brideFull = bride?.fullname || bride?.fullName || bride?.name || "Freya Astrid, S.Ds.";
+      const brideNick = bride?.name || bride?.nickname || "Freya";
+      const brideParents = bride?.daughterOf || bride?.parents || "Putri tercinta dari Bpk. Erik Dahl & Ibu Ingrid Bergman";
+      const rawBrideIg = bride && ('instagram' in bride) ? bride.instagram : (cfg === DEMO_CONFIG ? 'freyadahl' : '');
+      const brideIg = (rawBrideIg !== null && rawBrideIg !== undefined) ? String(rawBrideIg).trim() : '';
+      const brideHasSocial = brideIg !== '' && brideIg !== '@';
+      const bridePhoto = bride?.image || bride?.photo || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80";
+
+      // 1. Cover & Lockscreen
+      document.getElementById('lock-groom-name').textContent = groomNick;
+      document.getElementById('lock-bride-name').textContent = brideNick;
+      document.getElementById('hero-groom-name').textContent = groomNick;
+      document.getElementById('hero-bride-name').textContent = brideNick;
+      document.getElementById('footer-groom-name').textContent = groomNick;
+      document.getElementById('footer-bride-name').textContent = brideNick;
+
+      const coverBackdrop = cfg.coverImage || cfg.ogImage;
+      if (coverBackdrop) {
+        document.getElementById('lockscreen-bg-img').src = coverBackdrop;
+      }
+      const heroPhoto = cfg.heroImage || cfg.coverImage;
+      if (heroPhoto) {
+        document.getElementById('hero-main-photo').src = heroPhoto;
+      }
+
+      // Date in Cover & Hero
+      const eventsList = Array.isArray(cfg.events) && cfg.events.length > 0 ? cfg.events : DEMO_CONFIG.events;
+      const firstEvent = eventsList[0];
+      const eventDateText = firstEvent?.date || "Sabtu, 24 Oktober 2026";
+      document.getElementById('lock-event-date').textContent = eventDateText;
+      document.getElementById('hero-date').textContent = `${eventDateText} · ${firstEvent?.location || 'Bandung, Indonesia'}`;
+
+      // 2. Quotes
+      const quoteBody = typeof cfg.quotes === 'string' ? cfg.quotes : (cfg.quote?.translation || "Maka dipertemukanlah dua jiwa dalam ketenangan, saling melengkapi dalam kesederhanaan cinta yang tulus dan abadi.");
+      const quoteAuthor = cfg.quote?.source || "— Makna Cinta & Kebersamaan";
+      document.getElementById('quote-text').textContent = `"${quoteBody.replace(/^["“]|["”]$/g, '')}"`;
+      document.getElementById('quote-source').textContent = quoteAuthor;
+
+      // 3. Mempelai Cards
+      document.getElementById('groom-fullname').textContent = groomFull;
+      document.getElementById('groom-parents').innerHTML = groomParents;
+      document.getElementById('groom-img').src = groomPhoto;
+      
+      const groomSocialCont = document.getElementById('groom-social-container');
+      if (groomSocialCont) {
+        groomSocialCont.style.display = groomHasSocial ? 'block' : 'none';
+      }
+      if (groomHasSocial) {
+        const groomIcon = groom?.socialIcon || 'fa-brands fa-instagram';
+        const groomIconEl = document.getElementById('groom-social-icon');
+        if (groomIconEl) groomIconEl.className = `${groomIcon} text-sm`;
+        const groomIgEl = document.getElementById('groom-instagram');
+        if (groomIgEl) groomIgEl.href = formatSocialUrl(groomIg, groomIcon);
+        const groomHandleEl = document.getElementById('groom-ig-handle');
+        if (groomHandleEl) groomHandleEl.textContent = formatSocialHandle(groomIg);
+      }
+
+      document.getElementById('bride-fullname').textContent = brideFull;
+      document.getElementById('bride-parents').innerHTML = brideParents;
+      document.getElementById('bride-img').src = bridePhoto;
+
+      const brideSocialCont = document.getElementById('bride-social-container');
+      if (brideSocialCont) {
+        brideSocialCont.style.display = brideHasSocial ? 'block' : 'none';
+      }
+      if (brideHasSocial) {
+        const brideIcon = bride?.socialIcon || 'fa-brands fa-instagram';
+        const brideIconEl = document.getElementById('bride-social-icon');
+        if (brideIconEl) brideIconEl.className = `${brideIcon} text-sm`;
+        const brideIgEl = document.getElementById('bride-instagram');
+        if (brideIgEl) brideIgEl.href = formatSocialUrl(brideIg, brideIcon);
+        const brideHandleEl = document.getElementById('bride-ig-handle');
+        if (brideHandleEl) brideHandleEl.textContent = formatSocialHandle(brideIg);
+      }
+
+      // 4. Countdown Timer
+      const countdownTarget = cfg.countdownDate || firstEvent?.date || "2026-10-24";
+      const countdownTime = firstEvent?.startTime || firstEvent?.time;
+      initCountdown(countdownTarget, countdownTime);
+
+      // Save to Google Calendar URL helper
+      const calTitle = encodeURIComponent(`Pernikahan ${groomNick} & ${brideNick}`);
+      const calDetails = encodeURIComponent(`Pernikahan ${groomFull} & ${brideFull}`);
+      const calLocation = encodeURIComponent(firstEvent?.location || "Bandung");
+      const gcalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&details=${calDetails}&location=${calLocation}`;
+      document.getElementById('btn-save-cal-main').href = gcalLink;
+
+      // 5. Render Events
+      const eventsContainer = document.getElementById('events-container');
+      eventsContainer.innerHTML = '';
+      eventsList.forEach((ev, idx) => {
+        const evTitle = ev.title || (idx === 0 ? "Upacara Pernikahan" : "Resepsi & Perayaan");
+        const evDate = ev.date || eventDateText;
+        const evTime = ev.time || (ev.startTime ? `${ev.startTime} - ${ev.endTime || 'Selesai'} WIB` : "08:00 - 10:00 WIB");
+        const evLoc = ev.location || ev.locationName || "The Glass House Sanctuary";
+        const evAddr = ev.address || "";
+        
+        // Petunjuk Lokasi (Google Maps) - Hanya tampil jika diisi
+        const rawMap = (ev.mapsUrl || ev.mapUrl || ev.maps || '').trim();
+        const hasMap = Boolean(rawMap && rawMap !== '-' && rawMap.toLowerCase() !== 'none' && rawMap.toLowerCase() !== 'null');
+        const evMap = hasMap ? rawMap : '';
+        const mapBtnHtml = hasMap ? `
+          <a href="${escapeHtml(evMap)}" target="_blank" rel="noopener noreferrer" 
+             class="inline-flex items-center gap-2 border border-zinc-900 bg-zinc-900 text-white px-5 py-2.5 text-xs font-display uppercase tracking-wider hover:bg-white hover:text-zinc-900 transition-colors">
+            <i class="fa-solid fa-location-dot text-xs"></i>
+            <span>Buka Google Maps</span>
+          </a>
+        ` : '';
+
+        let evCalLink = ev.calendarUrl;
+        if (!evCalLink) {
+          const calLoc = `${evLoc}${evAddr ? ', ' + evAddr : ''}`;
+          evCalLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(evTitle + ' - ' + groomNick + ' & ' + brideNick)}&details=${encodeURIComponent(evTitle)}&location=${encodeURIComponent(calLoc)}`;
+        }
+
+        const calBtnHtml = evCalLink ? `
+          <a href="${evCalLink}" target="_blank" rel="noopener noreferrer" 
+             class="inline-flex items-center gap-2 border border-zinc-300 bg-white/80 text-zinc-700 px-5 py-2.5 text-xs font-display uppercase tracking-wider hover:border-zinc-900 hover:text-zinc-900 transition-colors">
+            <i class="fa-regular fa-calendar-plus text-xs"></i>
+            <span>Simpan Tanggal</span>
+          </a>
+        ` : '';
+
+        const actionsHtml = (mapBtnHtml || calBtnHtml) ? `
+          <div class="flex flex-wrap items-center justify-center gap-3">
+            ${mapBtnHtml}
+            ${calBtnHtml}
+          </div>
+        ` : '';
+
+        // Pilihan Hiburan (Optional)
+        const entertainmentVal = (ev.entertainment || ev.hiburan || '').trim();
+        let entertainmentHtml = '';
+        if (entertainmentVal) {
+          entertainmentHtml = `
+            <div class="my-4 inline-flex items-center gap-2 px-3.5 py-1.5 border border-zinc-200 bg-zinc-50/90 text-zinc-700 text-xs font-sans shadow-sm">
+              <i class="fa-solid fa-music text-[11px] text-zinc-500"></i>
+              <span>Hiburan: <strong class="font-medium text-zinc-900">${escapeHtml(entertainmentVal)}</strong></span>
+            </div>
+          `;
+        }
+
+        const card = document.createElement('div');
+        card.className = "nordic-glass-card p-6 sm:p-8 text-center relative overflow-hidden";
+        card.innerHTML = `
+          <div class="inline-block border-b border-zinc-200 pb-1 mb-4">
+            <span class="text-[10px] uppercase tracking-mega font-display text-zinc-400">Bagian 0${idx + 1}</span>
+          </div>
+          <h3 class="text-2xl font-serif text-zinc-900 font-normal mb-2">${escapeHtml(evTitle)}</h3>
+          
+          <div class="w-8 h-[1px] bg-zinc-200 mx-auto my-4"></div>
+
+          <div class="space-y-1 mb-6">
+            <p class="text-sm font-display font-medium text-zinc-800">${escapeHtml(evDate)}</p>
+            <p class="text-xs font-sans text-zinc-500"><i class="fa-regular fa-clock mr-1.5 text-zinc-400"></i>${escapeHtml(evTime)}</p>
+          </div>
+
+          <div class="space-y-1 ${entertainmentHtml ? 'mb-4' : (actionsHtml ? 'mb-8' : 'mb-2')} max-w-md mx-auto">
+            <p class="text-sm font-display font-semibold text-zinc-800">${escapeHtml(evLoc)}</p>
+            ${evAddr ? `<p class="text-xs font-sans text-zinc-500 leading-relaxed">${escapeHtml(evAddr)}</p>` : ''}
+          </div>
+
+          ${entertainmentHtml}
+
+          ${actionsHtml}
+        `;
+        eventsContainer.appendChild(card);
+      });
+
+      // 6. Render Love Story
+      const storiesContainer = document.getElementById('stories-container');
+      const storiesSection = document.getElementById('stories');
+      storiesContainer.innerHTML = '';
+      const storiesList = Array.isArray(cfg.stories) && cfg.stories.length > 0 ? cfg.stories : DEMO_CONFIG.stories;
+      if (storiesList.length > 0) {
+        storiesSection.classList.remove('hidden');
+        storiesList.forEach((st) => {
+          const item = document.createElement('div');
+          item.className = "relative group";
+          item.innerHTML = `
+            <div class="absolute -left-[31px] sm:-left-[39px] top-0 w-3 h-3 rounded-none bg-white border border-zinc-900"></div>
+            <span class="text-xs uppercase font-display tracking-widest text-zinc-400 font-semibold">${st.year || st.date || ''}</span>
+            <h4 class="text-base font-display font-medium text-zinc-900 mt-1">${st.title || ''}</h4>
+            ${st.image ? `<img src="${st.image}" class="w-full h-40 object-cover mt-2 mb-2 border border-zinc-200" alt="Story">` : ''}
+            <p class="text-xs text-zinc-600 font-sans leading-relaxed mt-2">${st.description || ''}</p>
+          `;
+          storiesContainer.appendChild(item);
+        });
+      } else {
+        storiesSection.classList.add('hidden');
+      }
+
+      // 7. Render Gallery Photos
+      const galleryPhotos = Array.isArray(cfg.gallery) && cfg.gallery.length > 0 ? cfg.gallery : DEMO_CONFIG.gallery;
+      currentGalleryPhotos = galleryPhotos;
+      const galleryContainer = document.getElementById('gallery-container');
+      galleryContainer.innerHTML = '';
+      galleryPhotos.forEach((photo, idx) => {
+        const imgUrl = typeof photo === 'string' ? photo : (photo.url || photo.image);
+        const caption = typeof photo === 'object' && photo.caption ? photo.caption : `Foto ${idx + 1}`;
+        const tile = document.createElement('div');
+        tile.className = "aspect-square border border-nordic-border bg-zinc-100 overflow-hidden cursor-pointer group relative";
+        tile.onclick = () => openLightbox(idx);
+        tile.innerHTML = `
+          <img src="${imgUrl}" alt="${caption}" 
+               class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 ease-out" loading="lazy" />
+          <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <i class="fa-solid fa-expand text-white text-sm"></i>
+          </div>
+        `;
+        galleryContainer.appendChild(tile);
+      });
+
+      // 8. Render Bank Accounts / Digital Gifts
+      function getBankLogo(bank) {
+        const b = (bank || '').toLowerCase();
+        if (b.includes('bca')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bank_Central_Asia.svg/960px-Bank_Central_Asia.svg.png';
+        if (b.includes('mandiri')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/250px-Bank_Mandiri_logo_2016.svg.png';
+        if (b.includes('bni')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Bank_Negara_Indonesia_logo_%282004%29.svg/250px-Bank_Negara_Indonesia_logo_%282004%29.svg.png';
+        if (b.includes('bri')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/BRI_2025.svg/960px-BRI_2025.svg.png';
+        if (b.includes('bsi') || b.includes('syariah indonesia')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bank_Syariah_Indonesia.svg/960px-Bank_Syariah_Indonesia.svg.png';
+        if (b.includes('dana')) return 'https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg';
+        if (b.includes('gopay')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/Logo_Gopay.svg/960px-Logo_Gopay.svg.png';
+        if (b.includes('ovo')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Logo_ovo_purple.svg/960px-Logo_ovo_purple.svg.png';
+        if (b.includes('shopee') || b.includes('spay')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Shopee.svg/1024px-Shopee.svg.png';
+        if (b.includes('cimb') || b.includes('niaga')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/CIMB_Niaga_logo.svg/800px-CIMB_Niaga_logo.svg.png';
+        if (b.includes('jago')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Bank_Jago_logo.svg/1200px-Bank_Jago_logo.svg.png';
+        if (b.includes('permata')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/PermataBank_logo.svg/1200px-PermataBank_logo.svg.png';
+        if (b.includes('jenius') || b.includes('btpn')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Jenius-logo.png/640px-Jenius-logo.png';
+        if (b.includes('seabank')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/SeaBank_logo.svg/1200px-SeaBank_logo.svg.png';
+        if (b.includes('muamalat')) return 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Bank_Muamalat_logo.svg/1200px-Bank_Muamalat_logo.svg.png';
+        return null;
+      }
+
+      const bankContainer = document.getElementById('bank-accounts-container');
+      bankContainer.innerHTML = '';
+      const bankList = Array.isArray(cfg.gifts) && cfg.gifts.length > 0 ? cfg.gifts : (Array.isArray(cfg.banks) && cfg.banks.length > 0 ? cfg.banks : DEMO_CONFIG.gifts);
+      bankList.forEach((b) => {
+        const bName = b.bank || b.bankName || 'Transfer Bank';
+        const bNumber = b.number || b.accountNumber || '-';
+        const bHolder = b.holder || b.accountName || b.accountHolder || '-';
+        const logo = b.logo || getBankLogo(bName);
+
+        const card = document.createElement('div');
+        card.className = "nordic-glass-card p-5 sm:p-6 text-center";
+        card.innerHTML = `
+          <div class="flex items-center justify-between gap-3 mb-4 pb-3 border-b border-zinc-200/60">
+            <span class="text-xs uppercase tracking-wider font-display text-zinc-600 font-semibold">${escapeHtml(bName)}</span>
+            ${logo ? `
+              <div class="bg-white px-2.5 py-1 rounded border border-zinc-200 shadow-xs flex items-center justify-center shrink-0">
+                <img src="${logo}" alt="${escapeHtml(bName)}" class="h-5 max-w-[75px] object-contain">
+              </div>
+            ` : `
+              <i class="fa-solid fa-credit-card text-zinc-400 text-sm"></i>
+            `}
+          </div>
+          <p class="text-lg sm:text-xl font-display font-semibold text-zinc-900 tracking-wider my-2 select-all">${escapeHtml(bNumber)}</p>
+          <p class="text-xs text-zinc-500 font-sans">a.n. ${escapeHtml(bHolder)}</p>
+          <button type="button" onclick="window.copyTextToClipboard('${bNumber.replace(/'/g, "\\'")}', 'Nomor rekening ${escapeHtml(bName)}')"
+                  class="mt-4 inline-flex items-center gap-2 border border-zinc-300 bg-white/90 px-4 py-2 text-xs font-display uppercase tracking-wider text-zinc-700 hover:border-zinc-900 hover:text-zinc-900 transition-colors cursor-pointer">
+            <i class="fa-regular fa-clone text-xs"></i>
+            <span>Salin Nomor Rekening</span>
+          </button>
+        `;
+        bankContainer.appendChild(card);
+      });
+
+      // Render Video Kebahagiaan
+      let videoSource = '';
+      if (typeof cfg.youtubeUrl === 'string') {
+        videoSource = cfg.youtubeUrl.trim();
+      } else if (typeof cfg.videoUrl === 'string') {
+        videoSource = cfg.videoUrl.trim();
+      } else if (typeof window.config !== 'undefined' && window.config && typeof window.config.youtubeUrl === 'string') {
+        videoSource = window.config.youtubeUrl.trim();
+      } else if (slug === 'demo') {
+        videoSource = (DEMO_CONFIG.youtubeUrl || '').trim();
+      }
+      renderVideo(videoSource);
+
+      // Gift physical address
+      const giftAddrContainer = document.getElementById('gift-address-container');
+      const giftAddrText = document.getElementById('gift-address-text');
+      if (cfg.giftAddress) {
+        giftAddrText.textContent = cfg.giftAddress;
+        giftAddrContainer.classList.remove('hidden');
+      } else {
+        giftAddrContainer.classList.add('hidden');
+      }
+
+      // 9. Background Music Source
+      const bgmAudio = document.getElementById('bgm-audio');
+      const musicSource = cfg.music || cfg.musicUrl || DEMO_CONFIG.music;
+      if (musicSource) {
+        bgmAudio.src = musicSource;
+      }
+    }
+
+    /**
+     * Render Video Kebahagiaan
+     */
+    function renderVideo(url) {
+      const section = document.getElementById('video-section');
+      const iframe = document.getElementById('youtube-iframe');
+      const navLink = document.getElementById('nav-link-video');
+
+      function hideVideo() {
+        if (section) {
+          section.style.display = 'none';
+          section.classList.add('hidden');
+        }
+        if (iframe) {
+          iframe.src = '';
+        }
+        if (navLink) {
+          navLink.style.display = 'none';
+          navLink.classList.add('hidden');
+        }
+      }
+
+      function showVideo(embedUrl) {
+        if (section) {
+          section.style.display = 'block';
+          section.classList.remove('hidden');
+        }
+        if (iframe) {
+          iframe.src = embedUrl;
+        }
+        if (navLink) {
+          navLink.style.display = '';
+          navLink.classList.remove('hidden');
+        }
+      }
+
+      // Jika tidak diisi / kosong / falsy
+      if (!url || typeof url !== 'string' || !url.trim()) {
+        hideVideo();
+        return;
+      }
+
+      const cleanUrl = url.trim();
+      if (cleanUrl === '-' || cleanUrl.toLowerCase() === 'none' || cleanUrl.toLowerCase() === 'null') {
+        hideVideo();
+        return;
+      }
+
+      let videoId = '';
+      try {
+        if (cleanUrl.includes('youtube.com/watch')) {
+          const params = new URLSearchParams(cleanUrl.split('?')[1]);
+          videoId = params.get('v') || '';
+        } else if (cleanUrl.includes('youtu.be/')) {
+          const parts = cleanUrl.split('youtu.be/')[1];
+          videoId = parts ? parts.split(/[?#&]/)[0] : '';
+        } else if (cleanUrl.includes('youtube.com/embed/')) {
+          const parts = cleanUrl.split('youtube.com/embed/')[1];
+          videoId = parts ? parts.split(/[?#&]/)[0] : '';
+        } else if (cleanUrl.includes('youtube.com/shorts/')) {
+          const parts = cleanUrl.split('youtube.com/shorts/')[1];
+          videoId = parts ? parts.split(/[?#&]/)[0] : '';
+        } else if (/^[a-zA-Z0-9_-]{11}$/.test(cleanUrl)) {
+          videoId = cleanUrl;
+        }
+      } catch (err) {
+        console.error("Error parsing YouTube URL:", err);
+      }
+
+      // Bila ID berupa 'contoh' di URL demo
+      if (videoId && videoId.toLowerCase() === 'contoh') {
+        videoId = 'y83x7MgzWOA';
+      } else if (!videoId && cleanUrl.toLowerCase().includes('contoh')) {
+        videoId = 'y83x7MgzWOA';
+      }
+
+      if (videoId) {
+        showVideo(`https://www.youtube.com/embed/${videoId}?rel=0`);
+      } else {
+        hideVideo();
+      }
+    }
+
+    // --- 7.6 WISHES RENDERER ---
+    function renderWishesList(wishes) {
+      const container = document.getElementById('wishes-container');
+      const countEl = document.getElementById('wishes-count');
+      if (!container) return;
+      container.innerHTML = '';
+      if (countEl) countEl.textContent = wishes.length;
+
+      if (!wishes || wishes.length === 0) {
+        container.innerHTML = `<div class="p-4 border border-dashed border-zinc-200 text-center text-xs text-zinc-400 font-sans">Belum ada ucapan. Jadilah yang pertama memberikan ucapan selamat!</div>`;
+        return;
+      }
+
+      wishes.forEach((w) => {
+        const item = document.createElement('div');
+        item.className = "nordic-glass-subtle p-4 space-y-1.5 border border-white/80";
+        
+        let attendanceBadge = '';
+        if (w.attendance === 'Hadir') {
+          attendanceBadge = '<span class="text-[9px] uppercase tracking-wider text-emerald-700 bg-emerald-50/80 px-2 py-0.5 border border-emerald-200">Hadir</span>';
+        } else if (w.attendance === 'Tidak Hadir') {
+          attendanceBadge = '<span class="text-[9px] uppercase tracking-wider text-zinc-500 bg-zinc-100/80 px-2 py-0.5 border border-zinc-200">Tidak Hadir</span>';
+        } else {
+          attendanceBadge = '<span class="text-[9px] uppercase tracking-wider text-amber-700 bg-amber-50/80 px-2 py-0.5 border border-amber-200">Ragu</span>';
+        }
+
+        let timeStr = 'Baru saja';
+        if (w.created_at) {
+          try {
+            const diffMs = Date.now() - new Date(w.created_at).getTime();
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            if (diffHours < 1) timeStr = 'Baru saja';
+            else if (diffHours < 24) timeStr = `${diffHours} jam lalu`;
+            else timeStr = `${Math.floor(diffHours / 24)} hari lalu`;
+          } catch(e) {
+            timeStr = w.created_at;
+          }
+        }
+
+        item.innerHTML = `
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-display font-semibold text-zinc-800">${escapeHtml(w.name || 'Tamu Undangan')}</h4>
+            ${attendanceBadge}
+          </div>
+          <p class="text-xs text-zinc-600 font-sans leading-relaxed pt-1">${escapeHtml(w.message || '')}</p>
+          <p class="text-[10px] text-zinc-400 font-display">${timeStr}</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // --- 7.7 APPLICATION INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", async () => {
+      // a. URL Parameters & Guest Detection
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('u') || window.FORCE_SLUG || 'demo';
+      const guestName = urlParams.get('to') || urlParams.get('kpd') || 'Tamu Undangan';
+
+      // Set guest name in UI
+      const lockGuestNameEl = document.getElementById('lock-guest-name');
+      const rsvpNameInput = document.getElementById('rsvp-name');
+      if (lockGuestNameEl) lockGuestNameEl.textContent = guestName;
+      if (rsvpNameInput) rsvpNameInput.value = guestName !== 'Tamu Undangan' ? guestName : '';
+
+      // b. Supabase Client Setup
+      let supabaseClient = window.supabaseClient || (typeof supabase !== 'undefined' && window.SUPABASE_URL && window.SUPABASE_ANON_KEY ? supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY) : null);
+
+      // c. Read 'invitations' table or DEMO fallback
+      let invitationData = null;
+      if (slug !== 'demo' && supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient.from('invitations').select('config').eq('slug', slug).single();
+          if (!error && data && data.config) {
+            invitationData = data.config;
+          }
+        } catch (err) {
+          console.warn("Could not fetch remote invitation config:", err);
+        }
+      }
+
+      const initialConfig = invitationData || (typeof window.config !== 'undefined' && window.config ? window.config : DEMO_CONFIG);
+      applyConfig(initialConfig);
+
+      // Fetch & subscribe to wishes
+      async function loadWishes() {
+        if (supabaseClient && slug !== 'demo') {
+          try {
+            const { data, error } = await supabaseClient.from('wishes').select('*').eq('slug', slug).order('created_at', { ascending: false });
+            if (!error && data) {
+              renderWishesList(data);
+              return;
+            }
+          } catch (e) {
+            console.warn("Error fetching wishes from Supabase:", e);
+          }
+        }
+        renderWishesList(localWishes);
+      }
+
+      await loadWishes();
+
+      // Realtime subscription if Supabase is active
+      if (supabaseClient && slug !== 'demo') {
+        try {
+          supabaseClient.channel(`nordic-wishes-${slug}`)
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'wishes', filter: `slug=eq.${slug}` }, (payload) => {
+              if (payload.new) {
+                loadWishes();
+                showToast(`Ucapan baru dari ${payload.new.name} baru saja masuk!`);
+              }
+            })
+            .subscribe();
+        } catch (e) {
+          console.warn("Realtime subscription init failed:", e);
+        }
+      }
+
+      // --- 7.8 INTERACTION HANDLERS ---
+      const bgmAudio = document.getElementById('bgm-audio');
+      const audioControlContainer = document.getElementById('audio-control-container');
+      const audioIcon = document.getElementById('audio-icon');
+      const floatingNav = document.getElementById('floating-nav');
+      const btnOpenInvitation = document.getElementById('btn-open-invitation');
+      const lockscreen = document.getElementById('lockscreen');
+
+      // Audio toggle handler
+      function toggleAudio() {
+        if (!bgmAudio) return;
+        if (isMusicPlaying) {
+          bgmAudio.pause();
+          isMusicPlaying = false;
+          audioIcon.classList.remove('animate-spin-slow');
+          audioIcon.className = 'fa-solid fa-play text-xs';
+          showToast("Musik dihentikan");
+        } else {
+          bgmAudio.play().then(() => {
+            isMusicPlaying = true;
+            audioIcon.classList.add('animate-spin-slow');
+            audioIcon.className = 'fa-solid fa-music text-xs animate-spin-slow';
+            showToast("Musik diputar");
+          }).catch(() => {
+            console.warn("Autoplay audio restriction");
+          });
+        }
+      }
+
+      document.getElementById('btn-toggle-audio').addEventListener('click', toggleAudio);
+
+      // Open Invitation CTA with silky smooth easing
+      btnOpenInvitation.addEventListener('click', () => {
+        btnOpenInvitation.classList.add('scale-95', 'opacity-80');
+
+        setTimeout(() => {
+          document.body.classList.remove('is-locked');
+          document.body.classList.add('is-unlocked');
+          lockscreen.classList.add('unlocked');
+          
+          // Reveal floating widgets smoothly (with CSS stagger transition)
+          audioControlContainer.classList.remove('opacity-0', 'pointer-events-none');
+          floatingNav.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+
+          // Play audio
+          if (bgmAudio) {
+            bgmAudio.play().then(() => {
+              isMusicPlaying = true;
+              audioIcon.classList.add('animate-spin-slow');
+              audioIcon.className = 'fa-solid fa-music text-xs animate-spin-slow';
+            }).catch((err) => {
+              console.log("Audio playback waiting for user trigger:", err);
+            });
+          }
+
+          // Complete cleanup after slow transition completes
+          setTimeout(() => {
+            lockscreen.style.display = 'none';
+          }, 1900);
+        }, 150);
+      });
+
+      // Lightbox listeners
+      document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+      document.getElementById('lightbox-prev').addEventListener('click', () => openLightbox(currentLightboxIndex - 1));
+      document.getElementById('lightbox-next').addEventListener('click', () => openLightbox(currentLightboxIndex + 1));
+      
+      document.getElementById('lightbox-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'lightbox-modal') closeLightbox();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        const modal = document.getElementById('lightbox-modal');
+        if (modal && !modal.classList.contains('hidden')) {
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') openLightbox(currentLightboxIndex - 1);
+          if (e.key === 'ArrowRight') openLightbox(currentLightboxIndex + 1);
+        }
+      });
+
+      // RSVP Submission Handler
+      const rsvpForm = document.getElementById('rsvp-form');
+      rsvpForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('btn-submit-rsvp');
+        const nameVal = document.getElementById('rsvp-name').value.trim();
+        const messageVal = document.getElementById('rsvp-message').value.trim();
+        const attendanceVal = document.querySelector('input[name="attendance"]:checked')?.value || 'Hadir';
+
+        if (!nameVal || !messageVal) {
+          showToast("Mohon lengkapi nama dan ucapan Anda.", "fa-circle-exclamation");
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-xs"></i><span>Mengirimkan...</span>`;
+
+        try {
+          if (supabaseClient && slug !== 'demo') {
+            const { error } = await supabaseClient.from('wishes').insert([
+              { slug: slug, name: nameVal, attendance: attendanceVal, message: messageVal }
+            ]);
+            if (error) throw error;
+          } else {
+            // Local fallback simulation
+            localWishes.unshift({
+              name: nameVal,
+              attendance: attendanceVal,
+              message: messageVal,
+              created_at: "Baru saja"
+            });
+            renderWishesList(localWishes);
+          }
+
+          showToast("Terima kasih! Konfirmasi & ucapan telah terkirim.");
+          document.getElementById('rsvp-message').value = '';
+        } catch (err) {
+          console.error("Gagal mengirim RSVP:", err);
+          showToast("Gagal mengirim. Silakan coba lagi.", "fa-triangle-exclamation");
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<i class="fa-regular fa-paper-plane text-xs"></i><span>Kirim Konfirmasi &amp; Ucapan</span>`;
+        }
+      });
+    });
+  </script>
+</body>
+</html>

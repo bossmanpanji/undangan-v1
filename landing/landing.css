@@ -271,48 +271,141 @@ body {
     border-color: var(--gold);
 }
 .theme-preview {
-    height: 220px;
+    height: 250px;
     position: relative;
     overflow: hidden;
     display: flex; align-items: center; justify-content: center;
+    perspective: 800px;
 }
 .theme-preview-royal {
-    background: linear-gradient(135deg, #1a120b 0%, #2d1e12 50%, #1a120b 100%);
+    background: radial-gradient(circle at 50% 35%, #2d1e12 0%, #1a120b 60%, #0d0805 100%);
 }
 .theme-preview-floral {
-    background: linear-gradient(135deg, #f5ebe0 0%, #d5c4a1 50%, #f5ebe0 100%);
+    background: radial-gradient(circle at 50% 35%, #fbf5ee 0%, #ecdcc9 60%, #dfcbb5 100%);
 }
 .theme-preview-midnight {
-    background: linear-gradient(135deg, #0a1628 0%, #1a2d4a 50%, #0a1628 100%);
+    background: radial-gradient(circle at 50% 35%, #162947 0%, #0a1628 60%, #050b14 100%);
 }
+.theme-preview-heritage {
+    background: radial-gradient(circle at 50% 35%, #5C4A3D 0%, #2C2A29 60%, #1a1817 100%);
+}
+.theme-preview-velvet {
+    background: radial-gradient(circle at 50% 35%, #0f1c38 0%, #070e1e 60%, #03060d 100%);
+}
+.theme-preview-nordic {
+    background: radial-gradient(circle at 50% 35%, #F4F4F2 0%, #E5E5E2 60%, #D4D4CE 100%);
+}
+.theme-preview-botanical {
+    background: radial-gradient(circle at 50% 35%, #E2E8E4 0%, #B8C7BE 60%, #8FA295 100%);
+}
+
+/* Category Badge on Preview */
+.theme-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 4px 10px;
+    border-radius: 99px;
+    backdrop-filter: blur(8px);
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.theme-badge-royal {
+    background: rgba(184, 134, 11, 0.2);
+    border: 1px solid rgba(184, 134, 11, 0.4);
+    color: #e2b34a;
+}
+.theme-badge-floral {
+    background: rgba(212, 163, 115, 0.25);
+    border: 1px solid rgba(212, 163, 115, 0.5);
+    color: #8b5d33;
+}
+.theme-badge-midnight {
+    background: rgba(58, 143, 183, 0.2);
+    border: 1px solid rgba(58, 143, 183, 0.4);
+    color: #64b5f6;
+}
+.theme-badge-heritage {
+    background: rgba(179, 139, 77, 0.25);
+    border: 1px solid rgba(179, 139, 77, 0.45);
+    color: #dfba79;
+}
+.theme-badge-velvet {
+    background: rgba(212, 175, 55, 0.2);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    color: #f5ecd1;
+}
+.theme-badge-nordic {
+    background: rgba(24, 24, 27, 0.12);
+    border: 1px solid rgba(24, 24, 27, 0.28);
+    color: #18181b;
+}
+
 /* --- Phone Mockup Wrapper --- */
 .phone-mockup {
-    width: 110px;
-    height: 190px;
-    border: 3px solid #1c1510;
-    border-radius: 16px;
+    width: 126px;
+    height: 215px;
+    border: 3.5px solid #1c1510;
+    border-radius: 20px;
     background: #000;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.65);
     overflow: hidden;
     position: relative;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s;
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.6s;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+/* Phone top speaker/camera notch */
+.phone-notch {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 36px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 99px;
+    z-index: 5;
+    pointer-events: none;
+}
+
 /* Specific borders for phone mockup depending on the theme color */
 .theme-preview-royal .phone-mockup {
-    border-color: #2a1f14;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 10px rgba(184, 134, 11, 0.15);
+    border-color: #3d2b17;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 0 15px rgba(184, 134, 11, 0.2);
 }
 .theme-preview-floral .phone-mockup {
-    border-color: #d5c4a1;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 10px rgba(212, 163, 115, 0.1);
+    border-color: #cbb998;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.25), 0 0 15px rgba(212, 163, 115, 0.2);
 }
 .theme-preview-midnight .phone-mockup {
-    border-color: #122136;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.7), 0 0 10px rgba(58, 143, 183, 0.2);
+    border-color: #1a2f4d;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 0 15px rgba(58, 143, 183, 0.25);
+}
+.theme-preview-heritage .phone-mockup {
+    border-color: #B38B4D;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.7), 0 0 15px rgba(179, 139, 77, 0.3);
+}
+.theme-preview-velvet .phone-mockup {
+    border-color: #d4af37;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+}
+.theme-preview-nordic .phone-mockup {
+    border-color: #27272a;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.18), 0 0 15px rgba(212, 212, 206, 0.5);
+}
+.theme-preview-botanical .phone-mockup {
+    border-color: #9EACA2;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 10px rgba(158, 172, 162, 0.3);
 }
 
 /* Glass shine overlay */
@@ -320,9 +413,9 @@ body {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0) 60%);
+    background: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0) 65%);
     pointer-events: none;
-    z-index: 2;
+    z-index: 3;
 }
 
 .phone-screen {
@@ -330,6 +423,9 @@ body {
     height: 100%;
     overflow: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .phone-screen img {
@@ -342,23 +438,44 @@ body {
 
 /* Micro-interaction on theme-card hover */
 .theme-card:hover .phone-mockup {
-    transform: translateY(-6px) scale(1.05) rotate(1.5deg);
+    transform: translateY(-8px) scale(1.06) rotate(1deg);
 }
 
 .theme-card:hover .theme-preview-royal .phone-mockup {
-    box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(184, 134, 11, 0.4);
+    box-shadow: 0 22px 45px rgba(0,0,0,0.85), 0 0 25px rgba(184, 134, 11, 0.5);
     border-color: var(--gold);
 }
 
 .theme-card:hover .theme-preview-floral .phone-mockup {
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px rgba(212, 163, 115, 0.3);
-    border-color: #8b6f47;
-    transform: translateY(-6px) scale(1.05) rotate(-1.5deg); /* Slight alternate tilt */
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35), 0 0 22px rgba(212, 163, 115, 0.4);
+    border-color: #b59873;
+    transform: translateY(-8px) scale(1.06) rotate(-1deg);
 }
 
 .theme-card:hover .theme-preview-midnight .phone-mockup {
-    box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(58, 143, 183, 0.5);
-    border-color: #3a8fb7;
+    box-shadow: 0 22px 45px rgba(0,0,0,0.85), 0 0 25px rgba(58, 143, 183, 0.6);
+    border-color: #4fa8d3;
+}
+
+.theme-card:hover .theme-preview-heritage .phone-mockup {
+    box-shadow: 0 22px 45px rgba(0,0,0,0.85), 0 0 25px rgba(179, 139, 77, 0.5);
+    border-color: #dfba79;
+}
+
+.theme-card:hover .theme-preview-velvet .phone-mockup {
+    box-shadow: 0 24px 50px rgba(0,0,0,0.9), 0 0 30px rgba(212, 175, 55, 0.65);
+    border-color: #f3d778;
+}
+
+.theme-card:hover .theme-preview-nordic .phone-mockup {
+    box-shadow: 0 22px 45px rgba(0,0,0,0.25), 0 0 25px rgba(39, 39, 42, 0.25);
+    border-color: #09090b;
+}
+
+.theme-card:hover .theme-preview-botanical .phone-mockup {
+    box-shadow: 0 20px 40px rgba(47, 60, 51, 0.4), 0 0 20px rgba(158, 172, 162, 0.5);
+    border-color: #9EACA2;
+    transform: translateY(-6px) scale(1.05) rotate(-1deg);
 }
 
 /* Slight image zoom/pan effect on card hover */

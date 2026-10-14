@@ -1,3 +1,13 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/themes/:path*", "destination": "/themes/:path*" },
+    { "source": "/admin/:path*", "destination": "/admin/:path*" },
+    { "source": "/editor/:path*", "destination": "/editor/:path*" },
+    { "source": "/login/:path*", "destination": "/login/:path*" },
+    { "source": "/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/supabase-config.js", "destination": "/supabase-config.js" },
+    { "source": "/config.js", "destination": "/config.js" },
+    { "source": "/:slug", "destination": "/index.html" }
+  ]
 }

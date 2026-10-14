@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Undangan Pernikahan - Heritage Series</title>
+    
+    <!-- Meta Tags for Social Media -->
+    <meta id="meta-desc" name="description" content="Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di hari bahagia kami.">
+    <meta property="og:type" content="website">
+    <meta id="og-title" property="og:title" content="Undangan Pernikahan - Heritage Series">
+    <meta id="og-desc" property="og:description" content="Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir di hari bahagia kami.">
+    <meta id="og-img" property="og:image" content="https://placehold.co/1080x1920/2C2A29/B38B4D?text=Heritage+Series">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23B38B4D' d='M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z'/%3E%3C/svg%3E">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Great+Vibes&family=Lato:ital,wght@0,300;0,400;1,300;0,700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'heritage-gold': '#B38B4D',
+                        'heritage-dark': '#2C2A29',
+                        'heritage-cream': '#FDFBF7',
+                        'heritage-brown': '#5C4A3D'
+                    },
+                    fontFamily: {
+                        'serif': ['Cinzel', 'serif'],
+                        'script': ['"Great Vibes"', 'cursive'],
+                        'sans': ['Lato', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #FDFBF7;
+            background-image: url('https://www.transparenttextures.com/patterns/aged-paper.png');
+            overflow-x: hidden;
+        }
+
+        .batik-pattern {
+            background-image: radial-gradient(#B38B4D 1px, transparent 1px), radial-gradient(#B38B4D 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            opacity: 0.05;
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 10;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #cover-screen {
+            background: linear-gradient(rgba(44, 42, 41, 0.85), rgba(44, 42, 41, 0.85)), url('https://placehold.co/1080x1920/2C2A29/B38B4D?text=Heritage+Background') center/cover no-repeat;
+        }
+
+        .ornament-border {
+            border: 1px solid #B38B4D;
+            padding: 4px;
+            position: relative;
+        }
+        
+        .ornament-border::before, .ornament-border::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid #B38B4D;
+        }
+        
+        .ornament-border::before {
+            top: -4px; left: -4px;
+            border-right: none; border-bottom: none;
+        }
+        
+        .ornament-border::after {
+            bottom: -4px; right: -4px;
+            border-left: none; border-top: none;
+        }
+
+        #audio-btn {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 139, 77, 0.7); }
+            70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(179, 139, 77, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(179, 139, 77, 0); }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #B38B4D;
+            border-radius: 4px;
+        }
+
+        /* Lightbox modal */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 100000;
+            inset: 0;
+            background: rgba(0,0,0,0.92);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body class="text-heritage-dark font-sans antialiased selection:bg-heritage-gold selection:text-white">
+
+    <!-- Error Overlay -->
+    <div id="error-overlay" class="fixed inset-0 z-[100000] bg-heritage-dark flex items-center justify-center p-6 text-center text-heritage-cream" style="display: none;">
+        <div class="max-w-md w-full bg-heritage-brown/40 p-8 rounded-2xl border border-heritage-gold shadow-2xl backdrop-blur-md">
+            <i class="fas fa-crown text-5xl text-heritage-gold mb-4"></i>
+            <h1 id="error-title" class="font-serif text-2xl text-heritage-gold mb-3">Undangan Tidak Ditemukan</h1>
+            <p id="error-desc" class="font-sans text-sm text-gray-300 leading-relaxed mb-6">Link undangan yang Anda tuju tidak terdaftar atau masa aktifnya telah berakhir.</p>
+            <a href="/" class="inline-block bg-heritage-gold hover:bg-yellow-700 text-white font-serif px-6 py-2.5 rounded-full text-sm uppercase tracking-wider transition">Kembali ke Beranda</a>
+        </div>
+    </div>
+
+    <!-- Cover Screen -->
+    <div id="cover-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center text-heritage-cream transition-transform duration-1000 ease-in-out">
+        <div class="text-center px-6 max-w-md w-full">
+            <h4 class="font-sans tracking-widest text-xs uppercase mb-4 text-heritage-gold">The Wedding Of</h4>
+            <h1 id="cover-couple-name" class="font-script text-6xl md:text-8xl mb-6 font-medium text-heritage-gold drop-shadow-md">Rama & Shinta</h1>
+            
+            <p id="cover-quote" class="font-serif text-xs md:text-sm mb-10 italic text-gray-300 line-clamp-3">"Sebuah ikatan suci yang terjalin dalam doa dan restu."</p>
+
+            <div class="mb-8">
+                <p class="text-xs font-sans mb-1 text-gray-400">Kepada Yth.</p>
+                <p id="guest-name" class="font-serif text-base md:text-lg font-semibold text-white bg-heritage-gold/20 px-5 py-2 rounded-full border border-heritage-gold/40 inline-block shadow-inner">
+                    Tamu Undangan
+                </p>
+                <p class="text-[11px] text-gray-400 mt-2 italic">*Mohon maaf bila ada kesalahan penulisan nama/gelar</p>
+            </div>
+
+            <button id="btn-open-invitation" onclick="openInvitation()" class="bg-heritage-gold hover:bg-yellow-700 text-white font-serif tracking-wider py-3 px-8 rounded-full transition-all duration-300 shadow-xl transform hover:scale-105 flex items-center justify-center mx-auto gap-2 text-sm uppercase">
+                <i class="fas fa-envelope-open-text"></i> Buka Undangan
+            </button>
+        </div>
+    </div>
+
+    <!-- Background Audio Element & Floating Button -->
+    <audio id="bg-music" loop>
+        <source id="bg-music-source" src="https://assets.mixkit.co/music/preview/mixkit-romantic-piano-110.mp3" type="audio/mpeg">
+    </audio>
+    <button id="audio-btn" onclick="togglePlay()" class="fixed bottom-6 right-6 z-40 bg-heritage-gold text-white w-12 h-12 rounded-full flex items-center justify-center shadow-2xl transition hover:opacity-90 hidden" aria-label="Music Toggle">
+        <i class="fas fa-music"></i>
+    </button>
+
+    <!-- Main Content Container -->
+    <div id="main-content" class="relative hidden w-full max-w-lg mx-auto bg-heritage-cream min-h-screen shadow-2xl border-x border-gray-200">
+        <div class="batik-pattern"></div>
+        
+        <!-- Section 1: Hero -->
+        <section class="relative min-h-screen flex flex-col items-center justify-center content-overlay p-6 text-center overflow-hidden py-16">
+            <!-- Decorative corner frames -->
+            <div class="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-heritage-gold"></div>
+            <div class="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-heritage-gold"></div>
+            <div class="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-heritage-gold"></div>
+            <div class="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-heritage-gold"></div>
+
+            <div class="fade-in mb-4">
+                <p class="font-serif text-heritage-brown tracking-[0.3em] text-xs uppercase">The Wedding Celebration</p>
+            </div>
+            
+            <div class="fade-in ornament-border p-2 mb-6">
+                <div class="w-48 h-64 md:w-56 md:h-72 overflow-hidden bg-gray-200 rounded-sm">
+                    <img id="hero-couple-image" src="https://placehold.co/400x600/5C4A3D/FDFBF7?text=Foto+Prewed" alt="Prewedding" class="w-full h-full object-cover transition duration-700">
+                </div>
+            </div>
+
+            <h1 id="hero-couple-names" class="fade-in font-script text-5xl md:text-6xl text-heritage-gold mb-2">Rama & Shinta</h1>
+            
+            <div class="fade-in mt-6 w-full max-w-xs mx-auto border-t border-heritage-gold/30 pt-6">
+                <p id="hero-date" class="font-serif text-base md:text-lg text-heritage-dark font-semibold">15 . 08 . 2027</p>
+                <div id="countdown" class="flex justify-center gap-3 mt-4 text-heritage-brown font-serif text-xs md:text-sm">
+                    <div class="text-center px-2 py-1.5 bg-white/60 rounded border border-heritage-gold/20 min-w-[55px]">
+                        <span id="days" class="block text-xl font-bold text-heritage-gold">00</span>Hari
+                    </div>
+                    <div class="text-center px-2 py-1.5 bg-white/60 rounded border border-heritage-gold/20 min-w-[55px]">
+                        <span id="hours" class="block text-xl font-bold text-heritage-gold">00</span>Jam
+                    </div>
+                    <div class="text-center px-2 py-1.5 bg-white/60 rounded border border-heritage-gold/20 min-w-[55px]">
+                        <span id="minutes" class="block text-xl font-bold text-heritage-gold">00</span>Mnt
+                    </div>
+                    <div class="text-center px-2 py-1.5 bg-white/60 rounded border border-heritage-gold/20 min-w-[55px]">
+                        <span id="seconds" class="block text-xl font-bold text-heritage-gold">00</span>Dtk
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Quote -->
+        <section class="py-16 px-8 content-overlay text-center bg-heritage-brown text-heritage-cream relative">
+            <i class="fas fa-leaf text-heritage-gold text-2xl mb-4 opacity-75 fade-in"></i>
+            <p id="quote-body" class="font-sans text-sm leading-relaxed mb-6 fade-in font-light italic">
+                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu isteri-isteri dari jenismu sendiri, supaya kamu cenderung dan merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir."
+            </p>
+            <div id="quote-ornament" class="flex justify-center items-center gap-3 fade-in mt-2 text-heritage-gold">
+                <span class="h-[1px] w-12 bg-heritage-gold/50"></span>
+                <i class="fas fa-star text-[10px]"></i>
+                <div class="w-2.5 h-2.5 rotate-45 border border-heritage-gold/80 bg-heritage-gold/20"></div>
+                <i class="fas fa-star text-[10px]"></i>
+                <span class="h-[1px] w-12 bg-heritage-gold/50"></span>
+            </div>
+        </section>
+
+        <!-- Section 3: Mempelai -->
+        <section class="py-20 px-6 content-overlay text-center relative">
+            <div class="fade-in mb-8 flex justify-center items-center gap-3">
+                <span class="h-[1px] w-12 bg-heritage-gold/50"></span>
+                <i class="fas fa-crown text-heritage-gold text-lg"></i>
+                <span class="h-[1px] w-12 bg-heritage-gold/50"></span>
+            </div>
+            
+            <h2 class="font-serif text-2xl text-heritage-gold mb-12 fade-in tracking-widest uppercase">Sang Mempelai</h2>
+
+            <!-- Groom -->
+            <div class="mb-12 fade-in">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-heritage-gold p-1 mb-5 shadow-md">
+                    <img id="groom-image" src="https://placehold.co/300x300/2C2A29/FDFBF7?text=Groom" alt="Groom" class="w-full h-full object-cover rounded-full">
+                </div>
+                <h3 id="groom-fullname" class="font-serif font-bold text-xl text-heritage-brown mb-1.5">Rama Wijaya, S.T.</h3>
+                <p id="groom-parents" class="font-serif text-xs md:text-sm text-heritage-dark leading-relaxed max-w-xs mx-auto">Putra dari Bpk. Prabu Dasarata & Ibu Kosalya</p>
+                <div id="groom-social-container" class="mt-3">
+                    <a id="groom-social-link" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-heritage-gold hover:text-heritage-brown transition border border-heritage-gold/30 px-3 py-1 rounded-full">
+                        <i id="groom-social-icon" class="fab fa-instagram"></i> <span id="groom-social-text">Instagram</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="font-script text-4xl text-heritage-gold mb-12 fade-in">&</div>
+
+            <!-- Bride -->
+            <div class="mb-6 fade-in">
+                <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-heritage-gold p-1 mb-5 shadow-md">
+                    <img id="bride-image" src="https://placehold.co/300x300/2C2A29/FDFBF7?text=Bride" alt="Bride" class="w-full h-full object-cover rounded-full">
+                </div>
+                <h3 id="bride-fullname" class="font-serif font-bold text-xl text-heritage-brown mb-1.5">Shinta Dewi, S.E.</h3>
+                <p id="bride-parents" class="font-serif text-xs md:text-sm text-heritage-dark leading-relaxed max-w-xs mx-auto">Putri dari Bpk. Prabu Janaka & Ibu Sunayana</p>
+                <div id="bride-social-container" class="mt-3">
+                    <a id="bride-social-link" href="#" target="_blank" class="inline-flex items-center gap-1.5 text-xs text-heritage-gold hover:text-heritage-brown transition border border-heritage-gold/30 px-3 py-1 rounded-full">
+                        <i id="bride-social-icon" class="fab fa-instagram"></i> <span id="bride-social-text">Instagram</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Detail Acara -->
+        <section class="py-20 px-6 content-overlay bg-[#F5F2EB] relative border-y border-heritage-gold/20">
+            <h2 class="font-serif text-2xl text-center text-heritage-gold mb-12 fade-in tracking-widest uppercase">Rangkaian Acara</h2>
+
+            <div id="events-container" class="space-y-8">
+                <!-- Events rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- Section 5: Love Story (Optional) -->
+        <section id="story-section" class="py-20 px-6 content-overlay text-center relative bg-heritage-cream" style="display: none;">
+            <h2 class="font-serif text-2xl text-heritage-gold mb-10 fade-in tracking-widest uppercase">Kisah Cinta Kami</h2>
+            <div id="story-timeline" class="space-y-6 text-left max-w-md mx-auto fade-in">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Section 6: Gallery -->
+        <section id="gallery-section" class="py-20 px-4 content-overlay text-center relative">
+            <h2 class="font-serif text-2xl text-heritage-gold mb-10 fade-in tracking-widest uppercase">Galeri Kenangan</h2>
+            
+            <div id="gallery-grid" class="grid grid-cols-2 gap-2.5 fade-in">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+
+        <!-- Section 7: YouTube Video (Optional) -->
+        <section id="video-section" class="py-16 px-6 content-overlay bg-[#F5F2EB] text-center border-y border-heritage-gold/20" style="display: none;">
+            <h2 class="font-serif text-2xl text-heritage-gold mb-6 fade-in tracking-widest uppercase">Video Bahagia</h2>
+            <div class="relative pb-[56.25%] h-0 overflow-hidden max-w-md mx-auto rounded-xl shadow-lg border border-heritage-gold/30">
+                <iframe id="youtube-iframe" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <!-- Section 8: RSVP & Messages -->
+        <section class="py-20 px-6 content-overlay bg-heritage-brown text-heritage-cream relative">
+            <h2 class="font-serif text-2xl text-center text-heritage-gold mb-4 fade-in tracking-widest uppercase">Kehadiran & Doa</h2>
+            <p class="text-center font-sans text-xs md:text-sm mb-10 opacity-80 fade-in max-w-xs mx-auto">Kehadiran dan doa restu Bapak/Ibu/Saudara/i merupakan karunia terindah bagi kami.</p>
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur-sm fade-in border border-white/20 shadow-lg">
+                <form id="rsvp-form" onsubmit="submitRSVP(event)" class="space-y-4">
+                    <div>
+                        <label class="block font-sans text-xs mb-1 text-heritage-gold uppercase tracking-wider font-semibold">Nama Lengkap</label>
+                        <input id="rsvp-name" type="text" required class="w-full px-3.5 py-2.5 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:border-heritage-gold text-white text-sm placeholder-gray-300" placeholder="Nama Anda">
+                    </div>
+                    <div>
+                        <label class="block font-sans text-xs mb-1 text-heritage-gold uppercase tracking-wider font-semibold">Konfirmasi Kehadiran</label>
+                        <select id="rsvp-attendance" class="w-full px-3.5 py-2.5 bg-heritage-dark border border-white/30 rounded-lg focus:outline-none focus:border-heritage-gold text-white text-sm">
+                            <option value="Hadir">Hadir</option>
+                            <option value="Tidak Hadir">Maaf, Tidak Bisa Hadir</option>
+                            <option value="Ragu-ragu">Masih Ragu-ragu</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-sans text-xs mb-1 text-heritage-gold uppercase tracking-wider font-semibold">Ucapan & Doa Restu</label>
+                        <textarea id="rsvp-message" rows="3" required class="w-full px-3.5 py-2.5 bg-white/20 border border-white/30 rounded-lg focus:outline-none focus:border-heritage-gold text-white text-sm placeholder-gray-300" placeholder="Tuliskan ucapan dan doa tulus Anda..."></textarea>
+                    </div>
+                    <button id="btn-submit-rsvp" type="submit" class="w-full bg-heritage-gold hover:bg-yellow-700 text-white font-serif py-3 rounded-lg transition shadow-md font-semibold text-sm tracking-wider uppercase">
+                        Kirim Ucapan
+                    </button>
+                </form>
+            </div>
+
+            <!-- Wishes List Container -->
+            <div class="mt-10">
+                <div class="flex items-center justify-between mb-4 border-b border-white/15 pb-2">
+                    <span class="text-xs uppercase tracking-wider text-heritage-gold font-serif">Doa & Ucapan Tamu</span>
+                    <span id="wishes-count" class="text-xs bg-heritage-gold/30 px-2.5 py-0.5 rounded-full text-white font-mono">0</span>
+                </div>
+                <div id="wishes-list" class="space-y-3.5 max-h-72 overflow-y-auto pr-1.5 fade-in custom-scrollbar">
+                    <p class="text-center text-xs text-gray-300 italic py-4">Memuat ucapan tamu...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Gift / Amplop Digital -->
+        <section id="gifts-section" class="py-20 px-6 content-overlay text-center relative" style="display: none;">
+            <i class="fas fa-gift text-3xl text-heritage-gold mb-4 fade-in"></i>
+            <h2 class="font-serif text-2xl text-heritage-brown mb-3 fade-in tracking-wider uppercase">Tanda Kasih</h2>
+            <p class="font-sans text-xs md:text-sm text-gray-600 mb-8 fade-in max-w-sm mx-auto">Tanpa mengurangi rasa hormat, bagi tamu yang ingin memberikan tanda kasih dapat melalui amplop digital berikut:</p>
+
+            <div id="gifts-container" class="space-y-4 max-w-sm mx-auto">
+                <!-- Rendered dynamically -->
+            </div>
+            
+            <!-- Toast notification for copy -->
+            <div id="toast" class="fixed bottom-20 left-1/2 transform -translate-x-1/2 bg-heritage-dark text-white px-5 py-2.5 rounded-full shadow-2xl opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-xs font-serif flex items-center gap-2 border border-heritage-gold/50">
+                <i class="fas fa-check-circle text-heritage-gold"></i> Nomor rekening berhasil disalin!
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 bg-heritage-dark text-center content-overlay text-heritage-cream">
+            <h2 id="footer-couple-name" class="font-script text-4xl text-heritage-gold mb-3">Rama & Shinta</h2>
+            <p class="font-sans text-xs text-gray-400">Terima kasih atas doa, restu, dan kehadiran Anda.</p>
+        </footer>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <img id="lightbox-img" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl border border-heritage-gold" src="" alt="Zoom Image">
+    </div>
+
+    <!-- Core Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/supabase-config.js"></script>
+    <script src="/config.js"></script>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>

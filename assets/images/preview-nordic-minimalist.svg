@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 610" width="360" height="610">
+  <defs>
+    <filter id="cardShadow" x="-10%" y="-10%" width="125%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.04"/>
+    </filter>
+  </defs>
+
+  <!-- Clean Minimalist Nordic Background -->
+  <rect width="360" height="610" fill="#F4F4F2"/>
+
+  <!-- Centered Floating White Nordic Card -->
+  <g transform="translate(24, 75)">
+    <!-- White Card Base -->
+    <rect width="312" height="460" rx="4" fill="#FFFFFF" stroke="#E4E4E7" stroke-width="1" filter="url(#cardShadow)"/>
+
+    <!-- Corner Accent Brackets -->
+    <!-- Top-Left -->
+    <path d="M 12 24 L 12 12 L 24 12" fill="none" stroke="#71717A" stroke-width="1"/>
+    <!-- Top-Right -->
+    <path d="M 300 24 L 300 12 L 288 12" fill="none" stroke="#71717A" stroke-width="1"/>
+    <!-- Bottom-Left -->
+    <path d="M 12 436 L 12 448 L 24 448" fill="none" stroke="#71717A" stroke-width="1"/>
+    <!-- Bottom-Right -->
+    <path d="M 300 436 L 300 448 L 288 448" fill="none" stroke="#71717A" stroke-width="1"/>
+
+    <!-- Header Text -->
+    <text x="156" y="52" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="9.5" font-weight="600" fill="#3F3F46" letter-spacing="3.2">THE WEDDING CELEBRATION OF</text>
+    <line x1="140" y1="58" x2="172" y2="58" stroke="#A1A1AA" stroke-width="1"/>
+
+    <!-- Couple Names (Script Calligraphy Stacked) -->
+    <text x="156" y="128" text-anchor="middle" font-family="'Parisienne', 'Great Vibes', cursive" font-size="44" fill="#18181B">Soren</text>
+    <text x="156" y="162" text-anchor="middle" font-family="'Parisienne', 'Great Vibes', cursive" font-size="22" fill="#71717A">&amp;</text>
+    <text x="156" y="214" text-anchor="middle" font-family="'Parisienne', 'Great Vibes', cursive" font-size="44" fill="#18181B">Freya</text>
+
+    <!-- Date -->
+    <text x="156" y="260" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="10" font-weight="500" fill="#3F3F46" letter-spacing="2.6">SABTU, 24 OKTOBER 2026</text>
+
+    <!-- Inset Guest Greeting Box -->
+    <g transform="translate(26, 285)">
+      <rect width="260" height="74" rx="2" fill="#FAFAF9" stroke="#E4E4E7" stroke-width="0.8"/>
+      <text x="130" y="20" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="7.5" font-weight="600" fill="#71717A" letter-spacing="1.4">KEPADA YTH. BAPAK/IBU/SAUDARA/I</text>
+      <text x="130" y="42" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="14" font-weight="700" fill="#18181B">Tamu Undangan</text>
+      <text x="130" y="60" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="6.8" font-style="italic" fill="#A1A1AA">Tanpa mengurangi rasa hormat, kami mengundang Anda untuk hadir.</text>
+    </g>
+
+    <!-- Button Buka Undangan -->
+    <g transform="translate(86, 388)">
+      <rect width="140" height="34" rx="2" fill="#18181B"/>
+      <text x="64" y="21" text-anchor="middle" font-family="'Plus Jakarta Sans', 'Inter', sans-serif" font-size="9" font-weight="700" fill="#FFFFFF" letter-spacing="1.2">BUKA UNDANGAN</text>
+      <!-- Small Envelope Icon -->
+      <path d="M 112 14 L 126 14 C 127 14, 128 14.5, 128 15.5 L 128 24.5 C 128 25.5, 127 26, 126 26 L 112 26 C 111 26, 110 25.5, 110 24.5 L 110 15.5 C 110 14.5, 111 14, 112 14 Z M 112 16 L 119 20.5 L 126 16 Z" fill="#FFFFFF"/>
+    </g>
+  </g>
+</svg>
